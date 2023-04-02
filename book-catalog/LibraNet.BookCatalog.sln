@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{BF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraNet.BookCatalog.Api", "src\LibraNet.BookCatalog.Api\LibraNet.BookCatalog.Api.csproj", "{3A8971B1-7E90-4297-8D90-43CB56033FF4}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LibraNet.BookCatalog.Database", "database\LibraNet.BookCatalog.Database\LibraNet.BookCatalog.Database.sqlproj", "{714CDDA4-0EBA-4798-8021-7B73167B8B79}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LibraNet.BookCatalog.Database", "database\LibraNet.BookCatalog.Database.sqlproj", "{714CDDA4-0EBA-4798-8021-7B73167B8B79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
