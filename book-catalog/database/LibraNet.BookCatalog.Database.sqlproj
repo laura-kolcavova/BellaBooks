@@ -59,16 +59,30 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="PublishProfiles\" />
+    <Folder Include="SeedAndPatch" />
+    <Folder Include="SeedAndPatch\Seed" />
+    <Folder Include="Scripts" />
+    <Folder Include="Security" />
+    <Folder Include="Security\Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Books.sql" />
     <Build Include="dbo\Tables\Publishers.sql" />
     <Build Include="dbo\Tables\Authors.sql" />
     <Build Include="dbo\Tables\Genres.sql" />
-    <Build Include="dbo\Tables\BooksAuthors.sql" />
+    <Build Include="dbo\Tables\AuthorsBooks.sql" />
     <Build Include="dbo\Tables\BooksGenres.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\Local.publish.xml" />
+    <None Include="SeedAndPatch\Seed.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_Books.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_Publishers.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_Authors.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_AuthorsBooks.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_BooksGenres.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_Genres.sql" />
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+    <Build Include="Security\Schemas\seed.sql" />
   </ItemGroup>
 </Project>
