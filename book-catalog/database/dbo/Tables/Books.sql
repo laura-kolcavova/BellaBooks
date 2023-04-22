@@ -8,7 +8,7 @@
 	[PublicationPlace] VARCHAR(255),
 	[PublicationLanguage] VARCHAR(255),
 	[Pages] INT,
-	[DateCreatedAt] DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET() NOT NULL,
+	[DateCreatedAt] DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
 	[DateUpdatedAt] DATETIMEOFFSET,
 	CONSTRAINT [PK_Books] PRIMARY KEY CLUSTERED ([Id] ASC),
 	CONSTRAINT [FK_Books_Publishers] FOREIGN KEY ([PublisherId]) REFERENCES [dbo].[Publishers] ([Id])
