@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Bussiness\BellaBooks.BookCatalog.Bussiness.csproj" />
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Infrastructure\BellaBooks.BookCatalog.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FastEndpoints.ClientGen" Version="5.15.0" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="5.15.0" />
+  </ItemGroup>
+
+</Project>

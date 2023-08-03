@@ -6,5 +6,8 @@ GO
 EXEC [seed].[SP_Seed_Books]
 GO
 
-EXEC [seed].[SP_Seed_AuthorsBooks]
-EXEC [seed].[SP_Seed_BooksGenres]
+EXEC [seed].[SP_Seed_AuthorBooks]
+EXEC [seed].[SP_Seed_BookGenres]
+GO
+
+EXEC [seed].[SP_Seed_LibraryPrints]
