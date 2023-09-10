@@ -5,7 +5,7 @@ using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.GetAllGenres;
 
 public class GetAllAuthorsEndpoint : EndpointWithoutRequest<
     Ok<GetAllAuthorsDto.Response>,

@@ -1,12 +1,11 @@
-﻿
-using BellaBooks.BookCatalog.Api.Contracts.Authors;
+﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.EditGenreInfo;
 
 public class EditAuthorInfoEndpoint : Endpoint<
     EditAuthorInfoDto.Request,

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Authors.CommandHandlers;
+
 internal class GetAuthorDetailCommandHandler : ICommandHandler<
     GetAuthorDetailCommand, Result<AuthorEntity, ErrorResult>>
 {

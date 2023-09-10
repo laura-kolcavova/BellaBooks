@@ -6,7 +6,7 @@ using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.GetAuthorDetail;
 
 public class GetAuthorDetailEndpoint : Endpoint<
     GetAuthorDetailDto.Request,

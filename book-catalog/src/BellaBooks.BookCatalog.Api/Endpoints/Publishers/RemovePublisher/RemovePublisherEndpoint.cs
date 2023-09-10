@@ -1,36 +1,36 @@
-﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
+﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.RemoveAuthor;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Publishers.RemovePublisher;
 
-public class RemoveAuthorEndpoint : Endpoint<
-    RemoveAuthorDto.Request,
+public class RemovePublisherEndpoint : Endpoint<
+    RemovePublisherDto.Request,
     Results<Ok, NotFound, UnprocessableEntity>>
 {
     public override void Configure()
     {
-        Delete("RemoveAuthor");
-        Group<AuthorsEndpointGroup>();
+        Delete("RemovePublisher");
+        Group<PublishersEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Remove an author from the catalog";
-            s.Description = "The endpoint will remove an author from the catalog";
+            s.Summary = "Remove a publisher from the catalog";
+            s.Description = "The endpoint will remove a publisher from the catalog";
         });
     }
 
     public override async Task<
         Results<Ok, NotFound, UnprocessableEntity>>
-        ExecuteAsync(RemoveAuthorDto.Request req, CancellationToken ct)
+        ExecuteAsync(RemovePublisherDto.Request req, CancellationToken ct)
     {
-        var result = await new RemoveAuthorCommand()
+        var result = await new RemovePublisherCommand()
         {
-            AuthorId = req.AuthorId,
+            PublisherId = req.PublisherId,
         }.ExecuteAsync(ct);
 
         if (result.IsFailure)

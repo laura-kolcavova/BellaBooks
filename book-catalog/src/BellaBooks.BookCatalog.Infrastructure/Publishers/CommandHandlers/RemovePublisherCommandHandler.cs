@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+﻿using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
@@ -6,17 +6,17 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Authors.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.Publishers.CommandHandlers;
 
-internal class RemoveAuthorCommandHandler : ICommandHandler<
-    RemoveAuthorCommand, UnitResult<ErrorResult>>
+internal class RemovePublisherCommandHandler : ICommandHandler<
+    RemovePublisherCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<RemoveAuthorCommandHandler> _logger;
+    private readonly ILogger<RemovePublisherCommandHandler> _logger;
 
-    public RemoveAuthorCommandHandler(
+    public RemovePublisherCommandHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<RemoveAuthorCommandHandler> logger)
+        ILogger<RemovePublisherCommandHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -24,31 +24,31 @@ internal class RemoveAuthorCommandHandler : ICommandHandler<
 
     public async Task<
         UnitResult<ErrorResult>>
-        ExecuteAsync(RemoveAuthorCommand command, CancellationToken ct)
+        ExecuteAsync(RemovePublisherCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["AuthorId"] = command.AuthorId,
+            ["PublisherId"] = command.PublisherId,
         });
 
         try
         {
-            var authorExists = await _bookCatalogContext.Authors
-                .AnyAsync(author => author.Id == command.AuthorId, ct);
+            var publisherExists = await _bookCatalogContext.Publishers
+                .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
 
-            if (!authorExists)
+            if (!publisherExists)
             {
                 return UnitResult.Failure
                     (GeneralErrorResults.EntityNotFound);
             }
 
-            var changes = await _bookCatalogContext.Authors
-                .Where(author => author.Id == command.AuthorId)
+            var changes = await _bookCatalogContext.Publishers
+                .Where(publisher => publisher.Id == command.PublisherId)
                 .ExecuteDeleteAsync(ct);
 
             if (changes == 0)
             {
-                _logger.LogError("An author was not removed from the catalog");
+                _logger.LogError("A publisher was not removed from the catalog");
 
                 return UnitResult.Failure
                     (GeneralErrorResults.NoChangesInDatabase);
@@ -58,7 +58,7 @@ internal class RemoveAuthorCommandHandler : ICommandHandler<
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while removing an author");
+            _logger.LogError(ex, "An unexpected error occurred while removing a publisher");
             throw;
         }
     }

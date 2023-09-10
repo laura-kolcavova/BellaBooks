@@ -1,36 +1,37 @@
-﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
+﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.RemoveAuthor;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Publishers.EditPublisherInfo;
 
-public class RemoveAuthorEndpoint : Endpoint<
-    RemoveAuthorDto.Request,
+public class EditPublisherInfoEndpoint : Endpoint<
+    EditPublisherInfoDto.Request,
     Results<Ok, NotFound, UnprocessableEntity>>
 {
     public override void Configure()
     {
-        Delete("RemoveAuthor");
-        Group<AuthorsEndpointGroup>();
+        Post("EditPublisherInfo");
+        Group<PublishersEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Remove an author from the catalog";
-            s.Description = "The endpoint will remove an author from the catalog";
+            s.Summary = "Edits a publisher info";
+            s.Description = "The endpoint will edit a publisher info";
         });
     }
 
     public override async Task<
         Results<Ok, NotFound, UnprocessableEntity>>
-        ExecuteAsync(RemoveAuthorDto.Request req, CancellationToken ct)
+        ExecuteAsync(EditPublisherInfoDto.Request req, CancellationToken ct)
     {
-        var result = await new RemoveAuthorCommand()
+        var result = await new EditPublisherInfoCommand
         {
-            AuthorId = req.AuthorId,
+            PublisherId = req.PublisherId,
+            Name = req.Name
         }.ExecuteAsync(ct);
 
         if (result.IsFailure)
@@ -38,7 +39,7 @@ public class RemoveAuthorEndpoint : Endpoint<
             return result.Error.Code switch
             {
                 GeneralErrorCodes.EntityNotFound
-                    => TypedResults.NotFound(),
+                  => TypedResults.NotFound(),
 
                 GeneralErrorCodes.NoChangesInDatabase or
                 _ => TypedResults.UnprocessableEntity()
