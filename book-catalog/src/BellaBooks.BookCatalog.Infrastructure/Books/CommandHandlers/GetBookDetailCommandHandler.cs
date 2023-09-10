@@ -7,7 +7,7 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Books;
+namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
 
 internal class GetBookDetailCommandHandler : ICommandHandler<
     GetBookDetailCommand,

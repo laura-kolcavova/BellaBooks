@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Books;
+namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
 
 internal class SimpleSearchBooksCommandHandler : ICommandHandler<
     SimpleSearchBooksCommand,

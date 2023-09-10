@@ -29,7 +29,7 @@ public class GetGenreByIdEndpoint : Endpoint<
         Ok<GetGenreByIdDto.Respone>, NotFound>>
         ExecuteAsync(GetGenreByIdDto.Request req, CancellationToken ct)
     {
-        var result = await new GetGenreByIdCommand()
+        var result = await new GetGenreDetailCommand()
         {
             GenreId = req.GenreId,
         }.ExecuteAsync(ct);
