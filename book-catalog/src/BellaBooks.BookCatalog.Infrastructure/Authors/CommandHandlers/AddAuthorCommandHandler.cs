@@ -56,7 +56,7 @@ internal class AddAuthorCommandHandler : ICommandHandler<
                 _logger.LogError("An author was not added to the catalog");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.NoChangesInDatabase);
+                    (GeneralErrorResults.EntityNotAdded);
             }
 
             return newAuthor.Id;

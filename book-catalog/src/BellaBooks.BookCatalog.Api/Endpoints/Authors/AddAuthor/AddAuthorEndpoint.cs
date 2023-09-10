@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
+using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
-using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -9,7 +9,7 @@ namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.AddAuthor;
 
 public class AddAuthorEndpoint : Endpoint<
     AddAuthorDto.Request,
-    Results<Ok<AddAuthorDto.Response>, UnprocessableEntity>,
+    Results<Ok<AddAuthorDto.Response>, ProblemHttpResult>,
     AddAuthorResponseMapper>
 {
     public override void Configure()
@@ -23,10 +23,13 @@ public class AddAuthorEndpoint : Endpoint<
             s.Summary = "Add a new author to the catalog";
             s.Description = "The endpoint will add a new author to the catalog and return its Id";
         });
+
+        Description(d => d
+           .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<
-        Results<Ok<AddAuthorDto.Response>, UnprocessableEntity>>
+        Results<Ok<AddAuthorDto.Response>, ProblemHttpResult>>
         ExecuteAsync(AddAuthorDto.Request req, CancellationToken ct)
     {
         var result = await new AddAuthorCommand
@@ -36,12 +39,8 @@ public class AddAuthorEndpoint : Endpoint<
 
         if (result.IsFailure)
         {
-            return result.Error.Code switch
-            {
-                GeneralErrorCodes.EntityAlreadyExists or
-                GeneralErrorCodes.NoChangesInDatabase or
-                _ => TypedResults.UnprocessableEntity()
-            };
+            return TypedResultsExtended.ProblemResponse(
+                result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code);
         }
 
         return TypedResults.Ok(Map.FromEntity(result.Value));

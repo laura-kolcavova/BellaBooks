@@ -10,6 +10,6 @@ public class GetBookDetailRequestValidator : Validator<
     public GetBookDetailRequestValidator()
     {
         RuleFor(x => x.BookId)
-            .NotEmpty();
+            .GreaterThan(0);
     }
 }

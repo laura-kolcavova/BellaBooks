@@ -56,7 +56,7 @@ internal class AddPublisherCommandHandler : ICommandHandler<
                 _logger.LogError("A publisher was not added to the catalog");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.NoChangesInDatabase);
+                    (GeneralErrorResults.EntityNotAdded);
             }
 
             return newPublisher.Id;

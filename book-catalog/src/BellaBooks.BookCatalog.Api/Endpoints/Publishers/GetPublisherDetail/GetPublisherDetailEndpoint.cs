@@ -1,8 +1,8 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
+using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
-using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -10,7 +10,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Publishers.GetPublisherDetail;
 
 public class GetPublisherDetailEndpoint : Endpoint<
     GetPublisherDetailDto.Request,
-    Results<Ok<GetPublisherDetailDto.Response>, NotFound>,
+    Results<Ok<GetPublisherDetailDto.Response>, ProblemHttpResult>,
     GetPublisherDetailResponseMapper>
 {
     public override void Configure()
@@ -24,10 +24,13 @@ public class GetPublisherDetailEndpoint : Endpoint<
             s.Summary = "Gets a publisher detail by its Id";
             s.Description = "The endpoint will return a publisher detail";
         });
+
+        Description(d => d
+         .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound));
     }
 
     public override async Task<Results<
-        Ok<GetPublisherDetailDto.Response>, NotFound>>
+        Ok<GetPublisherDetailDto.Response>, ProblemHttpResult>>
         ExecuteAsync(GetPublisherDetailDto.Request req, CancellationToken ct)
     {
         var result = await new GetPublisherDetailCommand()
@@ -37,11 +40,8 @@ public class GetPublisherDetailEndpoint : Endpoint<
 
         if (result.IsFailure)
         {
-            return result.Error.Code switch
-            {
-                GeneralErrorCodes.EntityNotFound or
-                _ => TypedResults.NotFound(),
-            };
+            TypedResultsExtended.ProblemResponse(
+                result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code);
         }
 
         return TypedResults.Ok(Map.FromEntity(result.Value));

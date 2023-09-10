@@ -51,7 +51,7 @@ internal class RemoveGenreCommandHandler : ICommandHandler<
                 _logger.LogError("A book was not removed from the catalog");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.NoChangesInDatabase);
+                    (GeneralErrorResults.EntityNotDeleted);
             }
 
             return UnitResult.Success<ErrorResult>();

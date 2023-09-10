@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
+using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
@@ -9,7 +10,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
 public class EditGenreInfoEndpoint : Endpoint<
     EditGenreInfoDto.Request,
-    Results<Ok, NotFound, UnprocessableEntity>>
+    Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
     {
@@ -22,10 +23,14 @@ public class EditGenreInfoEndpoint : Endpoint<
             s.Summary = "Edits a book gensre info";
             s.Description = "The endpoint will edit a book genre info";
         });
+
+        Description(d => d
+          .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound)
+          .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<
-        Results<Ok, NotFound, UnprocessableEntity>>
+        Results<Ok, ProblemHttpResult>>
         ExecuteAsync(EditGenreInfoDto.Request req, CancellationToken ct)
     {
         var result = await new EditGenreInfoCommand
@@ -39,10 +44,11 @@ public class EditGenreInfoEndpoint : Endpoint<
             return result.Error.Code switch
             {
                 GeneralErrorCodes.EntityNotFound
-                  => TypedResults.NotFound(),
+                 => TypedResultsExtended.ProblemResponse(
+                     result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code),
 
-                GeneralErrorCodes.NoChangesInDatabase or
-                _ => TypedResults.UnprocessableEntity()
+                _ => TypedResultsExtended.ProblemResponse(
+                     result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code)
             };
         }
 

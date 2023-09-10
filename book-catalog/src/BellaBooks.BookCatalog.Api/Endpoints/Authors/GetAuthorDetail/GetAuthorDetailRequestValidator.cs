@@ -9,6 +9,6 @@ public class GetAuthorDetailRequestValidator : Validator<GetAuthorDetailDto.Requ
     public GetAuthorDetailRequestValidator()
     {
         RuleFor(x => x.AuthorId)
-           .NotEmpty();
+           .GreaterThan(0);
     }
 }

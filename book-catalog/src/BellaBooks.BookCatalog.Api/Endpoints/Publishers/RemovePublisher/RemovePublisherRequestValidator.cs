@@ -9,6 +9,6 @@ public class RemovePublisherRequestValidator : Validator<RemovePublisherDto.Requ
     public RemovePublisherRequestValidator()
     {
         RuleFor(x => x.PublisherId)
-          .NotEmpty();
+          .GreaterThan(0);
     }
 }

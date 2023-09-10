@@ -1,42 +1,41 @@
-﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
+﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Bussiness.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.EditGenreInfo;
+namespace BellaBooks.BookCatalog.Api.Endpoints.Books.RemoveBook;
 
-public class EditAuthorInfoEndpoint : Endpoint<
-    EditAuthorInfoDto.Request,
+public class RemoveBookEndpoint : Endpoint<
+    RemoveBookDto.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
     {
-        Post("EditAuthorInfo");
-        Group<AuthorsEndpointGroup>();
+        Delete("RemoveBook");
+        Group<BooksEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Edits an author info";
-            s.Description = "The endpoint will edit an author info";
+            s.Summary = "Removes a book from the catalog";
+            s.Description = "The endpoint will remove a book from the catalog";
         });
 
         Description(d => d
-          .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound)
-          .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
+            .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound)
+            .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(EditAuthorInfoDto.Request req, CancellationToken ct)
+        ExecuteAsync(RemoveBookDto.Request req, CancellationToken ct)
     {
-        var result = await new EditAuthorInfoCommand
+        var result = await new RemoveBookCommand()
         {
-            AuthorId = req.AuthorId,
-            Name = req.Name
+            BookId = req.BookId,
         }.ExecuteAsync(ct);
 
         if (result.IsFailure)

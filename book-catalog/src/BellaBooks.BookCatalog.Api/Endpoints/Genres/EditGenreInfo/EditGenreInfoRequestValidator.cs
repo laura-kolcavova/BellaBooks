@@ -10,7 +10,7 @@ public class EditGenreInfoRequestValidator : Validator<
     public EditGenreInfoRequestValidator()
     {
         RuleFor(x => x.GenreId)
-           .NotEmpty();
+           .GreaterThan(0);
 
         RuleFor(x => x.Name)
             .NotEmpty();

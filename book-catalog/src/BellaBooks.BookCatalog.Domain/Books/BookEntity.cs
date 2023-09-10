@@ -88,7 +88,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         return this;
     }
 
-    public BookEntity SetSummary(string summary)
+    public BookEntity SetSummary(string? summary)
     {
         Summary = summary;
         return this;

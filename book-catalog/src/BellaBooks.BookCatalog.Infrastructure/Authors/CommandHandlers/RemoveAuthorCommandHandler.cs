@@ -51,7 +51,7 @@ internal class RemoveAuthorCommandHandler : ICommandHandler<
                 _logger.LogError("An author was not removed from the catalog");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.NoChangesInDatabase);
+                    (GeneralErrorResults.EntityNotDeleted);
             }
 
             return UnitResult.Success<ErrorResult>();

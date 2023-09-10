@@ -9,6 +9,6 @@ public class GetPublisherDetailRequestValidator : Validator<GetPublisherDetailDt
     public GetPublisherDetailRequestValidator()
     {
         RuleFor(x => x.PublisherId)
-           .NotEmpty();
+           .GreaterThan(0);
     }
 }

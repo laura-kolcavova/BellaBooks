@@ -57,7 +57,7 @@ internal class AddGenreCommandHandler : ICommandHandler<
                 _logger.LogError("A book was not added to the catalog");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.NoChangesInDatabase);
+                    (GeneralErrorResults.EntityNotAdded);
             }
 
             return newGenre.Id;

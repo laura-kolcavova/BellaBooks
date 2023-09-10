@@ -9,7 +9,7 @@ public class EditPublisherInfoRequestValidator : Validator<EditPublisherInfoDto.
     public EditPublisherInfoRequestValidator()
     {
         RuleFor(x => x.PublisherId)
-           .NotEmpty();
+           .GreaterThan(0);
 
         RuleFor(x => x.Name)
             .NotEmpty();

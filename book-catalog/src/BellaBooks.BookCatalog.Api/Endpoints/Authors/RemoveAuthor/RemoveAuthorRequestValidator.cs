@@ -9,6 +9,6 @@ public class RemoveAuthorRequestValidator : Validator<RemoveAuthorDto.Request>
     public RemoveAuthorRequestValidator()
     {
         RuleFor(x => x.AuthorId)
-          .NotEmpty();
+          .GreaterThan(0);
     }
 }

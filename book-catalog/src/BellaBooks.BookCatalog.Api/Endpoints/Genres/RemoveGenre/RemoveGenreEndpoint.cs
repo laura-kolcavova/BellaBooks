@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
+using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
@@ -9,7 +10,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
 public class RemoveGenreEndpoint : Endpoint<
     RemoveGenreDto.Request,
-    Results<Ok, NotFound, UnprocessableEntity>>
+    Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
     {
@@ -22,10 +23,14 @@ public class RemoveGenreEndpoint : Endpoint<
             s.Summary = "Remove a book genre from the catalog";
             s.Description = "The endpoint will remove genre from the catalog";
         });
+
+        Description(d => d
+         .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound)
+         .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<
-        Results<Ok, NotFound, UnprocessableEntity>>
+        Results<Ok, ProblemHttpResult>>
         ExecuteAsync(RemoveGenreDto.Request req, CancellationToken ct)
     {
         var result = await new RemoveGenreCommand()
@@ -38,10 +43,11 @@ public class RemoveGenreEndpoint : Endpoint<
             return result.Error.Code switch
             {
                 GeneralErrorCodes.EntityNotFound
-                    => TypedResults.NotFound(),
+                 => TypedResultsExtended.ProblemResponse(
+                     result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code),
 
-                GeneralErrorCodes.NoChangesInDatabase or
-                _ => TypedResults.UnprocessableEntity()
+                _ => TypedResultsExtended.ProblemResponse(
+                     result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code)
             };
         }
 

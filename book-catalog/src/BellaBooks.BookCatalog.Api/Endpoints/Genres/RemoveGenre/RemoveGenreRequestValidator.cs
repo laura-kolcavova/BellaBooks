@@ -10,6 +10,6 @@ public class RemoveGenreRequestValidator : Validator<
     public RemoveGenreRequestValidator()
     {
         RuleFor(x => x.GenreId)
-           .NotEmpty();
+           .GreaterThan(0);
     }
 }

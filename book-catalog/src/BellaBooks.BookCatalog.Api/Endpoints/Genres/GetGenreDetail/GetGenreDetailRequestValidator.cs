@@ -10,6 +10,6 @@ public class GetGenreDetailRequestValidator : Validator<
     public GetGenreDetailRequestValidator()
     {
         RuleFor(x => x.GenreId)
-            .NotEmpty();
+            .GreaterThan(0);
     }
 }
