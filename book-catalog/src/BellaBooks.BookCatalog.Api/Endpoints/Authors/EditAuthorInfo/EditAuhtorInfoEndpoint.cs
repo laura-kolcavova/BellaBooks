@@ -1,36 +1,37 @@
-﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
+﻿
+using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
-public class EditGenreInfoEndpoint : Endpoint<
-    EditGenreInfoDto.Request,
+public class EditAuthorInfoEndpoint : Endpoint<
+    EditAuthorInfoDto.Request,
     Results<Ok, NotFound, UnprocessableEntity>>
 {
     public override void Configure()
     {
-        Post("EditGennreInfo");
-        Group<GenresEndpointGroup>();
+        Post("EditAuthorInfo");
+        Group<AuthorsEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Edits a book gensre info";
-            s.Description = "The endpoint will edit a book genre info";
+            s.Summary = "Edits an author info";
+            s.Description = "The endpoint will edit an author info";
         });
     }
 
     public override async Task<
         Results<Ok, NotFound, UnprocessableEntity>>
-        ExecuteAsync(EditGenreInfoDto.Request req, CancellationToken ct)
+        ExecuteAsync(EditAuthorInfoDto.Request req, CancellationToken ct)
     {
-        var result = await new EditGenreInfoCommand
+        var result = await new EditAuthorInfoCommand
         {
-            GenreId = req.GenreId,
+            AuthorId = req.AuthorId,
             Name = req.Name
         }.ExecuteAsync(ct);
 

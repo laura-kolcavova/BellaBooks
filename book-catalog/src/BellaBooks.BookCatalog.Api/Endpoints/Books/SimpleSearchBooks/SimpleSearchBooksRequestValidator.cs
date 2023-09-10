@@ -4,10 +4,10 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
-public class SimpleSearchBooksValidator : Validator<
+public class SimpleSearchBooksRequestValidator : Validator<
     SimpleSearchBooksDto.Request>
 {
-    public SimpleSearchBooksValidator()
+    public SimpleSearchBooksRequestValidator()
     {
         RuleFor(x => x.SearchInput)
             .NotEmpty()

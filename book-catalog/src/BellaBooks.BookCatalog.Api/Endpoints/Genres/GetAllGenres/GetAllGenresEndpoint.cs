@@ -8,7 +8,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
 public class GetAllGenresEndpoint : EndpointWithoutRequest<
     Ok<GetAllGenresDto.Response>,
-    GetAllGenresMapper>
+    GetAllGenresResponseMapper>
 {
     public override void Configure()
     {

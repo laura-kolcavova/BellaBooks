@@ -10,7 +10,7 @@ public class GenreEntity : IEntity<int>, ITrackableEntity
 
     public DateTimeOffset? UpdatedAt { get; }
 
-    public ICollection<BookGenreEntity> BookGenres { get; }
+    public IReadOnlyCollection<BookGenreEntity> BookGenres { get; }
 
     protected GenreEntity()
     {

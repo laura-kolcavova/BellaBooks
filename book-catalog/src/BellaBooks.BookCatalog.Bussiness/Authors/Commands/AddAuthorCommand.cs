@@ -2,9 +2,9 @@
 using CSharpFunctionalExtensions;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+namespace BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 
-public record AddGenreCommand : ICommand<
+public record AddAuthorCommand : ICommand<
     Result<int, ErrorResult>>
 {
     public required string Name { get; init; }

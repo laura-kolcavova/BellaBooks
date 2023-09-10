@@ -3,8 +3,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;
 
-public class AddGenreMapper : Mapper<
-    AddGenreDto.Request,
+public class AddGenreResponseMapper : ResponseMapper<
     AddGenreDto.Response,
     int>
 {

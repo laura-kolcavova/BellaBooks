@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.Books.Commands;
 
-public class GetBookDetailCommand : ICommand<
+public record GetBookDetailCommand : ICommand<
     Result<BookEntity, ErrorResult>>
 {
     public required int BookId { get; init; }

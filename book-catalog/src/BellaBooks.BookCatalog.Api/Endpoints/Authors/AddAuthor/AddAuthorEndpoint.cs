@@ -1,35 +1,35 @@
-﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
+﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;
+namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.AddAuthor;
 
-public class AddGenreEndpoint : Endpoint<
-    AddGenreDto.Request,
-    Results<Ok<AddGenreDto.Response>, UnprocessableEntity>,
-    AddGenreResponseMapper>
+public class AddAuthorEndpoint : Endpoint<
+    AddAuthorDto.Request,
+    Results<Ok<AddAuthorDto.Response>, UnprocessableEntity>,
+    AddAuthorResponseMapper>
 {
     public override void Configure()
     {
-        Post("AddGenre");
-        Group<GenresEndpointGroup>();
+        Post("AddAuthor");
+        Group<AuthorsEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Add a book genre to the catalog";
-            s.Description = "The endpoint will add a new genre to the catalog and return its locator";
+            s.Summary = "Add a new author to the catalog";
+            s.Description = "The endpoint will add a new author to the catalog and return its Id";
         });
     }
 
     public override async Task<
-        Results<Ok<AddGenreDto.Response>, UnprocessableEntity>>
-        ExecuteAsync(AddGenreDto.Request req, CancellationToken ct)
+        Results<Ok<AddAuthorDto.Response>, UnprocessableEntity>>
+        ExecuteAsync(AddAuthorDto.Request req, CancellationToken ct)
     {
-        var result = await new AddGenreCommand
+        var result = await new AddAuthorCommand
         {
             Name = req.Name
         }.ExecuteAsync(ct);

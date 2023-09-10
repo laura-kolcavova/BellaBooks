@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+﻿using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
@@ -6,17 +6,17 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Genres.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.Authors.CommandHandlers;
 
-internal class EditGenreInfoCommandHandler : ICommandHandler<
-    EditGenreInfoCommand, UnitResult<ErrorResult>>
+internal class EditAuthorInfoCommandHandler : ICommandHandler<
+    EditAuthorInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<EditGenreInfoCommandHandler> _logger;
+    private ILogger<EditAuthorInfoCommandHandler> _logger;
 
-    public EditGenreInfoCommandHandler(
+    public EditAuthorInfoCommandHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<EditGenreInfoCommandHandler> logger)
+        ILogger<EditAuthorInfoCommandHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -24,34 +24,34 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
 
     public async Task<
         UnitResult<ErrorResult>>
-        ExecuteAsync(EditGenreInfoCommand command, CancellationToken ct)
+        ExecuteAsync(EditAuthorInfoCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["GenreId"] = command.GenreId,
+            ["AuthorId"] = command.AuthorId,
             ["Name"] = command.Name,
         });
 
         try
         {
-            var genreExists = await _bookCatalogContext.Genres
-                .AnyAsync(genre => genre.Id == command.GenreId, ct);
+            var authorExists = await _bookCatalogContext.Authors
+                .AnyAsync(author => author.Id == command.AuthorId, ct);
 
-            if (!genreExists)
+            if (!authorExists)
             {
                 return UnitResult.Failure
                     (GeneralErrorResults.EntityNotFound);
             }
 
-            await _bookCatalogContext.Genres
+            await _bookCatalogContext.Authors
                .ExecuteUpdateAsync(setters => setters.SetProperty(
-                   genre => genre.Name, command.Name), ct);
+                   author => author.Name, command.Name), ct);
 
             return UnitResult.Success<ErrorResult>();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while editing a book genre info");
+            _logger.LogError(ex, "An unexpected error occurred while editing an author info");
             throw;
         }
     }

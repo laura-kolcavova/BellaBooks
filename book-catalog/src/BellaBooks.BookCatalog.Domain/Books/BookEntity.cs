@@ -33,14 +33,14 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     public PublisherEntity? Publisher { get; private set; }
 
-    public ICollection<LibraryPrintEntity> LibraryPrints { get; }
+    public IReadOnlyCollection<LibraryPrintEntity> LibraryPrints { get; }
 
 
-    public ICollection<BookGenreEntity> BookGenres =>
+    public IReadOnlyCollection<BookGenreEntity> BookGenres =>
         _bookGenres
             .ToList();
 
-    public ICollection<AuthorBookEntity> AuthorBooks =>
+    public IReadOnlyCollection<AuthorBookEntity> AuthorBooks =>
         _authorBooks
             .ToList();
 

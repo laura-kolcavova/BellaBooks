@@ -9,7 +9,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 public class SimpleSearchBooksEndpoint : Endpoint<
     SimpleSearchBooksDto.Request,
     Ok<SimpleSearchBooksDto.Response>,
-    SimpleSearchBooksMapper>
+    SimpleSearchBooksResponseMapper>
 {
     public override void Configure()
     {

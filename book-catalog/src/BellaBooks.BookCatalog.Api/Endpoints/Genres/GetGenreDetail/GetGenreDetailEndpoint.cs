@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
 public class GetGenreByIdEndpoint : Endpoint<
-    GetGenreByIdDto.Request,
-    Results<Ok<GetGenreByIdDto.Respone>, NotFound>,
-    GetGenreDetailMapper>
+    GetGenreDetailDto.Request,
+    Results<Ok<GetGenreDetailDto.Response>, NotFound>,
+    GetGenreDetailResponseMapper>
 {
     public override void Configure()
     {
@@ -20,14 +20,14 @@ public class GetGenreByIdEndpoint : Endpoint<
 
         Summary(s =>
         {
-            s.Summary = "Searches for a specific book genre by its Id";
+            s.Summary = "Gets a book genre detail by its Id";
             s.Description = "The endpoint will return a book genre detail";
         });
     }
 
     public override async Task<Results<
-        Ok<GetGenreByIdDto.Respone>, NotFound>>
-        ExecuteAsync(GetGenreByIdDto.Request req, CancellationToken ct)
+        Ok<GetGenreDetailDto.Response>, NotFound>>
+        ExecuteAsync(GetGenreDetailDto.Request req, CancellationToken ct)
     {
         var result = await new GetGenreDetailCommand()
         {

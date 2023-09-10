@@ -2,12 +2,12 @@
 using CSharpFunctionalExtensions;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+namespace BellaBooks.BookCatalog.Bussiness.Authors.Commands;
 
-public record EditGenreInfoCommand : ICommand<
+public record EditAuthorInfoCommand : ICommand<
     UnitResult<ErrorResult>>
 {
-    public required int GenreId { get; init; }
+    public required int AuthorId { get; init; }
 
     public required string Name { get; init; }
 }

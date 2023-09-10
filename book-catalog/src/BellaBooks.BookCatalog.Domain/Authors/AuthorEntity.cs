@@ -12,7 +12,7 @@ public class AuthorEntity : IEntity<int>, ITrackableEntity
 
     #region NavigationProperties
 
-    public ICollection<AuthorBookEntity> AuthorBooks { get; }
+    public IReadOnlyCollection<AuthorBookEntity> AuthorBooks { get; }
 
     #endregion NavigationProperties
 

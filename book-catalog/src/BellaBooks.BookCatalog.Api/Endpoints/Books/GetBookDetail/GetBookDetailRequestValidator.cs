@@ -4,10 +4,10 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 
-public class GetBookDetailValidator : Validator<
+public class GetBookDetailRequestValidator : Validator<
     GetBookDetailDto.Request>
 {
-    public GetBookDetailValidator()
+    public GetBookDetailRequestValidator()
     {
         RuleFor(x => x.BookId)
             .NotEmpty();

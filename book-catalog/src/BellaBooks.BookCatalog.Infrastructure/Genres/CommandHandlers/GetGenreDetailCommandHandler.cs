@@ -47,7 +47,7 @@ internal class GetGenreDetailCommandHandler : ICommandHandler<
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected occurred while getting a book genre by Id");
+            _logger.LogError(ex, "An unexpected occurred while getting a book detail");
             throw;
         }
     }

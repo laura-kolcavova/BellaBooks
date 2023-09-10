@@ -4,8 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
-public class SimpleSearchBooksMapper : Mapper<
-    SimpleSearchBooksDto.Request,
+public class SimpleSearchBooksResponseMapper : ResponseMapper<
     SimpleSearchBooksDto.Response,
     ICollection<BookListingItemReadModel>>
 {

@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 
-public class GetAllGenresCommand : ICommand<
+public record GetAllGenresCommand : ICommand<
     ICollection<GenreEntity>>
 {
 }

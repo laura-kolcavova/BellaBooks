@@ -14,7 +14,7 @@ public class PublisherEntity : IEntity<int>, ITrackableEntity
 
     #region NavigationProperties
 
-    public ICollection<BookEntity> Books { get; }
+    public IReadOnlyCollection<BookEntity> Books { get; }
 
     #endregion NavigationProperties
 

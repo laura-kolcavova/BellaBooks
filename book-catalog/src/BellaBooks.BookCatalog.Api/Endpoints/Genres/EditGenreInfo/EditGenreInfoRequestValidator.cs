@@ -4,10 +4,10 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
-public class EditGenreInfoValidator : Validator<
+public class EditGenreInfoRequestValidator : Validator<
     EditGenreInfoDto.Request>
 {
-    public EditGenreInfoValidator()
+    public EditGenreInfoRequestValidator()
     {
         RuleFor(x => x.GenreId)
            .NotEmpty();

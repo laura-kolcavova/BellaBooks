@@ -4,8 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 
-public class GetBookDetailMapper : Mapper<
-    GetBookDetailDto.Request,
+public class GetBookDetailResponseMapper : ResponseMapper<
     GetBookDetailDto.Response,
     BookEntity>
 {

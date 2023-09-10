@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
-public class GetAllGenresMapper : ResponseMapper<
+public class GetAllGenresResponseMapper : ResponseMapper<
     GetAllGenresDto.Response,
     ICollection<GenreEntity>>
 {

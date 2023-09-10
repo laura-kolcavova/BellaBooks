@@ -5,7 +5,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 
-public class GetGenreDetailCommand : ICommand<
+public record GetGenreDetailCommand : ICommand<
     Result<GenreEntity, ErrorResult>>
 {
     public required int GenreId { get; init; }

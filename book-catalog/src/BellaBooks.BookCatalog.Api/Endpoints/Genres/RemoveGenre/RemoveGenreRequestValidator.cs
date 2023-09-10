@@ -4,10 +4,10 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
-public class RemoveGenreValidator : Validator<
+public class RemoveGenreRequestValidator : Validator<
     RemoveGenreDto.Request>
 {
-    public RemoveGenreValidator()
+    public RemoveGenreRequestValidator()
     {
         RuleFor(x => x.GenreId)
            .NotEmpty();

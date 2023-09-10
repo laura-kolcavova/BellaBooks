@@ -10,7 +10,7 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 public class GetBookDetailEndpoint : Endpoint
     <GetBookDetailDto.Request,
     Results<Ok<GetBookDetailDto.Response>, NotFound>,
-    GetBookDetailMapper>
+    GetBookDetailResponseMapper>
 {
     public override void Configure()
     {
