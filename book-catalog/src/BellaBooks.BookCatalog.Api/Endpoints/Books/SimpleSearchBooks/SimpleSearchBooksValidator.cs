@@ -2,7 +2,7 @@
 using FastEndpoints;
 using FluentValidation;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Books.SimpleSearchBooks;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 public class SimpleSearchBooksValidator : Validator<
     SimpleSearchBooksDto.Request>

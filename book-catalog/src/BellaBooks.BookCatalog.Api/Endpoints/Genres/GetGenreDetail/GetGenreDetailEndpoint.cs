@@ -1,21 +1,20 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Api.Mappers.Genres;
 using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Genres.GetGenreById;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
 public class GetGenreByIdEndpoint : Endpoint<
     GetGenreByIdDto.Request,
     Results<Ok<GetGenreByIdDto.Respone>, NotFound>,
-    GetGenreByIdMapper>
+    GetGenreDetailMapper>
 {
     public override void Configure()
     {
-        Get("Genre/{genreId}");
+        Get("GetGenreDetail/{genreId}");
         Group<GenresEndpointGroup>();
         AllowAnonymous();
 

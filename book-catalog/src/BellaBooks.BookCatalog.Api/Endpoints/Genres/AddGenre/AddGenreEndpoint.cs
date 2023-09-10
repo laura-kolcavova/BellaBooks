@@ -5,11 +5,12 @@ using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Genres;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;
 
 public class AddGenreEndpoint : Endpoint<
     AddGenreDto.Request,
-    Results<Ok, UnprocessableEntity>>
+    Results<Ok<AddGenreDto.Response>, UnprocessableEntity>,
+    AddGenreMapper>
 {
     public override void Configure()
     {
@@ -19,13 +20,13 @@ public class AddGenreEndpoint : Endpoint<
 
         Summary(s =>
         {
-            s.Summary = "Adda a book genre to the catalog";
+            s.Summary = "Add a book genre to the catalog";
             s.Description = "The endpoint will add a new genre to the catalog and return its locator";
         });
     }
 
     public override async Task<
-        Results<Ok, UnprocessableEntity>>
+        Results<Ok<AddGenreDto.Response>, UnprocessableEntity>>
         ExecuteAsync(AddGenreDto.Request req, CancellationToken ct)
     {
         var result = await new AddGenreCommand
@@ -43,6 +44,6 @@ public class AddGenreEndpoint : Endpoint<
             };
         }
 
-        return TypedResults.Ok();
+        return TypedResults.Ok(Map.FromEntity(result.Value));
     }
 }

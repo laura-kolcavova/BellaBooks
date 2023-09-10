@@ -2,12 +2,12 @@
 using FastEndpoints;
 using FluentValidation;
 
-namespace BellaBooks.BookCatalog.Api.Validators.Genres;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
-public class GetGenreByIdValidator : Validator<
+public class GetGenreDetailValidator : Validator<
     GetGenreByIdDto.Request>
 {
-    public GetGenreByIdValidator()
+    public GetGenreDetailValidator()
     {
         RuleFor(x => x.GenreId)
             .NotEmpty();

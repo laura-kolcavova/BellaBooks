@@ -1,4 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Books;
+using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.Books.Commands;

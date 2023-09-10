@@ -1,4 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Domain.Authors;
+using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Genres;
 using BellaBooks.BookCatalog.Domain.LibraryPrints;

@@ -7,24 +7,24 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Books;
 
-internal class GetBookByIdCommandHandler : ICommandHandler<
-    GetBookByIdCommand,
+internal class GetBookDetailCommandHandler : ICommandHandler<
+    GetBookDetailCommand,
     Result<BookEntity, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<GetBookByIdCommandHandler> _logger;
+    private readonly ILogger<GetBookDetailCommandHandler> _logger;
 
-    public GetBookByIdCommandHandler(
+    public GetBookDetailCommandHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<GetBookByIdCommandHandler> logger)
+        ILogger<GetBookDetailCommandHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
     }
 
-    public async Task<Result<BookEntity, ErrorResult>> ExecuteAsync(GetBookByIdCommand command, CancellationToken ct)
+    public async Task<Result<BookEntity, ErrorResult>> ExecuteAsync(GetBookDetailCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {

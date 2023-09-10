@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Domain.Authors;
 using BellaBooks.BookCatalog.Domain.Publishers;
 
-namespace BellaBooks.BookCatalog.Domain.Books;
+namespace BellaBooks.BookCatalog.Domain.Books.ReadModels;
 
 public class BookListingItemReadModel
 {

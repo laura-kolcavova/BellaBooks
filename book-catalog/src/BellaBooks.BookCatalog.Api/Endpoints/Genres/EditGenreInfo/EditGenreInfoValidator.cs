@@ -2,7 +2,7 @@
 using FastEndpoints;
 using FluentValidation;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Genres.UpdateGenre;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
 public class EditGenreInfoValidator : Validator<
     EditGenreInfoDto.Request>

@@ -1,6 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Books;
 using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Books;
 
 internal class SimpleSearchBooksCommandHandler : ICommandHandler<
     SimpleSearchBooksCommand,

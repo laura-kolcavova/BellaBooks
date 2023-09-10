@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 
-public class DeleteGenreCommand : ICommand<
+public class RemoveGenreCommand : ICommand<
     UnitResult<ErrorResult>>
 {
     public required int GenreId { get; init; }

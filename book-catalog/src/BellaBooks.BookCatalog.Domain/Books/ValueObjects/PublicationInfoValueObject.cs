@@ -1,4 +1,4 @@
-﻿namespace BellaBooks.BookCatalog.Domain.Books;
+﻿namespace BellaBooks.BookCatalog.Domain.Books.ValueObjects;
 
 public record PublicationInfoValueObject
 {

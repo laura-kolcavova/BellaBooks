@@ -5,31 +5,31 @@ using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Books.GetBookById;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 
-public class GetBookByIdEndpoint : Endpoint
-    <GetBookByIdDto.Request,
-    Results<Ok<GetBookByIdDto.Response>, NotFound>,
-    GetBookByIdMapper>
+public class GetBookDetailEndpoint : Endpoint
+    <GetBookDetailDto.Request,
+    Results<Ok<GetBookDetailDto.Response>, NotFound>,
+    GetBookDetailMapper>
 {
     public override void Configure()
     {
-        Get("Book/{bookId}");
+        Get("GetBookDetail/{bookId}");
         Group<BooksEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Searches for a specific book by its Id";
+            s.Summary = "Gets a book detail by its Id";
             s.Description = "The endpoint will return a book detail";
         });
     }
 
     public override async Task<Results<
-        Ok<GetBookByIdDto.Response>, NotFound>>
-        ExecuteAsync(GetBookByIdDto.Request req, CancellationToken ct)
+        Ok<GetBookDetailDto.Response>, NotFound>>
+        ExecuteAsync(GetBookDetailDto.Request req, CancellationToken ct)
     {
-        var result = await new GetBookByIdCommand
+        var result = await new GetBookDetailCommand
         {
             BookId = req.BookId,
         }.ExecuteAsync(ct);

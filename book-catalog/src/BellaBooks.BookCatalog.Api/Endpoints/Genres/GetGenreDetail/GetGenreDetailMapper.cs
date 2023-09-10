@@ -2,9 +2,9 @@
 using BellaBooks.BookCatalog.Domain.Genres;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Api.Mappers.Genres;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
-public class GetGenreByIdMapper : Mapper
+public class GetGenreDetailMapper : Mapper
     <GetGenreByIdDto.Request,
     GetGenreByIdDto.Respone,
     GenreEntity>

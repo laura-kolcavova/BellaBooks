@@ -6,17 +6,17 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Genres.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Genres;
 
-internal class EditGenreInfoCommandHandler : ICommandHandler<
-    EditGenreInfoCommand, UnitResult<ErrorResult>>
+internal class RemoveGenreCommandHandler : ICommandHandler<
+    RemoveGenreCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<EditGenreInfoCommandHandler> _logger;
+    private readonly ILogger<RemoveGenreCommandHandler> _logger;
 
-    public EditGenreInfoCommandHandler(
+    public RemoveGenreCommandHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<EditGenreInfoCommandHandler> logger)
+        ILogger<RemoveGenreCommandHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -24,18 +24,17 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
 
     public async Task<
         UnitResult<ErrorResult>>
-        ExecuteAsync(EditGenreInfoCommand command, CancellationToken ct)
+        ExecuteAsync(RemoveGenreCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
             ["GenreId"] = command.GenreId,
-            ["Name"] = command.Name,
         });
 
         try
         {
             var genreExists = await _bookCatalogContext.Genres.AnyAsync(genre
-              => genre.Id == command.GenreId, ct);
+               => genre.Id == command.GenreId, ct);
 
             if (!genreExists)
             {
@@ -43,15 +42,23 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
                     (GeneralErrorResults.EntityNotFound);
             }
 
-            await _bookCatalogContext.Genres
-               .ExecuteUpdateAsync(setters => setters.SetProperty(
-                   genre => genre.Name, command.Name), ct);
+            var changes = await _bookCatalogContext.Genres
+                .Where(genre => genre.Id == command.GenreId)
+                .ExecuteDeleteAsync(ct);
+
+            if (changes == 0)
+            {
+                _logger.LogError("A book was not removed from the catalog");
+
+                return UnitResult.Failure
+                    (GeneralErrorResults.NoChangesInDatabase);
+            }
 
             return UnitResult.Success<ErrorResult>();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while updating a book genre");
+            _logger.LogError(ex, "An unexpected error occurred while removing a book genre");
             throw;
         }
     }

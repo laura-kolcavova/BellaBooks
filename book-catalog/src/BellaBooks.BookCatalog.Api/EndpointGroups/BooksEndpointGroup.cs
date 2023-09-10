@@ -1,5 +1,4 @@
-﻿
-using FastEndpoints;
+﻿using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.EndpointGroups;
 

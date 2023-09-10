@@ -2,14 +2,14 @@
 using BellaBooks.BookCatalog.Domain.Books;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Books.GetBookById;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 
-public class GetBookByIdMapper : Mapper<
-    GetBookByIdDto.Request,
-    GetBookByIdDto.Response,
+public class GetBookDetailMapper : Mapper<
+    GetBookDetailDto.Request,
+    GetBookDetailDto.Response,
     BookEntity>
 {
-    public override GetBookByIdDto.Response FromEntity(BookEntity e)
+    public override GetBookDetailDto.Response FromEntity(BookEntity e)
     {
         return new()
         {

@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.Contracts.Publishers;
-using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.Books;
 

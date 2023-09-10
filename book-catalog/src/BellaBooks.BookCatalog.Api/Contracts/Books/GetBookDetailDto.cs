@@ -1,6 +1,6 @@
 ﻿namespace BellaBooks.BookCatalog.Api.Contracts.Books;
 
-public static class GetBookByIdDto
+public static class GetBookDetailDto
 {
     public class Request
     {

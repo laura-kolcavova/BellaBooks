@@ -4,7 +4,7 @@ using BellaBooks.BookCatalog.Domain.Books.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Books.SimpleSearchBooks;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 public class SimpleSearchBooksEndpoint : Endpoint<
     SimpleSearchBooksDto.Request,

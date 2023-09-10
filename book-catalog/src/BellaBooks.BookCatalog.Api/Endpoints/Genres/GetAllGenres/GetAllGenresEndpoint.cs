@@ -4,7 +4,7 @@ using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Genres.GetAllGenres;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
 public class GetAllGenresEndpoint : EndpointWithoutRequest<
     Ok<GetAllGenresDto.Response>,
@@ -12,7 +12,7 @@ public class GetAllGenresEndpoint : EndpointWithoutRequest<
 {
     public override void Configure()
     {
-        Get("All");
+        Get("GetAllGenres");
         Group<GenresEndpointGroup>();
         AllowAnonymous();
 

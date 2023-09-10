@@ -7,7 +7,7 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Genres.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.CommandHandlers.Genres;
 
 internal class GetGenreByIdCommandHandler : ICommandHandler<
     GetGenreByIdCommand,

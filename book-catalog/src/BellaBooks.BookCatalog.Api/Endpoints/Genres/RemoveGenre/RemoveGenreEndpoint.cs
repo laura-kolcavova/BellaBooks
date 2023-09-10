@@ -5,40 +5,42 @@ using BellaBooks.BookCatalog.Domain.Constants;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
+namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
-public class EditGenreInfoEndpoint : Endpoint<
-    EditGenreInfoDto.Request,
-    Results<Ok, UnprocessableEntity>>
+public class RemoveGenreEndpoint : Endpoint<
+    RemoveGenreDto.Request,
+    Results<Ok, NotFound, UnprocessableEntity>>
 {
     public override void Configure()
     {
-        Post("EditGennreInfo");
+        Delete("RemoveGenre");
         Group<GenresEndpointGroup>();
         AllowAnonymous();
 
         Summary(s =>
         {
-            s.Summary = "Updates a book genre";
-            s.Description = "The endpoint will update a book genre";
+            s.Summary = "Remove a book genre from the catalog";
+            s.Description = "The endpoint will remove genre from the catalog";
         });
     }
 
     public override async Task<
-        Results<Ok, UnprocessableEntity>>
-        ExecuteAsync(EditGenreInfoDto.Request req, CancellationToken ct)
+        Results<Ok, NotFound, UnprocessableEntity>>
+        ExecuteAsync(RemoveGenreDto.Request req, CancellationToken ct)
     {
-        var result = await new EditGenreInfoCommand
+        var result = await new RemoveGenreCommand()
         {
             GenreId = req.GenreId,
-            Name = req.Name
         }.ExecuteAsync(ct);
 
         if (result.IsFailure)
         {
             return result.Error.Code switch
             {
-                GeneralErrorCodes.EntityNotFound or
+                GeneralErrorCodes.EntityNotFound
+                    => TypedResults.NotFound(),
+
+                GeneralErrorCodes.NoChangesInDatabase or
                 _ => TypedResults.UnprocessableEntity()
             };
         }
