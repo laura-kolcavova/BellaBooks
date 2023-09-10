@@ -44,8 +44,9 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
             }
 
             await _bookCatalogContext.Genres
-               .ExecuteUpdateAsync(setters => setters.SetProperty(
-                   genre => genre.Name, command.Name), ct);
+                .Where(genre => genre.Id == command.GenreId)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(
+                    genre => genre.Name, command.Name), ct);
 
             return UnitResult.Success<ErrorResult>();
         }

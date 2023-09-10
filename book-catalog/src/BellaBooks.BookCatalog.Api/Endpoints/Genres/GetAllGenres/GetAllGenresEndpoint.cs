@@ -19,7 +19,7 @@ public class GetAllGenresEndpoint : EndpointWithoutRequest<
         Summary(s =>
         {
 
-            s.Summary = "Gets all book genres";
+            s.Summary = "Gets collection of all book genres";
             s.Description = "The endpoint will return collection of book genres";
         });
     }

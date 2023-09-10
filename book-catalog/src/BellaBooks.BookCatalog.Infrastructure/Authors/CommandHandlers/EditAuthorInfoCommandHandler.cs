@@ -44,8 +44,9 @@ internal class EditAuthorInfoCommandHandler : ICommandHandler<
             }
 
             await _bookCatalogContext.Authors
-               .ExecuteUpdateAsync(setters => setters.SetProperty(
-                   author => author.Name, command.Name), ct);
+                .Where(author => author.Id == command.AuthorId)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(
+                    author => author.Name, command.Name), ct);
 
             return UnitResult.Success<ErrorResult>();
         }
