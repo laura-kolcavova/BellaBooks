@@ -8,5 +8,6 @@
 	[DateCreatedAt] DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
 	[DateUpdatedAt] DATETIMEOFFSET,
 	CONSTRAINT [PK_LibraryPrints] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [FK_LibraryPrints_Books] FOREIGN KEY ([BookId]) REFERENCES [dbo].[Books] ([Id])
+	CONSTRAINT [FK_LibraryPrints_Books] FOREIGN KEY ([BookId])
+		REFERENCES [dbo].[Books] ([Id]) ON DELETE CASCADE
 )

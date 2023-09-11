@@ -8,12 +8,13 @@
 	[PublicationCity] NVARCHAR(255) NOT NULL,
 	[PublicationLanguage] NVARCHAR(255) NOT NULL,
 	[PageCount] SMALLINT,
-	[Summary] NTEXT,
+	[Summary] NVARCHAR(500),
 	[DateCreatedAt] DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
 	[DateUpdatedAt] DATETIMEOFFSET,
 	CONSTRAINT [PK_Books] PRIMARY KEY CLUSTERED ([Id] ASC),
 	CONSTRAINT [AK_Books_Isbn] UNIQUE ([Isbn]),
-	CONSTRAINT [FK_Books_Publishers] FOREIGN KEY ([PublisherId]) REFERENCES [dbo].[Publishers] ([Id])
+	CONSTRAINT [FK_Books_Publishers] FOREIGN KEY ([PublisherId])
+		REFERENCES [dbo].[Publishers] ([Id]) ON DELETE CASCADE
 )
 
 GO

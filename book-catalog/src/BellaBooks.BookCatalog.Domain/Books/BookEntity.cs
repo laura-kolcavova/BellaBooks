@@ -13,7 +13,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     public int PublisherId { get; }
 
-    public string Title { get; }
+    public string Title { get; private set; }
 
     public string? Summary { get; private set; }
 
@@ -69,12 +69,18 @@ public class BookEntity : IEntity<int>, ITrackableEntity
     public BookEntity(string title)
         : this()
     {
-        Title = title;
+        SetTitle(title);
     }
 
     public bool IsAvailable =>
          LibraryPrints.Any(libraryPrint =>
             libraryPrint.StateCode == LibraryPrintStateCode.AV);
+
+    public BookEntity SetTitle(string title)
+    {
+        Title = title;
+        return this;
+    }
 
     public BookEntity SetPublicationInfo(PublicationInfoValueObject publicationInfo)
     {
@@ -102,6 +108,11 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     public BookEntity SetAuthors(IEnumerable<AuthorEntity> authors)
     {
+        if (!authors.Any())
+        {
+            throw new ArgumentException("Collection of authors must not be empty", nameof(authors));
+        }
+
         var authorBooks = authors
             .Select(author => new AuthorBookEntity(author, this))
             .ToList();

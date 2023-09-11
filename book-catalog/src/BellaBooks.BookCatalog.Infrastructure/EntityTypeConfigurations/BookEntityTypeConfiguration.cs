@@ -30,7 +30,8 @@ public class BookEntityTypeConfiguration :
             .IsRequired();
 
         builder
-            .Property(e => e.Summary);
+            .Property(e => e.Summary)
+            .HasMaxLength(500);
 
         builder.OwnsOne(e => e.PublicationInfo, navigationBuilder =>
         {

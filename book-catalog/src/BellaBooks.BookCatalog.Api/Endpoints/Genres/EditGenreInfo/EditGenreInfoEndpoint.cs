@@ -44,11 +44,11 @@ public class EditGenreInfoEndpoint : Endpoint<
             return result.Error.Code switch
             {
                 GeneralErrorCodes.EntityNotFound
-                 => TypedResultsExtended.ProblemResponse(
-                     result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code),
+                    => TypedResultsExtended.ProblemResponse(
+                        result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code),
 
                 _ => TypedResultsExtended.ProblemResponse(
-                     result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code)
+                    result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code)
             };
         }
 

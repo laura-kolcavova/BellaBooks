@@ -2,14 +2,17 @@
 using FastEndpoints;
 using FluentValidation;
 
-namespace BellaBooks.BookCatalog.Api.Endpoints.Books.AddBook;
+namespace BellaBooks.BookCatalog.Api.Endpoints.Books.EditBookInfo;
 
-public class AddBookRequestValidator : Validator<AddBookDto.Request>
+public class EditBookInfoRequestValidator : Validator<EditBookInfoDto.Request>
 {
-    public AddBookRequestValidator()
+    public EditBookInfoRequestValidator()
     {
+        RuleFor(x => x.BookId)
+            .GreaterThan(0);
+
         RuleFor(x => x.Title)
-            .NotEmpty();
+           .NotEmpty();
 
         RuleFor(request => request.AuthorIds)
             .NotEmpty()
