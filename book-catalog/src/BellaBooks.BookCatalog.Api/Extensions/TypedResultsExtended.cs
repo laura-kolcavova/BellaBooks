@@ -4,8 +4,8 @@ namespace BellaBooks.BookCatalog.Api.Extensions;
 
 public static class TypedResultsExtended
 {
-    public static ProblemHttpResult ProblemResponse(string detail, int statusCode, string errorCode)
+    public static ProblemHttpResult ErrorProblem(string detail, int statusCode, string errorCode)
     {
-        return TypedResults.Problem(new ProblemDetailResponse(detail, statusCode, errorCode));
+        return TypedResults.Problem(new ErrorProblemDetails(detail, statusCode, errorCode));
     }
 }

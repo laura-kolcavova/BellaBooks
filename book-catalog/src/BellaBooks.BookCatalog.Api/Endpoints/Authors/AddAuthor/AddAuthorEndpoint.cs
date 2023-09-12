@@ -25,7 +25,7 @@ public class AddAuthorEndpoint : Endpoint<
         });
 
         Description(d => d
-           .Produces<ProblemDetailResponse>(StatusCodes.Status422UnprocessableEntity));
+           .Produces<ErrorProblemDetails>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<
@@ -39,7 +39,7 @@ public class AddAuthorEndpoint : Endpoint<
 
         if (result.IsFailure)
         {
-            return TypedResultsExtended.ProblemResponse(
+            return TypedResultsExtended.ErrorProblem(
                 result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code);
         }
 

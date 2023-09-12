@@ -26,7 +26,7 @@ public class GetAuthorDetailEndpoint : Endpoint<
         });
 
         Description(d => d
-          .Produces<ProblemDetailResponse>(StatusCodes.Status404NotFound));
+          .Produces<ErrorProblemDetails>(StatusCodes.Status422UnprocessableEntity));
     }
 
     public override async Task<Results<
@@ -40,8 +40,8 @@ public class GetAuthorDetailEndpoint : Endpoint<
 
         if (result.IsFailure)
         {
-            TypedResultsExtended.ProblemResponse(
-                result.Error.Message, StatusCodes.Status404NotFound, result.Error.Code);
+            TypedResultsExtended.ErrorProblem(
+                result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code);
         }
 
         return TypedResults.Ok(Map.FromEntity(result.Value));

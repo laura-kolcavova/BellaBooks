@@ -2,9 +2,9 @@
 
 namespace BellaBooks.BookCatalog.Api;
 
-public class ProblemDetailResponse : ProblemDetails
+public class ErrorProblemDetails : ProblemDetails
 {
-    public ProblemDetailResponse(string detail, int statusCode, string errorCode)
+    public ErrorProblemDetails(string detail, int statusCode, string errorCode)
     {
         Detail = detail;
         Status = statusCode;

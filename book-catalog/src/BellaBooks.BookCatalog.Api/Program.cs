@@ -7,6 +7,7 @@ using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using System.Text.Json.Serialization;
+using MicrosoftProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,7 +70,7 @@ services
 // Build application
 var app = builder.Build();
 
-app.UseDefaultExceptionHandler();
+app.UseProblemDetailsExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -77,7 +78,8 @@ app
     .UseFastEndpoints(options =>
     {
         options.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
-        options.Errors.UseProblemDetails();
+        options.Errors.ResponseBuilder = HttpValidationProblemDetailsExtensions.ResponseBuilder;
+        //options.Errors.UseProblemDetails();
         options.Endpoints.RoutePrefix = "api";
         options.Endpoints.ShortNames = true;
         options.Endpoints.Configurator = (ep) =>
@@ -89,8 +91,8 @@ app
 
             ep.Description(b =>
             {
-                b.ProducesProblemFE<ProblemDetails>(StatusCodes.Status400BadRequest);
-                b.ProducesProblemFE<ProblemDetails>(StatusCodes.Status500InternalServerError);
+                b.ProducesProblemFE<HttpValidationProblemDetails>(StatusCodes.Status400BadRequest);
+                b.ProducesProblemFE<MicrosoftProblemDetails>(StatusCodes.Status500InternalServerError);
             });
 
             ep.Summary(s =>
