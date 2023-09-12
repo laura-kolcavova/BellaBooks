@@ -16,15 +16,9 @@ public class AuthorEntity : IEntity<int>, ITrackableEntity
 
     #endregion NavigationProperties
 
-    protected AuthorEntity()
-    {
-        Name = string.Empty;
-        AuthorBooks = new List<AuthorBookEntity>();
-    }
-
     public AuthorEntity(string name)
-        : this()
     {
         Name = name;
+        AuthorBooks = new List<AuthorBookEntity>();
     }
 }

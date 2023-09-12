@@ -2,20 +2,9 @@
 
 public class ErrorResult
 {
-    public string Code { get; }
+    public required string Code { get; init; }
 
-    public string Message { get; }
+    public string Message { get; init; } = string.Empty;
 
-    public ErrorResultSeverity Severity { get; }
-
-    public ErrorResult(
-        string code,
-        string message = "",
-        ErrorResultSeverity severity = ErrorResultSeverity.Error
-    )
-    {
-        Code = code;
-        Message = message;
-        Severity = severity;
-    }
+    public ErrorResultSeverity Severity { get; init; } = ErrorResultSeverity.Error;
 }

@@ -12,7 +12,7 @@ public class LibraryPrintDto
 
     public required string Shelfmark { get; init; }
 
-    public required string LibraryBrancheCode { get; init; }
+    public required string LibraryBranchCode { get; init; }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public required LibraryPrintStateCode StateCode { get; init; }
@@ -24,7 +24,7 @@ public class LibraryPrintDto
             Id = entity.Id,
             BookId = entity.BookId,
             Shelfmark = entity.Shelfmark,
-            LibraryBrancheCode = entity.LibraryBrancheCode,
+            LibraryBranchCode = entity.LibraryBranchCode,
             StateCode = entity.StateCode,
         };
     }

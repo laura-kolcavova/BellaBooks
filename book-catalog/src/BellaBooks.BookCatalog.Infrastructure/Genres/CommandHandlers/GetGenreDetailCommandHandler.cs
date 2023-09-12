@@ -40,7 +40,7 @@ internal class GetGenreDetailCommandHandler : ICommandHandler<
             if (genre == null)
             {
                 return Result.Failure<GenreEntity, ErrorResult>
-                    (GeneralErrorResults.EntityNotFound);
+                    (GenreErrorResults.GenreNotFound);
             }
 
             return genre;

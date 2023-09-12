@@ -1,4 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
@@ -39,7 +40,7 @@ internal class RemoveBookCommandHandler : ICommandHandler<
             if (!bookExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (BookErrorResults.BookNotFound);
             }
 
             var changes = await _bookCatalogContext.Books
@@ -51,7 +52,7 @@ internal class RemoveBookCommandHandler : ICommandHandler<
                 _logger.LogError("A book was not removed from the catalog");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotDeleted);
+                    (BookErrorResults.BookNotRemoved);
             }
 
             return UnitResult.Success<ErrorResult>();

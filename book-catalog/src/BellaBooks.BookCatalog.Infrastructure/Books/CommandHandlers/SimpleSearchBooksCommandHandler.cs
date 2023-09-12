@@ -62,7 +62,6 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
         }
     }
 
-
     private static Expression<Func<BookEntity, bool>> GetFilterExpression(string searchInput, SimpleSearchFilter filter)
     {
         if (filter == SimpleSearchFilter.Title)

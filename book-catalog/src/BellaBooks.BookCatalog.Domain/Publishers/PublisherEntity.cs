@@ -18,15 +18,9 @@ public class PublisherEntity : IEntity<int>, ITrackableEntity
 
     #endregion NavigationProperties
 
-    protected PublisherEntity()
-    {
-        Name = string.Empty;
-        Books = new List<BookEntity>();
-    }
-
     public PublisherEntity(string name)
-        : this()
     {
         Name = name;
+        Books = new List<BookEntity>();
     }
 }

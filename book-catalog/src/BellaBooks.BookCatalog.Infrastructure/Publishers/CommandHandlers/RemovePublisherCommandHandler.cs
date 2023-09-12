@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -39,7 +40,7 @@ internal class RemovePublisherCommandHandler : ICommandHandler<
             if (!publisherExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (PublisherErrorResults.PublisherNotFound);
             }
 
             var changes = await _bookCatalogContext.Publishers
@@ -51,7 +52,7 @@ internal class RemovePublisherCommandHandler : ICommandHandler<
                 _logger.LogError("A publisher was not removed from the catalog");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotDeleted);
+                    (PublisherErrorResults.PublisherNotRemoved);
             }
 
             return UnitResult.Success<ErrorResult>();

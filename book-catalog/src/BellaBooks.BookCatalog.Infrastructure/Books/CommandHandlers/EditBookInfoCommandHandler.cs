@@ -1,7 +1,8 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
-using BellaBooks.BookCatalog.Domain.Constants.Books;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -43,7 +44,8 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
 
             if (book == null)
             {
-                return UnitResult.Failure(BookNotFound(command.BookId));
+                return UnitResult.Failure(
+                    BookErrorResults.BookNotFound);
             }
 
             if (book.PublicationInfo.Isbn != command.Isbn)
@@ -54,36 +56,38 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                 if (bookWithIsbnExists)
                 {
                     return Result.Failure<int, ErrorResult>(
-                        BookWithIsbnAlreadyExists(command.Isbn));
+                        BookErrorResults.BookWithSameIsbnAlreadyExists);
                 }
             }
 
             if (book.PublisherId != command.PublisherId)
             {
-                var publisher = await _bookCatalogContext.Publishers
-                    .SingleOrDefaultAsync(publisher => publisher.Id == command.PublisherId, ct);
+                var publisherExists = await _bookCatalogContext.Publishers
+                    .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
 
-                if (publisher == null)
+                if (!publisherExists)
                 {
                     return Result.Failure<int, ErrorResult>(
-                        PublisherNotFound(command.PublisherId));
+                        PublisherErrorResults.PublisherNotFound);
                 }
 
-                book.SetPublisher(publisher);
+                book.SetPublisher(command.PublisherId);
             }
 
             if (command.AuthorIds.Count == 0)
             {
                 return Result.Failure<int, ErrorResult>(
-                       NoAuthors());
+                    BookErrorResults.NoAuthors);
             }
 
             var authors = await _bookCatalogContext.Authors
                 .Where(author => command.AuthorIds.Contains(author.Id))
+                .AsNoTracking()
                 .ToListAsync(ct);
 
             var genres = await _bookCatalogContext.Genres
                 .Where(genre => command.GenreIds.Contains(genre.Id))
+                .AsNoTracking()
                 .ToListAsync(ct);
 
             book
@@ -97,7 +101,7 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                     City = command.PublicationCity,
                     Language = command.PublicationLanguage
                 })
-                .SetFromatInfo(new FormatInfoValueObject()
+                .SetFormatInfo(new FormatInfoValueObject()
                 {
                     PageCount = command.PageCount,
                 })
@@ -110,8 +114,10 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
+                _logger.LogError("An information about book was not edited");
+
                 return Result.Failure<int, ErrorResult>(
-                    BookNotUpdated());
+                    BookErrorResults.BookInfoNotUpdated);
             }
 
             return UnitResult.Success<ErrorResult>();
@@ -122,25 +128,4 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
             throw;
         }
     }
-
-    private static ErrorResult BookNotFound(int bookId) =>
-       new(EditBookInfoErrorCodes.BookNotFound,
-           $"A book with Id {bookId} was not found.");
-
-
-    private static ErrorResult BookWithIsbnAlreadyExists(string isbn) =>
-        new(EditBookInfoErrorCodes.BookWithIsbnAlreadyExists,
-            $"A book with ISBN {isbn} already exists.");
-
-    private static ErrorResult PublisherNotFound(int publisherId) =>
-        new(EditBookInfoErrorCodes.PublisherNotFound,
-            $"A publisher with Id {publisherId} was not found.");
-
-    private static ErrorResult NoAuthors() =>
-        new(EditBookInfoErrorCodes.NoAuthors,
-            $"A book has to have at least one author.");
-
-    private static ErrorResult BookNotUpdated() =>
-       new(EditBookInfoErrorCodes.BookNotUpdated,
-           $"A book was not updated.");
 }

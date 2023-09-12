@@ -11,7 +11,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 {
     public int Id { get; }
 
-    public int PublisherId { get; }
+    public int PublisherId { get; private set; }
 
     public string Title { get; private set; }
 
@@ -46,9 +46,9 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     #endregion NavigationProperties
 
-    protected BookEntity()
+    public BookEntity(string title)
     {
-        Title = string.Empty;
+        Title = title;
 
         PublicationInfo = new PublicationInfoValueObject()
         {
@@ -64,12 +64,6 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
         _bookGenres = new List<BookGenreEntity>();
         _authorBooks = new List<AuthorBookEntity>();
-    }
-
-    public BookEntity(string title)
-        : this()
-    {
-        SetTitle(title);
     }
 
     public bool IsAvailable =>
@@ -88,7 +82,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         return this;
     }
 
-    public BookEntity SetFromatInfo(FormatInfoValueObject formatInfo)
+    public BookEntity SetFormatInfo(FormatInfoValueObject formatInfo)
     {
         FormatInfo = formatInfo;
         return this;
@@ -100,10 +94,16 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         return this;
     }
 
+    public BookEntity SetPublisher(int publisherId)
+    {
+        PublisherId = publisherId;
+        return this;
+    }
+
     public BookEntity SetPublisher(PublisherEntity publisher)
     {
         Publisher = publisher;
-        return this;
+        return SetPublisher(publisher.Id);
     }
 
     public BookEntity SetAuthors(IEnumerable<AuthorEntity> authors)
@@ -121,6 +121,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
         return this;
     }
+
 
     public BookEntity SetGenres(IEnumerable<GenreEntity> genres)
     {

@@ -38,11 +38,12 @@ REASON: {error}
 
                     var problemDetails = new Microsoft.AspNetCore.Mvc.ProblemDetails
                     {
-                        Detail = error,
-                        Instance = null, // ctx.Request.Path
-                        Status = ctx.Response.StatusCode,
+                        Type = "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1",
                         Title = "Internal Server Error!",
-                        Type = type,
+                        Status = ctx.Response.StatusCode,
+                        Detail = error,
+                        Instance = ctx.Request.Path,
+                        //Extensions = { { "traceId", ctx.TraceIdentifier } }
                     };
 
                     await ctx.Response.WriteAsJsonAsync(problemDetails);

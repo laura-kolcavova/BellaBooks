@@ -17,14 +17,19 @@ public class AuthorBookEntity : IEntity
 
     #endregion NavigationProperties
 
-    private AuthorBookEntity()
+    public AuthorBookEntity(int authorId, int bookId)
     {
+        AuthorId = authorId;
+        BookId = bookId;
         Author = null!;
         Book = null!;
     }
 
     public AuthorBookEntity(AuthorEntity author, BookEntity book)
+        : this(author.Id, book.Id)
     {
+        AuthorId = author.Id;
+        BookId = book.Id;
         Author = author;
         Book = book;
     }

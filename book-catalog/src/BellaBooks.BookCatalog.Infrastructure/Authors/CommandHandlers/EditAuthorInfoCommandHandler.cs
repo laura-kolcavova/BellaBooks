@@ -1,4 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
@@ -12,7 +13,7 @@ internal class EditAuthorInfoCommandHandler : ICommandHandler<
     EditAuthorInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private ILogger<EditAuthorInfoCommandHandler> _logger;
+    private readonly ILogger<EditAuthorInfoCommandHandler> _logger;
 
     public EditAuthorInfoCommandHandler(
         BookCatalogContext bookCatalogContext,
@@ -40,13 +41,21 @@ internal class EditAuthorInfoCommandHandler : ICommandHandler<
             if (!authorExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (AuthorErrorResults.AuthorNotFound);
             }
 
-            await _bookCatalogContext.Authors
+            var changes = await _bookCatalogContext.Authors
                 .Where(author => author.Id == command.AuthorId)
                 .ExecuteUpdateAsync(setters => setters.SetProperty(
                     author => author.Name, command.Name), ct);
+
+            if (changes == 0)
+            {
+                _logger.LogError("An information about author was not updated");
+
+                return UnitResult.Failure
+                    (AuthorErrorResults.AuthorInfoNotUpdated);
+            }
 
             return UnitResult.Success<ErrorResult>();
         }

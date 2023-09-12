@@ -10,6 +10,7 @@ public class AddGenreRequestValidator : Validator<
     public AddGenreRequestValidator()
     {
         RuleFor(x => x.Name)
+            .MaximumLength(255)
             .NotEmpty();
     }
 }

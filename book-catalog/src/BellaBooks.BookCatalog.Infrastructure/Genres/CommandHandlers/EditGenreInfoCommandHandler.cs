@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Genres;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -40,13 +41,21 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
             if (!genreExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (GenreErrorResults.GenreNotFound);
             }
 
-            await _bookCatalogContext.Genres
+            var changes = await _bookCatalogContext.Genres
                 .Where(genre => genre.Id == command.GenreId)
                 .ExecuteUpdateAsync(setters => setters.SetProperty(
                     genre => genre.Name, command.Name), ct);
+
+            if (changes == 0)
+            {
+                _logger.LogError("An information about genre was not updated");
+
+                return UnitResult.Failure
+                    (GenreErrorResults.GenreInfoNotUpdated);
+            }
 
             return UnitResult.Success<ErrorResult>();
         }

@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Genres;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -39,7 +40,7 @@ internal class RemoveGenreCommandHandler : ICommandHandler<
             if (!genreExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (GenreErrorResults.GenreNotFound);
             }
 
             var changes = await _bookCatalogContext.Genres
@@ -48,10 +49,10 @@ internal class RemoveGenreCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
-                _logger.LogError("A book was not removed from the catalog");
+                _logger.LogError("A genre was not removed");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotDeleted);
+                    (GenreErrorResults.GenreNotRemoved);
             }
 
             return UnitResult.Success<ErrorResult>();

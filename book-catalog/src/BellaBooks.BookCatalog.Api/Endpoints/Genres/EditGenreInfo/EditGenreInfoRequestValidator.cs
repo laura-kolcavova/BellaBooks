@@ -13,6 +13,7 @@ public class EditGenreInfoRequestValidator : Validator<
            .GreaterThan(0);
 
         RuleFor(x => x.Name)
+            .MaximumLength(255)
             .NotEmpty();
     }
 }

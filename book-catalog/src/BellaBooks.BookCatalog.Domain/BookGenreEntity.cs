@@ -17,14 +17,18 @@ public class BookGenreEntity : IEntity
 
     #endregion NavigationProperties
 
-    private BookGenreEntity()
+    public BookGenreEntity(int bookId, int genreId)
     {
+        BookId = bookId;
+        GenreId = genreId;
         Book = null!;
         Genre = null!;
     }
 
     public BookGenreEntity(BookEntity book, GenreEntity genre)
     {
+        BookId = book.Id;
+        GenreId = genre.Id;
         Book = book;
         Genre = genre;
     }

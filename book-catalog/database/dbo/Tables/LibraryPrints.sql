@@ -3,7 +3,7 @@
 	[Id] INT IDENTITY (1, 1) NOT NULL, -- AccessionNumber
 	[BookId] INT NOT NULL,
 	[Shelfmark] VARCHAR(20) NOT NULL,
-	[LibraryBrancheCode] CHAR(2) NOT NULL,
+	[LibraryBranchCode] CHAR(2) NOT NULL,
 	[StateCode] CHAR(2) NOT NULL,
 	[DateCreatedAt] DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
 	[DateUpdatedAt] DATETIMEOFFSET,

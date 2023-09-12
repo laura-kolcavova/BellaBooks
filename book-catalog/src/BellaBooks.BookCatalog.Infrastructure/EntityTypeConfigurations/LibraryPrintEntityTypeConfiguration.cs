@@ -31,7 +31,7 @@ public class LibraryPrintEntityTypeConfiguration :
             .IsRequired();
 
         builder
-            .Property(e => e.LibraryBrancheCode)
+            .Property(e => e.LibraryBranchCode)
             .HasMaxLength(2)
             .IsRequired();
 

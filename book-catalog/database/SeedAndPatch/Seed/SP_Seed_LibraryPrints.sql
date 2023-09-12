@@ -52,7 +52,7 @@ BEGIN
         [Id],
         [BookId],
         [Shelfmark],
-        [LibraryBrancheCode],
+        [LibraryBranchCode],
         [StateCode]
     )
         ON (Target.[Id] = Source.[Id])
@@ -60,21 +60,21 @@ BEGIN
             UPDATE SET
                 [BookId] = Source.[BookId],
                 [Shelfmark] = Source.[Shelfmark],
-                [LibraryBrancheCode] = Source.[LibraryBrancheCode],
+                [LibraryBranchCode] = Source.[LibraryBranchCode],
                 [StateCode] = Source.[StateCode]
         WHEN NOT MATCHED BY TARGET THEN
             INSERT (
                 [Id],
                 [BookId],
                 [Shelfmark],
-                [LibraryBrancheCode],
+                [LibraryBranchCode],
                 [StateCode]
             )
             VALUES (
                 Source.[Id],
                 Source.[BookId],
                 Source.[Shelfmark],
-                Source.[LibraryBrancheCode],
+                Source.[LibraryBranchCode],
                 Source.[StateCode]
             )
         WHEN NOT MATCHED BY SOURCE THEN DELETE;

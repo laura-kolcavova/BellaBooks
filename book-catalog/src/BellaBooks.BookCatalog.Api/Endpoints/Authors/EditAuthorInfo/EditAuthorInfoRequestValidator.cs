@@ -12,6 +12,8 @@ public class EditAuthorInfoRequestValidator : Validator<EditAuthorInfoDto.Reques
            .GreaterThan(0);
 
         RuleFor(x => x.Name)
+            .MaximumLength(255)
+
             .NotEmpty();
     }
 }

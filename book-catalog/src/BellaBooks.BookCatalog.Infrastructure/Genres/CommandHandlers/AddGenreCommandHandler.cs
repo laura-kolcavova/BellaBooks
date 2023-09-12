@@ -41,7 +41,7 @@ internal class AddGenreCommandHandler : ICommandHandler<
             if (genreWithNameExists)
             {
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityAlreadyExists);
+                    (GenreErrorResults.GenreWithSameNameAlreadyExists);
             }
 
             var newGenre = new GenreEntity(command.Name);
@@ -54,10 +54,10 @@ internal class AddGenreCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
-                _logger.LogError("A book was not added to the catalog");
+                _logger.LogError("A book was not added");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityNotAdded);
+                    (GenreErrorResults.GenreNotAdded);
             }
 
             return newGenre.Id;

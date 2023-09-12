@@ -13,7 +13,7 @@ internal class AddAuthorCommandHandler : ICommandHandler<
     AddAuthorCommand, Result<int, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private ILogger<AddAuthorCommandHandler> _logger;
+    private readonly ILogger<AddAuthorCommandHandler> _logger;
 
     public AddAuthorCommandHandler(
         BookCatalogContext bookCatalogContext,
@@ -40,7 +40,7 @@ internal class AddAuthorCommandHandler : ICommandHandler<
             if (authorWithNameAlreadyExists)
             {
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityAlreadyExists);
+                    (AuthorErrorResults.AuthorWithSameNameAlreadyExists);
             }
 
             var newAuthor = new AuthorEntity(command.Name);
@@ -53,10 +53,10 @@ internal class AddAuthorCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
-                _logger.LogError("An author was not added to the catalog");
+                _logger.LogError("An author was not added");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityNotAdded);
+                    (AuthorErrorResults.AuthorNotAdded);
             }
 
             return newAuthor.Id;

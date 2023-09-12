@@ -11,7 +11,7 @@ public class LibraryPrintEntity : IEntity<int>, ITrackableEntity
 
     public string Shelfmark { get; private set; }
 
-    public string LibraryBrancheCode { get; private set; }
+    public string LibraryBranchCode { get; private set; }
 
     public LibraryPrintStateCode StateCode { get; private set; }
 
@@ -25,35 +25,31 @@ public class LibraryPrintEntity : IEntity<int>, ITrackableEntity
 
     #endregion NavigationProperties
 
-    protected LibraryPrintEntity()
-    {
-        Shelfmark = string.Empty;
-        LibraryBrancheCode = string.Empty;
-        Book = null;
-    }
-
     public LibraryPrintEntity(
-        BookEntity book,
-        string libraryBrancheCode,
+        int bookId,
+        string libraryBranchCode,
         string shelfmark,
         LibraryPrintStateCode stateCode)
-        : this()
     {
-        Book = book;
-        LibraryBrancheCode = libraryBrancheCode;
+        BookId = bookId;
+        LibraryBranchCode = libraryBranchCode;
         Shelfmark = shelfmark;
         StateCode = stateCode;
     }
 
-    public LibraryPrintEntity ChangeShelfLocation(string shelfmark)
+    public LibraryPrintEntity(
+       BookEntity book,
+       string libraryBranchCode,
+       string shelfmark,
+       LibraryPrintStateCode stateCode)
+       : this(book.Id, libraryBranchCode, shelfmark, stateCode)
     {
-        Shelfmark = shelfmark;
-        return this;
+        Book = book;
     }
 
-    public LibraryPrintEntity ChangeLibraryBranche(string libraryBrancheCode, string shelfmark)
+    public LibraryPrintEntity ChangefLocation(string libraryBranchCode, string shelfmark)
     {
-        LibraryBrancheCode = libraryBrancheCode;
+        LibraryBranchCode = libraryBranchCode;
         Shelfmark = shelfmark;
         return this;
     }

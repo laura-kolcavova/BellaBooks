@@ -1,4 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
@@ -39,7 +40,7 @@ internal class RemoveAuthorCommandHandler : ICommandHandler<
             if (!authorExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (AuthorErrorResults.AuthorNotFound);
             }
 
             var changes = await _bookCatalogContext.Authors
@@ -48,10 +49,10 @@ internal class RemoveAuthorCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
-                _logger.LogError("An author was not removed from the catalog");
+                _logger.LogError("An author was not removed");
 
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotDeleted);
+                    (AuthorErrorResults.AuthorNotRemoved);
             }
 
             return UnitResult.Success<ErrorResult>();

@@ -12,6 +12,7 @@ public class EditBookInfoRequestValidator : Validator<EditBookInfoDto.Request>
             .GreaterThan(0);
 
         RuleFor(x => x.Title)
+           .MaximumLength(255)
            .NotEmpty();
 
         RuleFor(request => request.AuthorIds)
@@ -29,9 +30,11 @@ public class EditBookInfoRequestValidator : Validator<EditBookInfoDto.Request>
             .Length(13);
 
         RuleFor(x => x.PublicationCity)
+            .MaximumLength(200)
             .NotEmpty();
 
         RuleFor(x => x.PublicationLanguage)
+            .MaximumLength(200)
             .NotEmpty();
 
         RuleFor(x => x.PageCount)

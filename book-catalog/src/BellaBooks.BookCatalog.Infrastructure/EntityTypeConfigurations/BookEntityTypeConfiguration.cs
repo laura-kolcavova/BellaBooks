@@ -27,6 +27,7 @@ public class BookEntityTypeConfiguration :
 
         builder
             .Property(e => e.Title)
+            .HasMaxLength(255)
             .IsRequired();
 
         builder
@@ -48,12 +49,12 @@ public class BookEntityTypeConfiguration :
             navigationBuilder
                 .Property(p => p.City)
                 .HasColumnName("PublicationCity")
-                .HasMaxLength(255);
+                .HasMaxLength(200);
 
             navigationBuilder
                 .Property(p => p.Language)
                 .HasColumnName("PublicationLanguage")
-                .HasMaxLength(255);
+                .HasMaxLength(200);
         });
 
         builder.OwnsOne(e => e.FormatInfo, navigationBuilder =>

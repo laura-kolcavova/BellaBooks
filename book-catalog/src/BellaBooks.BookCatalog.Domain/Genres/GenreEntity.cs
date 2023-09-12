@@ -12,15 +12,9 @@ public class GenreEntity : IEntity<int>, ITrackableEntity
 
     public IReadOnlyCollection<BookGenreEntity> BookGenres { get; }
 
-    protected GenreEntity()
-    {
-        Name = string.Empty;
-        BookGenres = new List<BookGenreEntity>();
-    }
-
     public GenreEntity(string name)
-        : this()
     {
         Name = name;
+        BookGenres = new List<BookGenreEntity>();
     }
 }

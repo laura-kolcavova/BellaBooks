@@ -1,8 +1,8 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
-using BellaBooks.BookCatalog.Domain.Constants.Books;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -42,36 +42,38 @@ internal class AddBookCommandHandler : ICommandHandler<
             if (bookWithIsbnExists)
             {
                 return Result.Failure<int, ErrorResult>(
-                    BookWithIsbnAlreadyExists(command.Isbn));
+                    BookErrorResults.BookWithSameIsbnAlreadyExists);
             }
 
-            var publisher = await _bookCatalogContext.Publishers
-                .SingleOrDefaultAsync(publisher => publisher.Id == command.PublisherId, ct);
+            var publisherExists = await _bookCatalogContext.Publishers
+                .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
 
-            if (publisher == null)
+            if (!publisherExists)
             {
                 return Result.Failure<int, ErrorResult>(
-                    PublisherNotFound(command.PublisherId));
+                    PublisherErrorResults.PublisherNotFound);
             }
 
             if (command.AuthorIds.Count == 0)
             {
                 return Result.Failure<int, ErrorResult>(
-                   NoAuthors());
+                   BookErrorResults.NoAuthors);
             }
 
             var authors = await _bookCatalogContext.Authors
                 .Where(author => command.AuthorIds.Contains(author.Id))
+                .AsNoTracking()
                 .ToListAsync(ct);
 
             var genres = await _bookCatalogContext.Genres
                 .Where(genre => command.GenreIds.Contains(genre.Id))
+                .AsNoTracking()
                 .ToListAsync(ct);
 
             var newBook = new BookEntity(command.Title)
                 .SetAuthors(authors)
                 .SetGenres(genres)
-                .SetPublisher(publisher)
+                .SetPublisher(command.PublisherId)
                 .SetPublicationInfo(new PublicationInfoValueObject()
                 {
                     Isbn = command.Isbn,
@@ -79,7 +81,7 @@ internal class AddBookCommandHandler : ICommandHandler<
                     City = command.PublicationCity,
                     Language = command.PublicationLanguage
                 })
-                .SetFromatInfo(new FormatInfoValueObject()
+                .SetFormatInfo(new FormatInfoValueObject()
                 {
                     PageCount = command.PageCount,
                 })
@@ -92,34 +94,20 @@ internal class AddBookCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
+                _logger.LogError("A book was not added");
+
                 return Result.Failure<int, ErrorResult>(
-                    BookNotAdded());
+                    BookErrorResults.BookNotAdded);
             }
 
             return newBook.Id;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred while add a book to the catalog");
+            _logger.LogError(ex, "An unexpected error occurred while adding a book to the catalog");
             throw;
         }
 
         throw new NotImplementedException();
     }
-
-    private static ErrorResult BookWithIsbnAlreadyExists(string isbn) =>
-        new(AddBookErrorCodes.BookWithIsbnAlreadyExists,
-            $"A book with ISBN {isbn} already exists.");
-
-    private static ErrorResult PublisherNotFound(int publisherId) =>
-        new(AddBookErrorCodes.PublisherNotFound,
-            $"A publisher with Id {publisherId} was not found.");
-
-    private static ErrorResult NoAuthors() =>
-        new(AddBookErrorCodes.NoAuthors,
-            $"A book has to have at least one author.");
-
-    private static ErrorResult BookNotAdded() =>
-       new(AddBookErrorCodes.BookNotAdded,
-           $"A book was not added.");
 }

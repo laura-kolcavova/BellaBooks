@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -12,7 +13,7 @@ internal class EditPublisherInfoCommandHandler : ICommandHandler<
     EditPublisherInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private ILogger<EditPublisherInfoCommandHandler> _logger;
+    private readonly ILogger<EditPublisherInfoCommandHandler> _logger;
 
     public EditPublisherInfoCommandHandler(
         BookCatalogContext bookCatalogContext,
@@ -40,13 +41,21 @@ internal class EditPublisherInfoCommandHandler : ICommandHandler<
             if (!publisherExists)
             {
                 return UnitResult.Failure
-                    (GeneralErrorResults.EntityNotFound);
+                    (PublisherErrorResults.PublisherNotFound);
             }
 
-            await _bookCatalogContext.Publishers
-                .Where(publisher => publisher.Id == command.PublisherId)
-                .ExecuteUpdateAsync(setters => setters.SetProperty(
-                    publisher => publisher.Name, command.Name), ct);
+            var changes = await _bookCatalogContext.Publishers
+                 .Where(publisher => publisher.Id == command.PublisherId)
+                 .ExecuteUpdateAsync(setters => setters.SetProperty(
+                     publisher => publisher.Name, command.Name), ct);
+
+            if (changes == 0)
+            {
+                _logger.LogError("An information about publisher was not updated");
+
+                return UnitResult.Failure
+                    (PublisherErrorResults.PublisherInfoNotUpdated);
+            }
 
             return UnitResult.Success<ErrorResult>();
         }

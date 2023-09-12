@@ -41,12 +41,12 @@ internal class GetBookDetailCommandHandler : ICommandHandler<
                 .Include(book => book.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(book => book.Id == command.BookId);
+                .SingleOrDefaultAsync(book => book.Id == command.BookId, ct);
 
             if (book == null)
             {
                 return Result.Failure<BookEntity, ErrorResult>
-                    (GeneralErrorResults.EntityNotFound);
+                    (BookErrorResults.BookNotFound);
             }
 
             return book;

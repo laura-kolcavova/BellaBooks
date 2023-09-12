@@ -41,7 +41,7 @@ internal class GetAuthorDetailCommandHandler : ICommandHandler<
             if (author == null)
             {
                 return Result.Failure<AuthorEntity, ErrorResult>
-                    (GeneralErrorResults.EntityNotFound);
+                    (AuthorErrorResults.AuthorNotFound);
             }
 
             return author;

@@ -9,6 +9,7 @@ public class AddBookRequestValidator : Validator<AddBookDto.Request>
     public AddBookRequestValidator()
     {
         RuleFor(x => x.Title)
+            .MinimumLength(255)
             .NotEmpty();
 
         RuleFor(request => request.AuthorIds)
@@ -26,9 +27,11 @@ public class AddBookRequestValidator : Validator<AddBookDto.Request>
             .Length(13);
 
         RuleFor(x => x.PublicationCity)
+            .MaximumLength(200)
             .NotEmpty();
 
         RuleFor(x => x.PublicationLanguage)
+            .MaximumLength(200)
             .NotEmpty();
 
         RuleFor(x => x.PageCount)

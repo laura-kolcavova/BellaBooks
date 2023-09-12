@@ -9,6 +9,7 @@ public class AddAuthorRequestValidator : Validator<AddAuthorDto.Request>
     public AddAuthorRequestValidator()
     {
         RuleFor(x => x.Name)
+            .MaximumLength(255)
             .NotEmpty();
     }
 }

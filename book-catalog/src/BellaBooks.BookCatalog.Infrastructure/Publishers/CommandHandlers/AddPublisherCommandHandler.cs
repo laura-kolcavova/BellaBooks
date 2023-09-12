@@ -13,7 +13,7 @@ internal class AddPublisherCommandHandler : ICommandHandler<
     AddPublisherCommand, Result<int, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private ILogger<AddPublisherCommandHandler> _logger;
+    private readonly ILogger<AddPublisherCommandHandler> _logger;
 
     public AddPublisherCommandHandler(
         BookCatalogContext bookCatalogContext,
@@ -40,7 +40,7 @@ internal class AddPublisherCommandHandler : ICommandHandler<
             if (publisherWithNameAlreadyExists)
             {
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityAlreadyExists);
+                    (PublisherErrorResults.PublisherWithSameNameAlreadyExists);
             }
 
             var newPublisher = new PublisherEntity(command.Name);
@@ -53,10 +53,10 @@ internal class AddPublisherCommandHandler : ICommandHandler<
 
             if (changes == 0)
             {
-                _logger.LogError("A publisher was not added to the catalog");
+                _logger.LogError("A publisher was not added");
 
                 return Result.Failure<int, ErrorResult>
-                    (GeneralErrorResults.EntityNotAdded);
+                    (PublisherErrorResults.PublisherNotAdded);
             }
 
             return newPublisher.Id;

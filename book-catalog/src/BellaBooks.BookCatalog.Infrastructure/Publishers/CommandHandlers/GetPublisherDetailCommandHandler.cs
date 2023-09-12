@@ -40,7 +40,7 @@ internal class GetPublisherDetailCommandHandler : ICommandHandler<
             if (publisher == null)
             {
                 return Result.Failure<PublisherEntity, ErrorResult>
-                    (GeneralErrorResults.EntityNotFound);
+                    (PublisherErrorResults.PublisherNotFound);
             }
 
             return publisher;
