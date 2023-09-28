@@ -2,7 +2,7 @@
 
 namespace BellaBooks.BookCatalog.Api.Extensions;
 
-public static class TypedResultsExtended
+internal static class TypedResultsExtended
 {
     public static ProblemHttpResult ErrorProblem(string detail, int statusCode, string errorCode)
     {

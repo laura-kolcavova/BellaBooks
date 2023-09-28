@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.EditGenreInfo;
 
 public class EditAuthorInfoEndpoint : Endpoint<
-    EditAuthorInfoDto.Request,
+    EditAuthorInfoContracts.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class EditAuthorInfoEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(EditAuthorInfoDto.Request req, CancellationToken ct)
+        ExecuteAsync(EditAuthorInfoContracts.Request req, CancellationToken ct)
     {
         var result = await new EditAuthorInfoCommand
         {

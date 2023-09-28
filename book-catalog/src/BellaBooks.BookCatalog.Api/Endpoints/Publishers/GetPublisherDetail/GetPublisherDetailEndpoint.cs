@@ -1,16 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
-using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
+using BellaBooks.BookCatalog.Domain.Publishers.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Publishers.GetPublisherDetail;
 
 public class GetPublisherDetailEndpoint : Endpoint<
-    GetPublisherDetailDto.Request,
-    Results<Ok<GetPublisherDetailDto.Response>, ProblemHttpResult>,
+    GetPublisherDetailContracts.Request,
+    Ok<GetPublisherDetailContracts.Response>,
     GetPublisherDetailResponseMapper>
 {
     public override void Configure()
@@ -29,21 +28,15 @@ public class GetPublisherDetailEndpoint : Endpoint<
          .Produces<ErrorProblemDetails>(StatusCodes.Status422UnprocessableEntity));
     }
 
-    public override async Task<Results<
-        Ok<GetPublisherDetailDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(GetPublisherDetailDto.Request req, CancellationToken ct)
+    public override async Task<
+        Ok<GetPublisherDetailContracts.Response>>
+        ExecuteAsync(GetPublisherDetailContracts.Request req, CancellationToken ct)
     {
         var result = await new GetPublisherDetailCommand()
         {
             PublisherId = req.PublisherId,
         }.ExecuteAsync(ct);
 
-        if (result.IsFailure)
-        {
-            TypedResultsExtended.ErrorProblem(
-                result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code);
-        }
-
-        return TypedResults.Ok(Map.FromEntity(result.Value));
+        return TypedResults.Ok(Map.FromEntity(result));
     }
 }

@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
-using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Domain.Publishers;
@@ -74,17 +74,13 @@ internal class AddBookCommandHandler : ICommandHandler<
                 .SetAuthors(authors)
                 .SetGenres(genres)
                 .SetPublisher(command.PublisherId)
-                .SetPublicationInfo(new PublicationInfoValueObject()
-                {
-                    Isbn = command.Isbn,
-                    Year = command.PublicationYear,
-                    City = command.PublicationCity,
-                    Language = command.PublicationLanguage
-                })
-                .SetFormatInfo(new FormatInfoValueObject()
-                {
-                    PageCount = command.PageCount,
-                })
+                .SetPublicationInfo(new PublicationInfoValueObject(
+                    isbn: command.Isbn,
+                    year: command.PublicationYear,
+                    city: command.PublicationCity,
+                    language: command.PublicationLanguage))
+                .SetFormatInfo(new FormatInfoValueObject(
+                    pageCount: command.PageCount))
                 .SetSummary(command.Summary);
 
             await _bookCatalogContext.Books

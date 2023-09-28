@@ -5,23 +5,23 @@ BEGIN
 
     MERGE INTO [dbo].[Publishers] AS Target
     USING (VALUES
-        (1, 'HarperCollins'),
-        (2, 'Penguin Books'),
-        (3, 'Editorial Sudamericana'),
-        (4, 'Little, Brown and Company'),
-        (5, 'Charles Scribner''s Sons'),
-        (6, 'Alfred A. Knopf'),
-        (7, 'Harcourt Brace Jovanovich'),
-        (8, 'Delacorte Press'),
-        (9, 'Bantam Books'),
-        (10, 'Thomas Egerton'),
-        (11, 'Pan Books'),
-        (12, 'George Allen & Unwin'),
-        (13, 'Contact Publishing'),
-        (14, 'Riverhead Books'),
-        (15, 'Editora Rocco'),
-        (16, 'Scholastic Corporation'),
-        (17, 'Bloomsbury Publishing')
+        (1, N'HarperCollins'),
+        (2, N'Penguin Books'),
+        (3, N'Editorial Sudamericana'),
+        (4, N'Little, Brown and Company'),
+        (5, N'Charles Scribner''s Sons'),
+        (6, N'Alfred A. Knopf'),
+        (7, N'Harcourt Brace Jovanovich'),
+        (8, N'Delacorte Press'),
+        (9, N'Bantam Books'),
+        (10, N'Thomas Egerton'),
+        (11, N'Pan Books'),
+        (12, N'George Allen & Unwin'),
+        (13, N'Contact Publishing'),
+        (14, N'Riverhead Books'),
+        (15, N'Editora Rocco'),
+        (16, N'Scholastic Corporation'),
+        (17, N'Bloomsbury Publishing')
     ) AS SOURCE (
         [Id],
         [Name]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BellaBooks.BookCatalog.Infrastructure.EntityTypeConfigurations;
 
-public class PublisherEntityTypeConfiguration
+internal class PublisherEntityTypeConfiguration
     : IEntityTypeConfiguration<PublisherEntity>
 {
     public void Configure(EntityTypeBuilder<PublisherEntity> builder)

@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Authors.GetAllAuthors;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.GetAllGenres;
 
 public class GetAllAuthorsEndpoint : EndpointWithoutRequest<
-    Ok<GetAllAuthorsDto.Response>,
+    Ok<GetAllAuthorsContracts.Response>,
     GetAllAuthorsResponseMapper>
 {
     public override void Configure()
@@ -26,7 +26,7 @@ public class GetAllAuthorsEndpoint : EndpointWithoutRequest<
     }
 
     public override async Task<
-        Ok<GetAllAuthorsDto.Response>>
+        Ok<GetAllAuthorsContracts.Response>>
         ExecuteAsync(CancellationToken ct)
     {
         var authors = await new GetAllAuthorsCommand()

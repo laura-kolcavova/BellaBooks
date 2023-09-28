@@ -5,7 +5,7 @@ using FluentValidation;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
 public class RemoveGenreRequestValidator : Validator<
-    RemoveGenreDto.Request>
+    Contracts.Genres.RemoveGenreContracts.Request>
 {
     public RemoveGenreRequestValidator()
     {

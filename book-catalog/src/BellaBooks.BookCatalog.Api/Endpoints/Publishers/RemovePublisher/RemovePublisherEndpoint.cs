@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
+using BellaBooks.BookCatalog.Domain.Publishers.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Publishers.RemovePublisher;
 
 public class RemovePublisherEndpoint : Endpoint<
-    RemovePublisherDto.Request,
+    RemovePublisherContracts.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class RemovePublisherEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(RemovePublisherDto.Request req, CancellationToken ct)
+        ExecuteAsync(RemovePublisherContracts.Request req, CancellationToken ct)
     {
         var result = await new RemovePublisherCommand()
         {

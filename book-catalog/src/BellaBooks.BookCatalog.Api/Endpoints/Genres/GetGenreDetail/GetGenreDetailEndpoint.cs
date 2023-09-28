@@ -1,15 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+using BellaBooks.BookCatalog.Domain.Genres.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
 public class GetGenreByIdEndpoint : Endpoint<
-    GetGenreDetailDto.Request,
-    Results<Ok<GetGenreDetailDto.Response>, ProblemHttpResult>,
+    GetGenreDetailContracts.Request,
+    Ok<GetGenreDetailContracts.Response>,
     GetGenreDetailResponseMapper>
 {
     public override void Configure()
@@ -23,26 +22,17 @@ public class GetGenreByIdEndpoint : Endpoint<
             s.Summary = "Gets a book genre detail by its Id";
             s.Description = "The endpoint will return a book genre detail";
         });
-
-        Description(d => d
-          .Produces<ErrorProblemDetails>(StatusCodes.Status422UnprocessableEntity));
     }
 
-    public override async Task<Results<
-        Ok<GetGenreDetailDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(GetGenreDetailDto.Request req, CancellationToken ct)
+    public override async Task<
+        Ok<GetGenreDetailContracts.Response>>
+        ExecuteAsync(GetGenreDetailContracts.Request req, CancellationToken ct)
     {
         var result = await new GetGenreDetailCommand()
         {
             GenreId = req.GenreId,
         }.ExecuteAsync(ct);
 
-        if (result.IsFailure)
-        {
-            TypedResultsExtended.ErrorProblem(
-                result.Error.Message, StatusCodes.Status422UnprocessableEntity, result.Error.Code);
-        }
-
-        return TypedResults.Ok(Map.FromEntity(result.Value));
+        return TypedResults.Ok(Map.FromEntity(result));
     }
 }

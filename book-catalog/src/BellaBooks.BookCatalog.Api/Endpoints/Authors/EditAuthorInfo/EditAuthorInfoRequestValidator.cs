@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.EditAuthorInfo;
 
-public class EditAuthorInfoRequestValidator : Validator<EditAuthorInfoDto.Request>
+public class EditAuthorInfoRequestValidator : Validator<Contracts.Authors.EditAuthorInfoContracts.Request>
 {
     public EditAuthorInfoRequestValidator()
     {

@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
+using BellaBooks.BookCatalog.Domain.Publishers.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.AddPublisher;
 
 public class AddPublisherEndpoint : Endpoint<
-    AddPublisherDto.Request,
-    Results<Ok<AddPublisherDto.Response>, ProblemHttpResult>,
+    AddPublisherContracts.Request,
+    Results<Ok<AddPublisherContracts.Response>, ProblemHttpResult>,
     AddPublisherResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ public class AddPublisherEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddPublisherDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddPublisherDto.Request req, CancellationToken ct)
+        Results<Ok<AddPublisherContracts.Response>, ProblemHttpResult>>
+        ExecuteAsync(AddPublisherContracts.Request req, CancellationToken ct)
     {
         var result = await new AddPublisherCommand
         {

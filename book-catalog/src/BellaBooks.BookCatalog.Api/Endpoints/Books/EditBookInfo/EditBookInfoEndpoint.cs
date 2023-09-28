@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.EditBookInfo;
 
 public class EditBookInfoEndpoint : Endpoint<
-    EditBookInfoDto.Request,
+    EditBookInfoContracts.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class EditBookInfoEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(EditBookInfoDto.Request req, CancellationToken ct)
+        ExecuteAsync(EditBookInfoContracts.Request req, CancellationToken ct)
     {
         var result = await CreateEditBookInfoCommand(req)
             .ExecuteAsync(ct);
@@ -43,7 +43,7 @@ public class EditBookInfoEndpoint : Endpoint<
         return TypedResults.Ok();
     }
 
-    private static EditBookInfoCommand CreateEditBookInfoCommand(EditBookInfoDto.Request req)
+    private static EditBookInfoCommand CreateEditBookInfoCommand(Contracts.Books.EditBookInfoContracts.Request req)
     {
         return new EditBookInfoCommand()
         {

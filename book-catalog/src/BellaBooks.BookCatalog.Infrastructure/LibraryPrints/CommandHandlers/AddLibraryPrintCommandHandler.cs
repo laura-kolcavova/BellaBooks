@@ -1,8 +1,9 @@
-﻿using BellaBooks.BookCatalog.Bussiness.LibraryPrints.Commands;
-using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Errors;
+using BellaBooks.BookCatalog.Domain.LibraryBranches;
 using BellaBooks.BookCatalog.Domain.LibraryPrints;
+using BellaBooks.BookCatalog.Domain.LibraryPrints.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -29,7 +30,9 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["BookId"] = command.BookId
+            ["BookId"] = command.BookId,
+            ["LibraryBranchCode"] = command.LibraryBranchCode,
+            ["Shelfmark"] = command.Shelfmark,
         });
 
         try
@@ -39,8 +42,29 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
 
             if (!bookExists)
             {
-                Result.Failure<int, ErrorResult>(
+                return Result.Failure<int, ErrorResult>(
                     BookErrorResults.BookNotFound);
+            }
+
+            var libraryBranch = await _bookCatalogContext.LibraryBranches
+                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
+                .Select(libraryBranch => new
+                {
+                    libraryBranch.Code,
+                    libraryBranch.IsActive,
+                })
+                .SingleOrDefaultAsync(ct);
+
+            if (libraryBranch is null)
+            {
+                return Result.Failure<int, ErrorResult>(
+                    LibraryBranchErrorResults.LibraryBranchNotFound);
+            }
+
+            if (!libraryBranch.IsActive)
+            {
+                return Result.Failure<int, ErrorResult>(
+                    LibraryBranchErrorResults.LibraryBranchIsDisabled);
             }
 
             var libraryPrint = new LibraryPrintEntity(

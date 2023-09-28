@@ -5,7 +5,7 @@ using FluentValidation;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
 public class EditGenreInfoRequestValidator : Validator<
-    EditGenreInfoDto.Request>
+    Contracts.Genres.EditGenreInfoContracts.Request>
 {
     public EditGenreInfoRequestValidator()
     {

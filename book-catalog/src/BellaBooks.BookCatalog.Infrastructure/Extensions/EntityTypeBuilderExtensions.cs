@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;
 
-public static class EntityTypeBuilderExtensions
+internal static class EntityTypeBuilderExtensions
 {
     public static EntityTypeBuilder<TEntity> HasTrackableProperties<TEntity>(this EntityTypeBuilder<TEntity> builder)
         where TEntity : class, ITrackableEntity

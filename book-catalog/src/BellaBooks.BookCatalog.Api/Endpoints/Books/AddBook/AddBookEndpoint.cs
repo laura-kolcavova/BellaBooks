@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.AddBook;
 
 public class AddBookEndpoint : Endpoint<
-    AddBookDto.Request,
-    Results<Ok<AddBookDto.Response>, ProblemHttpResult>,
+    AddBookContracts.Request,
+    Results<Ok<AddBookContracts.Response>, ProblemHttpResult>,
     AddBookResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ public class AddBookEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddBookDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddBookDto.Request req, CancellationToken ct)
+        Results<Ok<AddBookContracts.Response>, ProblemHttpResult>>
+        ExecuteAsync(AddBookContracts.Request req, CancellationToken ct)
     {
         var result = await CreateAddBookCommand(req)
             .ExecuteAsync(ct);
@@ -44,7 +44,7 @@ public class AddBookEndpoint : Endpoint<
         return TypedResults.Ok(Map.FromEntity(result.Value));
     }
 
-    private static AddBookCommand CreateAddBookCommand(AddBookDto.Request req)
+    private static AddBookCommand CreateAddBookCommand(Contracts.Books.AddBookContracts.Request req)
     {
         return new AddBookCommand()
         {

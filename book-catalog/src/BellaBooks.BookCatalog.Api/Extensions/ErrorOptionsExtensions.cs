@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BellaBooks.BookCatalog.Api.Extensions;
 
-public static class ErrorOptionsExtensions
+internal static class ErrorOptionsExtensions
 {
     private static Func<List<ValidationFailure>, HttpContext, int, object> ResponseBuilder { get; } =
         (failures, ctx, statusCode) =>

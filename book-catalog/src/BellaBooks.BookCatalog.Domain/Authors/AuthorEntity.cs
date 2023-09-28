@@ -12,13 +12,13 @@ public class AuthorEntity : IEntity<int>, ITrackableEntity
 
     #region NavigationProperties
 
-    public IReadOnlyCollection<AuthorBookEntity> AuthorBooks { get; }
+    public IReadOnlyCollection<BookAuthorEntity> BookAuthors { get; }
 
     #endregion NavigationProperties
 
     public AuthorEntity(string name)
     {
         Name = name;
-        AuthorBooks = new List<AuthorBookEntity>();
+        BookAuthors = new List<BookAuthorEntity>();
     }
 }

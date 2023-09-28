@@ -1,5 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
+using BellaBooks.BookCatalog.Domain.LibraryBranches;
 
 namespace BellaBooks.BookCatalog.Domain.LibraryPrints;
 
@@ -23,6 +24,8 @@ public class LibraryPrintEntity : IEntity<int>, ITrackableEntity
 
     public BookEntity? Book { get; }
 
+    public LibraryBranchEntity? LibraryBranch { get; }
+
     #endregion NavigationProperties
 
     public LibraryPrintEntity(
@@ -37,17 +40,7 @@ public class LibraryPrintEntity : IEntity<int>, ITrackableEntity
         StateCode = stateCode;
     }
 
-    public LibraryPrintEntity(
-       BookEntity book,
-       string libraryBranchCode,
-       string shelfmark,
-       LibraryPrintStateCode stateCode)
-       : this(book.Id, libraryBranchCode, shelfmark, stateCode)
-    {
-        Book = book;
-    }
-
-    public LibraryPrintEntity ChangefLocation(string libraryBranchCode, string shelfmark)
+    public LibraryPrintEntity MoveToLocation(string libraryBranchCode, string shelfmark)
     {
         LibraryBranchCode = libraryBranchCode;
         Shelfmark = shelfmark;

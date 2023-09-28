@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+using BellaBooks.BookCatalog.Domain.Genres.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
 public class RemoveGenreEndpoint : Endpoint<
-    RemoveGenreDto.Request,
+    RemoveGenreContracts.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class RemoveGenreEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(RemoveGenreDto.Request req, CancellationToken ct)
+        ExecuteAsync(RemoveGenreContracts.Request req, CancellationToken ct)
     {
         var result = await new RemoveGenreCommand()
         {

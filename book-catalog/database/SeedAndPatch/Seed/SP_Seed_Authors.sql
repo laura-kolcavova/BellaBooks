@@ -5,24 +5,24 @@ BEGIN
 
     MERGE INTO [dbo].[Authors] AS Target
     USING (VALUES
-        (1, 'Harper Lee'),
-        (2, 'George Orwell'),
-        (3, 'Gabriel García Márquez'),
-        (4, 'Aldous Huxley'),
-        (5, 'J.D. Salinger'),
-        (6, 'F. Scott Fitzgerald'),
-        (7, 'Toni Morrison'),
-        (8, 'Alice Walker'),
-        (9, 'Kurt Vonnegut'),
-        (10, 'Stephen Hawking'),
-        (11, 'Jane Austen'),
-        (12, 'Douglas Adams'),
-        (13, 'J.R.R. Tolkien'),
-        (14, 'Anne Frank'),
-        (15, 'Khaled Hosseini'),
-        (16, 'Paulo Coelho'),
-        (17, 'Suzanne Collins'),
-        (18, 'J.K. Rowling')
+        (1, N'Harper Lee'),
+        (2, N'George Orwell'),
+        (3, N'Gabriel García Márquez'),
+        (4, N'Aldous Huxley'),
+        (5, N'J.D. Salinger'),
+        (6, N'F. Scott Fitzgerald'),
+        (7, N'Toni Morrison'),
+        (8, N'Alice Walker'),
+        (9, N'Kurt Vonnegut'),
+        (10, N'Stephen Hawking'),
+        (11, N'Jane Austen'),
+        (12, N'Douglas Adams'),
+        (13, N'J.R.R. Tolkien'),
+        (14, N'Anne Frank'),
+        (15, N'Khaled Hosseini'),
+        (16, N'Paulo Coelho'),
+        (17, N'Suzanne Collins'),
+        (18, N'J.K. Rowling')
     ) AS SOURCE (
         [Id],
         [Name]

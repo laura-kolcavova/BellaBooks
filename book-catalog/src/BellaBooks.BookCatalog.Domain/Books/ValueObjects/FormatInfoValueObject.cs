@@ -1,6 +1,21 @@
-﻿namespace BellaBooks.BookCatalog.Domain.Books.ValueObjects;
+﻿using CSharpFunctionalExtensions;
 
-public record FormatInfoValueObject
+namespace BellaBooks.BookCatalog.Domain.Books.ValueObjects;
+
+public class FormatInfoValueObject : ValueObject
 {
-    public short? PageCount { get; init; }
+    public short? PageCount { get; }
+
+    public FormatInfoValueObject(short? pageCount)
+    {
+        PageCount = pageCount;
+    }
+
+    protected override IEnumerable<IComparable> GetEqualityComponents()
+    {
+        if (PageCount != null)
+        {
+            yield return PageCount;
+        }
+    }
 }

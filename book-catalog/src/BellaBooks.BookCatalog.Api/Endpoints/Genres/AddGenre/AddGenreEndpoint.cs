@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+using BellaBooks.BookCatalog.Domain.Genres.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;
 
 public class AddGenreEndpoint : Endpoint<
-    AddGenreDto.Request,
-    Results<Ok<AddGenreDto.Response>, ProblemHttpResult>,
+    AddGenreContracts.Request,
+    Results<Ok<AddGenreContracts.Response>, ProblemHttpResult>,
     AddGenreResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ public class AddGenreEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddGenreDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddGenreDto.Request req, CancellationToken ct)
+        Results<Ok<AddGenreContracts.Response>, ProblemHttpResult>>
+        ExecuteAsync(AddGenreContracts.Request req, CancellationToken ct)
     {
         var result = await new AddGenreCommand
         {

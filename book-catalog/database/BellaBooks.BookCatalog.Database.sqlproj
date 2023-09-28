@@ -70,9 +70,11 @@
     <Build Include="dbo\Tables\Publishers.sql" />
     <Build Include="dbo\Tables\Authors.sql" />
     <Build Include="dbo\Tables\Genres.sql" />
-    <Build Include="dbo\Tables\AuthorBooks.sql" />
+    <Build Include="dbo\Tables\BookAuthors.sql" />
     <Build Include="dbo\Tables\BookGenres.sql" />
     <Build Include="dbo\Tables\LibraryPrints.sql" />
+    <Build Include="dbo\Tables\LibraryBranches.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_LibraryBranches.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\Local.publish.xml" />
@@ -80,7 +82,7 @@
     <Build Include="SeedAndPatch\Seed\SP_Seed_Books.sql" />
     <Build Include="SeedAndPatch\Seed\SP_Seed_Publishers.sql" />
     <Build Include="SeedAndPatch\Seed\SP_Seed_Authors.sql" />
-    <Build Include="SeedAndPatch\Seed\SP_Seed_AuthorBooks.sql" />
+    <Build Include="SeedAndPatch\Seed\SP_Seed_BookAuthors.sql" />
     <Build Include="SeedAndPatch\Seed\SP_Seed_BookGenres.sql" />
     <Build Include="SeedAndPatch\Seed\SP_Seed_Genres.sql" />
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

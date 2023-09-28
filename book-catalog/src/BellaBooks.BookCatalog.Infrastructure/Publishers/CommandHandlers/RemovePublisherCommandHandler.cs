@@ -1,6 +1,6 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
-using BellaBooks.BookCatalog.Domain.Errors;
+﻿using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Domain.Publishers;
+using BellaBooks.BookCatalog.Domain.Publishers.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;

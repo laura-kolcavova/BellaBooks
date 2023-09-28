@@ -15,7 +15,11 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BellaBooks.BookCatalog.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellaBooks.BookCatalog.Bussiness", "src\BellaBooks.BookCatalog.Bussiness\BellaBooks.BookCatalog.Bussiness.csproj", "{ED2F6217-7E03-4510-BB3E-0F9A497F9A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellaBooks.BookCatalog.Api", "src\BellaBooks.BookCatalog.Api\BellaBooks.BookCatalog.Api.csproj", "{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellaBooks.BookCatalog.Api", "src\BellaBooks.BookCatalog.Api\BellaBooks.BookCatalog.Api.csproj", "{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellaBooks.BookCatalog.UnitTests", "tests\BellaBooks.BookCatalog.UnitTests\BellaBooks.BookCatalog.UnitTests.csproj", "{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C56887B-B9B3-4120-AC8B-E18148D8494D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{714CDDA4-0EBA-4798-8021-7B73167B8B79} = {BF75665E-5A51-4E74-8CF5-4C0ABD8E1E64}
 		{ED2F6217-7E03-4510-BB3E-0F9A497F9A30} = {098A792D-9AEC-4C32-A490-392C6BEB5458}
 		{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2} = {098A792D-9AEC-4C32-A490-392C6BEB5458}
+		{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3} = {2C56887B-B9B3-4120-AC8B-E18148D8494D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {982489E2-920E-4D3D-8B61-C4CBCF97FD50}

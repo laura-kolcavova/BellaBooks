@@ -1,8 +1,8 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Books;
-using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
+using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -34,24 +34,20 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
         {
             var query = _bookCatalogContext.Books
                 .Include(book => book.Publisher)
-                .Include(book => book.AuthorBooks)
+                .Include(book => book.BookAuthors)
                     .ThenInclude(ab => ab.Author)
-                .Where(GetFilterExpression(command.SearchInput, command.Filter))
-                .Select(book => new BookListingItemReadModel
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    PublicaitonYear = book.PublicationInfo.Year,
-                    PublicationCity = book.PublicationInfo.City,
-                    PublicationLanguage = book.PublicationInfo.Language,
-                    Publisher = book.Publisher!,
-                    Authors = book.AuthorBooks
-                        .Select(ab => ab.Author)
-                        .ToList()
-                })
-                .AsNoTracking();
+                .Include(book => book.LibraryPrints)
+                .AsQueryable();
 
-            var books = await query.ToListAsync(ct);
+            if (command.SearchInput != null)
+            {
+                query = query
+                    .Where(GetFilterExpression(command.SearchInput, command.Filter));
+            }
+
+            var books = await query
+                .Select(book => BookListingItemReadModelExtensions.FromBookEntity(book))
+                .ToListAsync(ct);
 
             return books;
         }
@@ -77,12 +73,12 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
         if (
            filter == SimpleSearchFilter.Author)
         {
-            return (book) => book.AuthorBooks.Any(ab => ab.Author.Name.Contains(searchInput));
+            return (book) => book.BookAuthors.Any(ab => ab.Author.Name.Contains(searchInput));
         }
 
         return (book) =>
             book.Title.Contains(searchInput) ||
             book.PublicationInfo.Isbn == searchInput ||
-            book.AuthorBooks.Any(ab => ab.Author.Name.Contains(searchInput));
+            book.BookAuthors.Any(ab => ab.Author.Name.Contains(searchInput));
     }
 }

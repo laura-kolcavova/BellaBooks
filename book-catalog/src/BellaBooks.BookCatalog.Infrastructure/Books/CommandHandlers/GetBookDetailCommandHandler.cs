@@ -1,8 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Domain.Books;
 using BellaBooks.BookCatalog.Domain.Books.Commands;
-using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
-using CSharpFunctionalExtensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,7 +9,7 @@ namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
 
 internal class GetBookDetailCommandHandler : ICommandHandler<
     GetBookDetailCommand,
-    Result<BookEntity, ErrorResult>>
+    BookEntity?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetBookDetailCommandHandler> _logger;
@@ -24,7 +22,9 @@ internal class GetBookDetailCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<Result<BookEntity, ErrorResult>> ExecuteAsync(GetBookDetailCommand command, CancellationToken ct)
+    public async Task<
+        BookEntity?>
+        ExecuteAsync(GetBookDetailCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
@@ -36,18 +36,13 @@ internal class GetBookDetailCommandHandler : ICommandHandler<
             var book = await _bookCatalogContext.Books
                 .Include(book => book.Publisher)
                 .Include(book => book.LibraryPrints)
-                .Include(book => book.AuthorBooks)
+                    .ThenInclude(libaryPrint => libaryPrint.LibraryBranch)
+                .Include(book => book.BookAuthors)
                     .ThenInclude(ab => ab.Author)
                 .Include(book => book.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(book => book.Id == command.BookId, ct);
-
-            if (book == null)
-            {
-                return Result.Failure<BookEntity, ErrorResult>
-                    (BookErrorResults.BookNotFound);
-            }
 
             return book;
         }

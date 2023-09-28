@@ -2,7 +2,7 @@
 
 namespace BellaBooks.BookCatalog.Api.EndpointGroups;
 
-public class GenresEndpointGroup : Group
+internal class GenresEndpointGroup : Group
 {
     public GenresEndpointGroup()
     {

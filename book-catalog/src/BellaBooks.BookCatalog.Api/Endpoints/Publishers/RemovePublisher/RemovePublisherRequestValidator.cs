@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.RemovePublisher;
 
-public class RemovePublisherRequestValidator : Validator<RemovePublisherDto.Request>
+public class RemovePublisherRequestValidator : Validator<RemovePublisherContracts.Request>
 {
     public RemovePublisherRequestValidator()
     {

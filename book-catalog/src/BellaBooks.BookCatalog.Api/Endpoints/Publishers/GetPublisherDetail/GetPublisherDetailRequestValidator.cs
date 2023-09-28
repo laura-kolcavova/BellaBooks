@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
 
-public class GetPublisherDetailRequestValidator : Validator<GetPublisherDetailDto.Request>
+public class GetPublisherDetailRequestValidator : Validator<Contracts.Publishers.GetPublisherDetailContracts.Request>
 {
     public GetPublisherDetailRequestValidator()
     {

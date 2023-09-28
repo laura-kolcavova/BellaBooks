@@ -1,6 +1,6 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
-using BellaBooks.BookCatalog.Domain.Errors;
+﻿using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Domain.Genres;
+using BellaBooks.BookCatalog.Domain.Genres.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -35,15 +35,6 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
 
         try
         {
-            var genreExists = await _bookCatalogContext.Genres
-                .AnyAsync(genre => genre.Id == command.GenreId, ct);
-
-            if (!genreExists)
-            {
-                return UnitResult.Failure
-                    (GenreErrorResults.GenreNotFound);
-            }
-
             var changes = await _bookCatalogContext.Genres
                 .Where(genre => genre.Id == command.GenreId)
                 .ExecuteUpdateAsync(setters => setters.SetProperty(

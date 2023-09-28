@@ -1,6 +1,6 @@
 ﻿namespace BellaBooks.BookCatalog.Api.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApi(this IServiceCollection services)
     {

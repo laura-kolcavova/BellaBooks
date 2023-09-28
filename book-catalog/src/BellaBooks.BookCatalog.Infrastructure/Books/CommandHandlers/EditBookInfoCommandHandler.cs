@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
-using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Domain.Publishers;
@@ -38,7 +38,7 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
         try
         {
             var book = await _bookCatalogContext.Books
-                .Include(book => book.AuthorBooks)
+                .Include(book => book.BookAuthors)
                 .Include(book => book.BookGenres)
                 .SingleOrDefaultAsync(book => book.Id == command.BookId, ct);
 
@@ -94,17 +94,13 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                 .SetTitle(command.Title)
                 .SetAuthors(authors)
                 .SetGenres(genres)
-                .SetPublicationInfo(new PublicationInfoValueObject()
-                {
-                    Isbn = command.Isbn,
-                    Year = command.PublicationYear,
-                    City = command.PublicationCity,
-                    Language = command.PublicationLanguage
-                })
-                .SetFormatInfo(new FormatInfoValueObject()
-                {
-                    PageCount = command.PageCount,
-                })
+                .SetPublicationInfo(new PublicationInfoValueObject(
+                    isbn: command.Isbn,
+                    year: command.PublicationYear,
+                    city: command.PublicationCity,
+                    language: command.PublicationLanguage))
+                .SetFormatInfo(new FormatInfoValueObject(
+                    pageCount: command.PageCount))
                 .SetSummary(command.Summary);
 
             _bookCatalogContext.Books

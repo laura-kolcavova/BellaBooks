@@ -5,7 +5,7 @@ using FluentValidation;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
 public class GetGenreDetailRequestValidator : Validator<
-    GetGenreDetailDto.Request>
+    Contracts.Genres.GetGenreDetailContracts.Request>
 {
     public GetGenreDetailRequestValidator()
     {

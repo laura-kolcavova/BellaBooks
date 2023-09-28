@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.AddBook;
 
-public class AddBookRequestValidator : Validator<AddBookDto.Request>
+public class AddBookRequestValidator : Validator<Contracts.Books.AddBookContracts.Request>
 {
     public AddBookRequestValidator()
     {

@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.AddAuthor;
 
 public class AddAuthorEndpoint : Endpoint<
-    AddAuthorDto.Request,
-    Results<Ok<AddAuthorDto.Response>, ProblemHttpResult>,
+    AddAuthorContracts.Request,
+    Results<Ok<AddAuthorContracts.Response>, ProblemHttpResult>,
     AddAuthorResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ public class AddAuthorEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddAuthorDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddAuthorDto.Request req, CancellationToken ct)
+        Results<Ok<AddAuthorContracts.Response>, ProblemHttpResult>>
+        ExecuteAsync(AddAuthorContracts.Request req, CancellationToken ct)
     {
         var result = await new AddAuthorCommand
         {

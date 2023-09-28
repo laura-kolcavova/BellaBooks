@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.RemoveBook;
 
-public class RemoveBookRequestValidator : Validator<RemoveBookDto.Request>
+public class RemoveBookRequestValidator : Validator<Contracts.Books.RemoveBookContracts.Request>
 {
     public RemoveBookRequestValidator()
     {

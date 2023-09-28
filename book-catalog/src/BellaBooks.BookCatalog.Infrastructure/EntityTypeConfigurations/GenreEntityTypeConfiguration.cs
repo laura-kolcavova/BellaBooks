@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BellaBooks.BookCatalog.Infrastructure.EntityTypeConfigurations;
 
-public class GenreEntityTypeConfiguration :
+internal class GenreEntityTypeConfiguration :
     IEntityTypeConfiguration<GenreEntity>
 {
     public void Configure(EntityTypeBuilder<GenreEntity> builder)

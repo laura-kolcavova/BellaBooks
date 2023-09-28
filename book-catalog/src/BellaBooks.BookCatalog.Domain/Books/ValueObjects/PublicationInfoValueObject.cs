@@ -1,12 +1,30 @@
-﻿namespace BellaBooks.BookCatalog.Domain.Books.ValueObjects;
+﻿using CSharpFunctionalExtensions;
 
-public record PublicationInfoValueObject
+namespace BellaBooks.BookCatalog.Domain.Books.ValueObjects;
+
+public class PublicationInfoValueObject : ValueObject
 {
-    public required string Isbn { get; init; }
+    public string Isbn { get; }
 
-    public required short Year { get; init; }
+    public short Year { get; }
 
-    public required string Language { get; init; }
+    public string City { get; }
 
-    public required string City { get; init; }
+    public string Language { get; }
+
+    public PublicationInfoValueObject(string isbn, short year, string city, string language)
+    {
+        Isbn = isbn;
+        Year = year;
+        City = city;
+        Language = language;
+    }
+
+    protected override IEnumerable<IComparable> GetEqualityComponents()
+    {
+        yield return Isbn;
+        yield return Year;
+        yield return City;
+        yield return Language;
+    }
 }

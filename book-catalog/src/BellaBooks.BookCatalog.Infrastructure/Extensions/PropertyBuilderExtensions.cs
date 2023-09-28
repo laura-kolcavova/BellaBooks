@@ -2,7 +2,7 @@
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;
 
-public static class PropertyBuilderExtensions
+internal static class PropertyBuilderExtensions
 {
     public static PropertyBuilder<TProperty> HasStringEnumConversion<TProperty>(this PropertyBuilder<TProperty> propertyBuilder)
         where TProperty : Enum

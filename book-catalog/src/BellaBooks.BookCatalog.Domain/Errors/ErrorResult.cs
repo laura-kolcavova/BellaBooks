@@ -1,10 +1,28 @@
 ﻿namespace BellaBooks.BookCatalog.Domain.Errors;
 
-public class ErrorResult
+public record ErrorResult
 {
-    public required string Code { get; init; }
+    private static readonly string EmptyMessage = string.Empty;
 
-    public string Message { get; init; } = string.Empty;
+    public string Code { get; }
 
-    public ErrorResultSeverity Severity { get; init; } = ErrorResultSeverity.Error;
+    public string Message { get; }
+
+    public ErrorResultSeverity Severity { get; }
+
+    public ErrorResult(string code, string message, ErrorResultSeverity severity)
+    {
+        Code = code;
+        Message = message;
+        Severity = severity;
+    }
+    public ErrorResult(string code, string message)
+        : this(code, message, ErrorResultSeverity.Error)
+    {
+    }
+
+    public ErrorResult(string code)
+        : this(code, EmptyMessage, ErrorResultSeverity.Error)
+    {
+    }
 }

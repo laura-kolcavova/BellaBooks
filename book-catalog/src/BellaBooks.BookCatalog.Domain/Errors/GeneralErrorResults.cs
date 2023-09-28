@@ -4,45 +4,31 @@ namespace BellaBooks.BookCatalog.Domain.Errors;
 
 public static class GeneralErrorResults
 {
-    public static ErrorResult EntityNotFound { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityNotFound,
-        Message = "Entity was not found."
-    };
+    public static ErrorResult EntityNotFound => new(
+        ErrorCodes.General.EntityNotFound,
+        "Entity was not found.");
 
-    public static ErrorResult EntityAlreadyExists { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityAlreadyExists,
-        Message = "Entity already exists."
-    };
+    public static ErrorResult EntityAlreadyExists => new(
+        ErrorCodes.General.EntityAlreadyExists,
+        "Entity already exists.");
 
-    public static ErrorResult EntityInBadState { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityInBadState,
-        Message = "Entity is in bad state."
-    };
+    public static ErrorResult EntityInBadState => new(
+        ErrorCodes.General.EntityInBadState,
+        "Entity is in bad state.");
 
-    public static ErrorResult EntityNotAdded { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityNotAdded,
-        Message = "Entity was not added."
-    };
+    public static ErrorResult EntityNotAdded => new(
+        ErrorCodes.General.EntityNotAdded,
+        "Entity was not added.");
 
-    public static ErrorResult EntityNotDeleted { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityNotDeleted,
-        Message = "Entity was not deleted."
-    };
+    public static ErrorResult EntityNotDeleted => new(
+        ErrorCodes.General.EntityNotDeleted,
+        "Entity was not deleted.");
 
-    public static ErrorResult EntityNotUpdated { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.EntityNotUpdated,
-        Message = "Entity was not updated."
-    };
+    public static ErrorResult EntityNotUpdated => new(
+        ErrorCodes.General.EntityNotUpdated,
+        "Entity was not updated.");
 
-    public static ErrorResult NoChangesInDatabase { get; } = new ErrorResult()
-    {
-        Code = ErrorCodes.General.NoChangesInDatabase,
-        Message = "There were no changes in the database."
-    };
+    public static ErrorResult NoChangesInDatabase => new(
+        ErrorCodes.General.NoChangesInDatabase,
+        "There were no changes in the database.");
 }

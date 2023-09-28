@@ -5,7 +5,7 @@ namespace FastEndpoints;
 
 internal class ExceptionHandler { }
 
-public static class ExceptionHandlerExtensions
+internal static class ExceptionHandlerExtensions
 {
     public static IApplicationBuilder UseProblemDetailsExceptionHandler(this IApplicationBuilder app, ILogger? logger = null, bool logStructuredException = false)
     {

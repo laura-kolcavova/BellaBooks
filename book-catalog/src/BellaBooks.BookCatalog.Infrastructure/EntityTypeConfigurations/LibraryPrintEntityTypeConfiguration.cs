@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BellaBooks.BookCatalog.Infrastructure.EntityTypeConfigurations;
 
-public class LibraryPrintEntityTypeConfiguration :
+internal class LibraryPrintEntityTypeConfiguration :
     IEntityTypeConfiguration<LibraryPrintEntity>
 {
     public void Configure(EntityTypeBuilder<LibraryPrintEntity> builder)
@@ -48,5 +48,10 @@ public class LibraryPrintEntityTypeConfiguration :
             .HasOne(e => e.Book)
             .WithMany(f => f.LibraryPrints)
             .HasForeignKey(e => e.BookId);
+
+        builder
+           .HasOne(e => e.LibraryBranch)
+           .WithMany(f => f.LibraryPrints)
+           .HasForeignKey(e => e.LibraryBranchCode);
     }
 }

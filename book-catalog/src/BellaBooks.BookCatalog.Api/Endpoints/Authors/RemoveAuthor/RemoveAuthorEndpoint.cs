@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.RemoveAuthor;
 
 public class RemoveAuthorEndpoint : Endpoint<
-    RemoveAuthorDto.Request,
+    RemoveAuthorContracts.Request,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class RemoveAuthorEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(RemoveAuthorDto.Request req, CancellationToken ct)
+        ExecuteAsync(RemoveAuthorContracts.Request req, CancellationToken ct)
     {
         var result = await new RemoveAuthorCommand()
         {

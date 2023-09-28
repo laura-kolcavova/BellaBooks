@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BellaBooks.BookCatalog.Infrastructure;
 
-public abstract class BaseDbContext<TContext> : DbContext
+internal abstract class BaseDbContext<TContext> : DbContext
     where TContext : DbContext
 {
     protected BaseDbContext(DbContextOptions<TContext> options)

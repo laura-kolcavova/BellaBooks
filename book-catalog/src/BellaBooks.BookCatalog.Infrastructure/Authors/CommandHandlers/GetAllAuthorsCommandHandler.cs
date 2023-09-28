@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Authors.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Authors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using FastEndpoints;

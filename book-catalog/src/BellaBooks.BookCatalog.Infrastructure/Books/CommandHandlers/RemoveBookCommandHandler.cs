@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Books.Commands;
-using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;

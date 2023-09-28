@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 public class SimpleSearchBooksEndpoint : Endpoint<
-    SimpleSearchBooksDto.Request,
-    Ok<SimpleSearchBooksDto.Response>,
+    SimpleSearchBooksContracts.Request,
+    Ok<SimpleSearchBooksContracts.Response>,
     SimpleSearchBooksResponseMapper>
 {
     public override void Configure()
@@ -26,12 +26,12 @@ public class SimpleSearchBooksEndpoint : Endpoint<
     }
 
     public override async Task<
-        Ok<SimpleSearchBooksDto.Response>>
-        ExecuteAsync(SimpleSearchBooksDto.Request req, CancellationToken ct)
+        Ok<SimpleSearchBooksContracts.Response>>
+        ExecuteAsync(SimpleSearchBooksContracts.Request req, CancellationToken ct)
     {
         var books = await new SimpleSearchBooksCommand
         {
-            SearchInput = req.SearchInput,
+            SearchInput = req.SearchInput ?? string.Empty,
             Filter = req.Filter,
         }.ExecuteAsync(ct);
 

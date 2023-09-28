@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Bussiness.LibraryPrints.Commands;
+using BellaBooks.BookCatalog.Domain.LibraryPrints.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 
 public class AddLibraryPrintEndpoint : Endpoint<
-    AddLibraryPrintDto.Request,
-    Results<Ok<AddLibraryPrintDto.Response>, ProblemHttpResult>,
+    AddLibraryPrintContracts.Request,
+    Results<Ok<AddLibraryPrintContracts.Response>, ProblemHttpResult>,
     AddLibraryPrintResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ public class AddLibraryPrintEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddLibraryPrintDto.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddLibraryPrintDto.Request req, CancellationToken ct)
+        Results<Ok<AddLibraryPrintContracts.Response>, ProblemHttpResult>>
+        ExecuteAsync(AddLibraryPrintContracts.Request req, CancellationToken ct)
     {
         var result = await new AddLibraryPrintCommand
         {

@@ -1,6 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Domain.Authors;
 using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
-using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Genres;
 using BellaBooks.BookCatalog.Domain.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Publishers;
@@ -29,7 +28,7 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     private List<BookGenreEntity> _bookGenres;
 
-    private List<AuthorBookEntity> _authorBooks;
+    private List<BookAuthorEntity> _bookAuthors;
 
     public PublisherEntity? Publisher { get; private set; }
 
@@ -40,8 +39,8 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         _bookGenres
             .ToList();
 
-    public IReadOnlyCollection<AuthorBookEntity> AuthorBooks =>
-        _authorBooks
+    public IReadOnlyCollection<BookAuthorEntity> BookAuthors =>
+        _bookAuthors
             .ToList();
 
     #endregion NavigationProperties
@@ -49,26 +48,14 @@ public class BookEntity : IEntity<int>, ITrackableEntity
     public BookEntity(string title)
     {
         Title = title;
-
-        PublicationInfo = new PublicationInfoValueObject()
-        {
-            Isbn = string.Empty,
-            Year = 0,
-            City = string.Empty,
-            Language = string.Empty,
-        };
-
-        FormatInfo = new FormatInfoValueObject();
+        PublicationInfo = null!;
+        FormatInfo = null!;
 
         LibraryPrints = new List<LibraryPrintEntity>();
 
         _bookGenres = new List<BookGenreEntity>();
-        _authorBooks = new List<AuthorBookEntity>();
+        _bookAuthors = new List<BookAuthorEntity>();
     }
-
-    public bool IsAvailable =>
-         LibraryPrints.Any(libraryPrint =>
-            libraryPrint.StateCode == LibraryPrintStateCode.AV);
 
     public BookEntity SetTitle(string title)
     {
@@ -113,11 +100,11 @@ public class BookEntity : IEntity<int>, ITrackableEntity
             throw new ArgumentException("Collection of authors must not be empty", nameof(authors));
         }
 
-        var authorBooks = authors
-            .Select(author => new AuthorBookEntity(author, this))
+        var bookAuthors = authors
+            .Select(author => new BookAuthorEntity(author, this))
             .ToList();
 
-        _authorBooks = authorBooks;
+        _bookAuthors = bookAuthors;
 
         return this;
     }

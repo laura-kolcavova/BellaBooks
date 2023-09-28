@@ -1,15 +1,14 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Publishers.Commands;
-using BellaBooks.BookCatalog.Domain.Errors;
-using BellaBooks.BookCatalog.Domain.Publishers;
+﻿using BellaBooks.BookCatalog.Domain.Publishers;
+using BellaBooks.BookCatalog.Domain.Publishers.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
-using CSharpFunctionalExtensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Publishers.CommandHandlers;
+
 internal class GetPublisherDetailCommandHandler : ICommandHandler<
-    GetPublisherDetailCommand, Result<PublisherEntity, ErrorResult>>
+    GetPublisherDetailCommand, PublisherEntity?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetPublisherDetailCommandHandler> _logger;
@@ -23,7 +22,7 @@ internal class GetPublisherDetailCommandHandler : ICommandHandler<
     }
 
     public async Task<
-        Result<PublisherEntity, ErrorResult>>
+        PublisherEntity?>
         ExecuteAsync(GetPublisherDetailCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
@@ -36,12 +35,6 @@ internal class GetPublisherDetailCommandHandler : ICommandHandler<
             var publisher = await _bookCatalogContext.Publishers
                 .AsNoTracking()
                 .SingleOrDefaultAsync(publisher => publisher.Id == command.PublisherId, ct);
-
-            if (publisher == null)
-            {
-                return Result.Failure<PublisherEntity, ErrorResult>
-                    (PublisherErrorResults.PublisherNotFound);
-            }
 
             return publisher;
         }

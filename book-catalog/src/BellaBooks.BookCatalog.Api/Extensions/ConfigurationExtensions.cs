@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace BellaBooks.BookCatalog.Api.Extensions;
 
-public static class ConfigurationExtensions
+internal static class ConfigurationExtensions
 {
     public static T GetConfiguration<T>(this IConfiguration configuration, string sectionName)
     {

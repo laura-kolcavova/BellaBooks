@@ -5,19 +5,19 @@ BEGIN
 
     MERGE INTO [dbo].[Genres] AS Target
     USING (VALUES
-        (1, 'Fiction'),
-        (2, 'Classic'),
-        (3, 'Dystopian'),
-        (4, 'Magic Realism'),
-        (5, 'Jazz Age'),
-        (6, 'Historical Fiction'),
-        (7, 'Science Fiction'),
-        (8, 'Non-fiction'),
-        (9, 'Political Satire'),
-        (10, 'Fantasy'),
-        (11, 'Autobiography'),
-        (12, 'Philosophical Fiction'),
-        (13, 'Young Adult Fiction')
+        (1, N'Fiction'),
+        (2, N'Classic'),
+        (3, N'Dystopian'),
+        (4, N'Magic Realism'),
+        (5, N'Jazz Age'),
+        (6, N'Historical Fiction'),
+        (7, N'Science Fiction'),
+        (8, N'Non-fiction'),
+        (9, N'Political Satire'),
+        (10, N'Fantasy'),
+        (11, N'Autobiography'),
+        (12, N'Philosophical Fiction'),
+        (13, N'Young Adult Fiction')
     ) AS SOURCE (
         [Id],
         [Name]

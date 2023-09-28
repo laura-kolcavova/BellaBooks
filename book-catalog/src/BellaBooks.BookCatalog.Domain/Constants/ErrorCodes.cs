@@ -1,4 +1,5 @@
 ﻿namespace BellaBooks.BookCatalog.Domain.Constants;
+
 public static class ErrorCodes
 {
     public static class General
@@ -16,6 +17,25 @@ public static class ErrorCodes
         public const string EntityNotUpdated = $"{nameof(EntityNotUpdated)}";
 
         public const string NoChangesInDatabase = $"{nameof(NoChangesInDatabase)}";
+    }
+
+    public static class LibraryBranches
+    {
+        public const string LibraryBranchNotFound = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchNotFound)}";
+
+        public const string LibraryBranchWithSameCodeAlreadyExists = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchWithSameCodeAlreadyExists)}";
+
+        public const string LibraryBranchNotAdded = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchNotAdded)}";
+
+        public const string LibraryBranchInfoNotUpdated = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchInfoNotUpdated)}";
+
+        public const string LibraryBranchNotRemoved = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchNotRemoved)}";
+
+        public const string LibraryBranchIsDisabled = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchIsDisabled)}";
+
+        public const string LibraryBranchActivatingFailed = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchActivatingFailed)}";
+
+        public const string LibraryBranchDisablingFailed = $"{nameof(LibraryBranches)}.{nameof(LibraryBranchDisablingFailed)}";
     }
 
     public static class Books
@@ -74,6 +94,18 @@ public static class ErrorCodes
 
     public static class LibraryPrints
     {
-        public const string LibaryPrintNotAdded = $"{nameof(LibraryPrints)}.{nameof(LibaryPrintNotAdded)}";
+        public const string LibraryPrintNotFound = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintNotFound)}";
+
+        public const string LibraryPrintNotAdded = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintNotAdded)}";
+
+        public const string LibraryPrintNotRemoved = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintNotRemoved)}";
+
+        public const string LibraryPrintStateIsSameAsNewOne = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintStateIsSameAsNewOne)}";
+
+        public const string LibraryPrintStateNotChanged = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintStateNotChanged)}";
+
+        public const string LibraryPrintLocationIsSameAsNewOne = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintLocationIsSameAsNewOne)}";
+
+        public const string LibraryPrintLocationNotChanged = $"{nameof(LibraryPrints)}.{nameof(LibraryPrintLocationNotChanged)}";
     }
 }

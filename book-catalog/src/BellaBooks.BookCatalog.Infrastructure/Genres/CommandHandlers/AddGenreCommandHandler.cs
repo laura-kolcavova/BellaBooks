@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Bussiness.Genres.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Errors;
 using BellaBooks.BookCatalog.Domain.Genres;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;

@@ -1,6 +1,6 @@
 ﻿namespace BellaBooks.BookCatalog.Api.Configuration;
 
-public class ConnectionStringAndPasswordSection
+internal class ConnectionStringAndPasswordSection
 {
     public required string ConnectionString { get; set; }
 
