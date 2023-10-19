@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 
 internal class AddLibraryPrintEndpoint : Endpoint<
-    AddLibraryPrintContracts.Request,
-    Results<Ok<AddLibraryPrintContracts.Response>, ProblemHttpResult>,
+    AddLibraryPrintContracts.RequestDto,
+    Results<Ok<AddLibraryPrintContracts.ResponseDto>, ProblemHttpResult>,
     AddLibraryPrintResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ internal class AddLibraryPrintEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddLibraryPrintContracts.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddLibraryPrintContracts.Request req, CancellationToken ct)
+        Results<Ok<AddLibraryPrintContracts.ResponseDto>, ProblemHttpResult>>
+        ExecuteAsync(AddLibraryPrintContracts.RequestDto req, CancellationToken ct)
     {
         var result = await new AddLibraryPrintCommand
         {

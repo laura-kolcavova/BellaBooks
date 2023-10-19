@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 internal class SimpleSearchBooksEndpoint : Endpoint<
-    SimpleSearchBooksContracts.Request,
-    Ok<SimpleSearchBooksContracts.Response>,
+    SimpleSearchBooksContracts.RequestDto,
+    Ok<SimpleSearchBooksContracts.ResponseDto>,
     SimpleSearchBooksResponseMapper>
 {
     public override void Configure()
@@ -26,8 +26,8 @@ internal class SimpleSearchBooksEndpoint : Endpoint<
     }
 
     public override async Task<
-        Ok<SimpleSearchBooksContracts.Response>>
-        ExecuteAsync(SimpleSearchBooksContracts.Request req, CancellationToken ct)
+        Ok<SimpleSearchBooksContracts.ResponseDto>>
+        ExecuteAsync(SimpleSearchBooksContracts.RequestDto req, CancellationToken ct)
     {
         var books = await new SimpleSearchBooksCommand
         {

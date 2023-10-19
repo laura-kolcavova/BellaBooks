@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.RemoveAuthor;
 
 public class RemoveAuthorEndpoint : Endpoint<
-    RemoveAuthorContracts.Request,
+    RemoveAuthorContracts.RequestDto,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class RemoveAuthorEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(RemoveAuthorContracts.Request req, CancellationToken ct)
+        ExecuteAsync(RemoveAuthorContracts.RequestDto req, CancellationToken ct)
     {
         var result = await new RemoveAuthorCommand()
         {

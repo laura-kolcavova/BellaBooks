@@ -2,7 +2,7 @@
 
 public static class RemoveAuthorContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int AuthorId { get; init; }
     }

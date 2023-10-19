@@ -2,12 +2,12 @@
 
 public static class GetGenreDetailContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int GenreId { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required GenreDetailDto? Genre { get; init; }
     }

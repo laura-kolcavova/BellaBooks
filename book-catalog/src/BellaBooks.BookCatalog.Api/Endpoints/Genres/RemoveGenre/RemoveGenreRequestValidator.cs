@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.RemoveGenre;
 
-internal class RemoveGenreRequestValidator : Validator<RemoveGenreContracts.Request>
+internal class RemoveGenreRequestValidator : Validator<RemoveGenreContracts.RequestDto>
 {
     public RemoveGenreRequestValidator()
     {

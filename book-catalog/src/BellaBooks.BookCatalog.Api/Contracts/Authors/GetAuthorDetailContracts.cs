@@ -2,12 +2,12 @@
 
 public static class GetAuthorDetailContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int AuthorId { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required AuthorDetailDto? Author { get; init; }
     }

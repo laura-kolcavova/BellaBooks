@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
-internal class GetGenreDetailRequestValidator : Validator<GetGenreDetailContracts.Request>
+internal class GetGenreDetailRequestValidator : Validator<GetGenreDetailContracts.RequestDto>
 {
     public GetGenreDetailRequestValidator()
     {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.EditBookInfo;
 
 public class EditBookInfoEndpoint : Endpoint<
-    EditBookInfoContracts.Request,
+    EditBookInfoContracts.RequestDto,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class EditBookInfoEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(EditBookInfoContracts.Request req, CancellationToken ct)
+        ExecuteAsync(EditBookInfoContracts.RequestDto req, CancellationToken ct)
     {
         var result = await CreateEditBookInfoCommand(req)
             .ExecuteAsync(ct);
@@ -43,7 +43,7 @@ public class EditBookInfoEndpoint : Endpoint<
         return TypedResults.Ok();
     }
 
-    private static EditBookInfoCommand CreateEditBookInfoCommand(Contracts.Books.EditBookInfoContracts.Request req)
+    private static EditBookInfoCommand CreateEditBookInfoCommand(Contracts.Books.EditBookInfoContracts.RequestDto req)
     {
         return new EditBookInfoCommand()
         {

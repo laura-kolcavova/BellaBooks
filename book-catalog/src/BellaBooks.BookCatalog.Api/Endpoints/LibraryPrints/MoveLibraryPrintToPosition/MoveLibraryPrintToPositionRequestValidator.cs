@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.MoveLibraryPrintToPosition;
 
-internal class MoveLibraryPrintToPositionRequestValidator : Validator<MoveLibraryPrintToPositionContracts.Request>
+internal class MoveLibraryPrintToPositionRequestValidator : Validator<MoveLibraryPrintToPositionContracts.RequestDto>
 {
     public MoveLibraryPrintToPositionRequestValidator()
     {

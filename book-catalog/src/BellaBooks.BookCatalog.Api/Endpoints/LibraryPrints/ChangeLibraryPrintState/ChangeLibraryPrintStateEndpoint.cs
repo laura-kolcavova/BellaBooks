@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.ChangeLibraryPrintState;
 
 public class ChangeLibraryPrintStateEndpoint : Endpoint<
-    ChangeLibraryPrintStateContracts.Request,
+    ChangeLibraryPrintStateContracts.RequestDto,
     Results<Ok, ProblemHttpResult>>
 {
     public override void Configure()
@@ -29,7 +29,7 @@ public class ChangeLibraryPrintStateEndpoint : Endpoint<
 
     public override async Task<
         Results<Ok, ProblemHttpResult>>
-        ExecuteAsync(ChangeLibraryPrintStateContracts.Request req, CancellationToken ct)
+        ExecuteAsync(ChangeLibraryPrintStateContracts.RequestDto req, CancellationToken ct)
     {
         var result = await new ChangeLibaryPrintStateCommand()
         {

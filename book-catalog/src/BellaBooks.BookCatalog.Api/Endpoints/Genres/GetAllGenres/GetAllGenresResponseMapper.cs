@@ -5,10 +5,10 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
 internal class GetAllGenresResponseMapper : ResponseMapper<
-    GetAllGenresContracts.Response,
+    GetAllGenresContracts.ResponseDto,
     ICollection<GenreEntity>>
 {
-    public override GetAllGenresContracts.Response FromEntity(ICollection<GenreEntity> e)
+    public override GetAllGenresContracts.ResponseDto FromEntity(ICollection<GenreEntity> e)
     {
         return new()
         {

@@ -2,7 +2,7 @@
 
 public static class GetAllPublishersContracts
 {
-    public record Response
+    public record ResponseDto
     {
         public required ICollection<PublisherDetailDto> Publishers { get; init; }
     }

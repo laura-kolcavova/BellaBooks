@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.RemoveBook;
 
-internal class RemoveBookRequestValidator : Validator<RemoveBookContracts.Request>
+internal class RemoveBookRequestValidator : Validator<RemoveBookContracts.RequestDto>
 {
     public RemoveBookRequestValidator()
     {

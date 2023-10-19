@@ -2,7 +2,7 @@
 
 public static class AddBookContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required string Title { get; init; }
 
@@ -25,7 +25,7 @@ public static class AddBookContracts
         public required string? Summary { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required int BookId { get; init; }
     }

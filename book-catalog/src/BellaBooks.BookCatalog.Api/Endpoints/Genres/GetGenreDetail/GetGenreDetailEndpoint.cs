@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
 internal class GetGenreByIdEndpoint : Endpoint<
-    GetGenreDetailContracts.Request,
-    Ok<GetGenreDetailContracts.Response>,
+    GetGenreDetailContracts.RequestDto,
+    Ok<GetGenreDetailContracts.ResponseDto>,
     GetGenreDetailResponseMapper>
 {
     public override void Configure()
@@ -25,8 +25,8 @@ internal class GetGenreByIdEndpoint : Endpoint<
     }
 
     public override async Task<
-        Ok<GetGenreDetailContracts.Response>>
-        ExecuteAsync(GetGenreDetailContracts.Request req, CancellationToken ct)
+        Ok<GetGenreDetailContracts.ResponseDto>>
+        ExecuteAsync(GetGenreDetailContracts.RequestDto req, CancellationToken ct)
     {
         var result = await new GetGenreDetailCommand()
         {

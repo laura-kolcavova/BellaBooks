@@ -2,7 +2,7 @@
 
 public static class MoveLibraryPrintToPositionContracts
 {
-    public record Request
+    public record RequestDto
     {
         public int LibraryPrintId { get; init; }
 

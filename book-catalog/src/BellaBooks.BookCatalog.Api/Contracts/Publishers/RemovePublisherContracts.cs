@@ -2,7 +2,7 @@
 
 public static class RemovePublisherContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int PublisherId { get; init; }
     }

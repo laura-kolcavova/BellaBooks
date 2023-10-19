@@ -2,7 +2,7 @@
 
 public static class EditAuthorInfoContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int AuthorId { get; init; }
 

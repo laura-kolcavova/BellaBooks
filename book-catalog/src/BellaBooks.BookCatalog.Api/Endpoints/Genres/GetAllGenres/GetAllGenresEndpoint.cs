@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
 internal class GetAllGenresEndpoint : EndpointWithoutRequest<
-    Ok<GetAllGenresContracts.Response>,
+    Ok<GetAllGenresContracts.ResponseDto>,
     GetAllGenresResponseMapper>
 {
     public override void Configure()
@@ -25,7 +25,7 @@ internal class GetAllGenresEndpoint : EndpointWithoutRequest<
     }
 
     public override async Task<
-        Ok<GetAllGenresContracts.Response>>
+        Ok<GetAllGenresContracts.ResponseDto>>
         ExecuteAsync(CancellationToken ct)
     {
         var genres = await new GetAllGenresCommand()

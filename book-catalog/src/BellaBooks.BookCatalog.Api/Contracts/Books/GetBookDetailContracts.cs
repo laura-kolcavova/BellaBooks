@@ -2,12 +2,12 @@
 
 public static class GetBookDetailContracts
 {
-    public class Request
+    public class RequestDto
     {
         public required int BookId { get; init; }
     }
 
-    public class Response
+    public class ResponseDto
     {
         public required BookDetailDto? BookDetail { get; init; }
     }

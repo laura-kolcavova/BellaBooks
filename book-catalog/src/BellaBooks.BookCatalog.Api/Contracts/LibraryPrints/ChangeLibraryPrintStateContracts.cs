@@ -4,7 +4,7 @@ namespace BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
 
 public static class ChangeLibraryPrintStateContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int LibraryPrintId { get; init; }
 

@@ -2,7 +2,7 @@
 
 public static class RemoveLibraryPrintContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int LibraryPrintId { get; init; }
     }

@@ -2,7 +2,7 @@
 
 public static class RemoveBookContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int BookId { get; init; }
     }

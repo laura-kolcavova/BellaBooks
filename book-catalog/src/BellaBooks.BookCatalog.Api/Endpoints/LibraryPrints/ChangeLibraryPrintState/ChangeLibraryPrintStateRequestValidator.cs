@@ -5,7 +5,7 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.ChangeLibraryPrintState;
 
 internal class ChangeLibraryPrintStateRequestValidator : Validator<
-    ChangeLibraryPrintStateContracts.Request>
+    ChangeLibraryPrintStateContracts.RequestDto>
 {
     public ChangeLibraryPrintStateRequestValidator()
     {

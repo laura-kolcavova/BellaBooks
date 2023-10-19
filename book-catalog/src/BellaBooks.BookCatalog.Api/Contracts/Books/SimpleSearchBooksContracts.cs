@@ -4,14 +4,14 @@ namespace BellaBooks.BookCatalog.Api.Contracts.Books;
 
 public static class SimpleSearchBooksContracts
 {
-    public class Request
+    public class RequestDto
     {
         public required string? SearchInput { get; init; }
 
         public required SimpleSearchFilter Filter { get; init; }
     }
 
-    public class Response
+    public class ResponseDto
     {
         public required IReadOnlyCollection<BookListingItemDto> Books { get; init; }
     }

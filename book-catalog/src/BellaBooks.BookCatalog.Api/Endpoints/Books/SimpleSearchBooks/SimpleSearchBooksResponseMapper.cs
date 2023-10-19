@@ -5,10 +5,10 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 internal class SimpleSearchBooksResponseMapper : ResponseMapper<
-    SimpleSearchBooksContracts.Response,
+    SimpleSearchBooksContracts.ResponseDto,
     ICollection<BookListingItemReadModel>>
 {
-    public override SimpleSearchBooksContracts.Response FromEntity(ICollection<BookListingItemReadModel> e)
+    public override SimpleSearchBooksContracts.ResponseDto FromEntity(ICollection<BookListingItemReadModel> e)
     {
         return new()
         {

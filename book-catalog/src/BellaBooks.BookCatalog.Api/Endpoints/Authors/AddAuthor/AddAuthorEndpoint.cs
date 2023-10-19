@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.AddAuthor;
 
 internal class AddAuthorEndpoint : Endpoint<
-    AddAuthorContracts.Request,
-    Results<Ok<AddAuthorContracts.Response>, ProblemHttpResult>,
+    AddAuthorContracts.RequestDto,
+    Results<Ok<AddAuthorContracts.ResponseDto>, ProblemHttpResult>,
     AddAuthorResponseMapper>
 {
     public override void Configure()
@@ -29,8 +29,8 @@ internal class AddAuthorEndpoint : Endpoint<
     }
 
     public override async Task<
-        Results<Ok<AddAuthorContracts.Response>, ProblemHttpResult>>
-        ExecuteAsync(AddAuthorContracts.Request req, CancellationToken ct)
+        Results<Ok<AddAuthorContracts.ResponseDto>, ProblemHttpResult>>
+        ExecuteAsync(AddAuthorContracts.RequestDto req, CancellationToken ct)
     {
         var result = await new AddAuthorCommand
         {

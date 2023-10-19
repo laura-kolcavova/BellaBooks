@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.RemovePublisher;
 
-internal class RemovePublisherRequestValidator : Validator<RemovePublisherContracts.Request>
+internal class RemovePublisherRequestValidator : Validator<RemovePublisherContracts.RequestDto>
 {
     public RemovePublisherRequestValidator()
     {

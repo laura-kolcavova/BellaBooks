@@ -4,9 +4,9 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 
 internal class AddLibraryPrintResponseMapper : ResponseMapper<
-    AddLibraryPrintContracts.Response, int>
+    AddLibraryPrintContracts.ResponseDto, int>
 {
-    public override AddLibraryPrintContracts.Response FromEntity(int e)
+    public override AddLibraryPrintContracts.ResponseDto FromEntity(int e)
     {
         return new()
         {

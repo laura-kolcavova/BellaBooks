@@ -2,12 +2,12 @@
 
 public static class GetPublisherDetailContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int PublisherId { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required PublisherDetailDto? Publisher { get; init; }
     }

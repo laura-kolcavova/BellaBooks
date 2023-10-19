@@ -2,7 +2,7 @@
 
 public static class EditGenreInfoContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int GenreId { get; init; }
 

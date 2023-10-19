@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 
-internal class AddLibraryPrintRequestValidator : Validator<AddLibraryPrintContracts.Request>
+internal class AddLibraryPrintRequestValidator : Validator<AddLibraryPrintContracts.RequestDto>
 {
     public AddLibraryPrintRequestValidator()
     {

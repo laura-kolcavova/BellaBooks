@@ -2,7 +2,7 @@
 
 public static class GetAllGenresContracts
 {
-    public record Response
+    public record ResponseDto
     {
         public required ICollection<GenreDetailDto> Genres { get; init; }
     }

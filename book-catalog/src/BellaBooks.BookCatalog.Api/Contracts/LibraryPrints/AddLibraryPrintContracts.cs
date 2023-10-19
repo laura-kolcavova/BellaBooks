@@ -2,7 +2,7 @@
 
 public static class AddLibraryPrintContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required int BookId { get; init; }
 
@@ -11,7 +11,7 @@ public static class AddLibraryPrintContracts
         public required string Shelfmark { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required int LibraryPrintId { get; init; }
     }

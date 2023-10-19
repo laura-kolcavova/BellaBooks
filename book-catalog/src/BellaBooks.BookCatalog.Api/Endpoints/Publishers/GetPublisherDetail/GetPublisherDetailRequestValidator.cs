@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
 
-internal class GetPublisherDetailRequestValidator : Validator<Contracts.Publishers.GetPublisherDetailContracts.Request>
+internal class GetPublisherDetailRequestValidator : Validator<Contracts.Publishers.GetPublisherDetailContracts.RequestDto>
 {
     public GetPublisherDetailRequestValidator()
     {
