@@ -2,12 +2,12 @@
 
 public static class GetLibraryBranchDetailContracts
 {
-    public record Request
+    public record RequestDto
     {
         public required string LibraryBranchCode { get; init; }
     }
 
-    public record Response
+    public record ResponseDto
     {
         public required LibraryBranchDetailDto? LibraryBranch { get; init; }
     }

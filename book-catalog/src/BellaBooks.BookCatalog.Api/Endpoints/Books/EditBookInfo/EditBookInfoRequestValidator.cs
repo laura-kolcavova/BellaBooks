@@ -1,15 +1,16 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.EditBookInfo;
 
-public class EditBookInfoRequestValidator : Validator<Contracts.Books.EditBookInfoContracts.Request>
+internal class EditBookInfoRequestValidator : Validator<EditBookInfoContracts.Request>
 {
     public EditBookInfoRequestValidator()
     {
         RuleFor(x => x.BookId)
-            .GreaterThan(0);
+            .IsNumericId();
 
         RuleFor(x => x.Title)
            .MaximumLength(255)
@@ -17,13 +18,13 @@ public class EditBookInfoRequestValidator : Validator<Contracts.Books.EditBookIn
 
         RuleFor(request => request.AuthorIds)
             .NotEmpty()
-            .ForEach(id => id.GreaterThan(0));
+            .ForEach(id => id.IsNumericId());
 
         RuleFor(request => request.GenreIds)
-            .ForEach(id => id.GreaterThan(0));
+            .ForEach(id => id.IsNumericId());
 
         RuleFor(x => x.PublisherId)
-            .GreaterThan(0);
+            .IsNumericId();
 
         RuleFor(x => x.Isbn)
             .NotEmpty()

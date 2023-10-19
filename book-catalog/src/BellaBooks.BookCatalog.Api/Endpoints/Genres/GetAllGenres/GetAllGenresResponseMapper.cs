@@ -4,11 +4,11 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 
-public class GetAllGenresResponseMapper : ResponseMapper<
-    Contracts.Genres.GetAllGenresContracts.Response,
+internal class GetAllGenresResponseMapper : ResponseMapper<
+    GetAllGenresContracts.Response,
     ICollection<GenreEntity>>
 {
-    public override Contracts.Genres.GetAllGenresContracts.Response FromEntity(ICollection<GenreEntity> e)
+    public override GetAllGenresContracts.Response FromEntity(ICollection<GenreEntity> e)
     {
         return new()
         {

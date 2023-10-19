@@ -1,15 +1,15 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
-using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.ChangeLibraryPrintState;
 
-public class ChangeLibraryPrintRequestValidator : Validator<
+internal class ChangeLibraryPrintStateRequestValidator : Validator<
     ChangeLibraryPrintStateContracts.Request>
 {
-    public ChangeLibraryPrintRequestValidator()
+    public ChangeLibraryPrintStateRequestValidator()
     {
         RuleFor(x => x.LibraryPrintId)
-          .GreaterThan(0);
+            .IsNumericId();
     }
 }

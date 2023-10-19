@@ -1,19 +1,19 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.MoveLibraryPrintToPosition;
 
-public class MoveLibraryPrintToPositionRequestValidator : Validator<MoveLibraryPrintToPositionContracts.Request>
+internal class MoveLibraryPrintToPositionRequestValidator : Validator<MoveLibraryPrintToPositionContracts.Request>
 {
     public MoveLibraryPrintToPositionRequestValidator()
     {
         RuleFor(x => x.LibraryPrintId)
-          .GreaterThan(0);
+            .IsNumericId();
 
         RuleFor(x => x.LibraryBranchCode)
-            .NotEmpty()
-            .Length(2);
+            .IsLibraryBranchCode();
 
         RuleFor(x => x.Shelfmark)
             .NotEmpty();

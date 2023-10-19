@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
-using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.RemoveLibraryPrint;
 
-public class RemoveLibraryPrintRequestValidator : Validator<RemoveLibraryPrintContracts.Request>
+internal class RemoveLibraryPrintRequestValidator : Validator<RemoveLibraryPrintContracts.Request>
 {
     public RemoveLibraryPrintRequestValidator()
     {
         RuleFor(x => x.LibraryPrintId)
-          .GreaterThan(0);
+          .IsNumericId();
     }
 }

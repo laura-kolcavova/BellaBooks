@@ -1,16 +1,16 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.EditGenreInfo;
 
-public class EditGenreInfoRequestValidator : Validator<
-    Contracts.Genres.EditGenreInfoContracts.Request>
+internal class EditGenreInfoRequestValidator : Validator<EditGenreInfoContracts.Request>
 {
     public EditGenreInfoRequestValidator()
     {
         RuleFor(x => x.GenreId)
-           .GreaterThan(0);
+           .IsNumericId();
 
         RuleFor(x => x.Name)
             .MaximumLength(255)

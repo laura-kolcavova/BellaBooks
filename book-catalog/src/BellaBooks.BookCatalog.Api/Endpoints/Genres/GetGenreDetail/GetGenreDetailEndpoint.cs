@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
-public class GetGenreByIdEndpoint : Endpoint<
+internal class GetGenreByIdEndpoint : Endpoint<
     GetGenreDetailContracts.Request,
     Ok<GetGenreDetailContracts.Response>,
     GetGenreDetailResponseMapper>

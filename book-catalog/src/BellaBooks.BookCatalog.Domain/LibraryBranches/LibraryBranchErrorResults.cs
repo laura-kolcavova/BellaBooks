@@ -26,14 +26,14 @@ public static class LibraryBranchErrorResults
         "A library branch was not removed.");
 
     public static ErrorResult LibraryBranchIsDisabled => new(
-       ErrorCodes.LibraryBranches.LibraryBranchIsDisabled,
+        ErrorCodes.LibraryBranches.LibraryBranchIsDisabled,
        "A library branch is disabled.");
 
     public static ErrorResult LibraryBranchActivatingFailed => new(
-     ErrorCodes.LibraryBranches.LibraryBranchActivatingFailed,
-     "A library branch was not activated.");
+        ErrorCodes.LibraryBranches.LibraryBranchActivatingFailed,
+       "A library branch was not activated.");
 
     public static ErrorResult LibraryBranchDisablingFailed => new(
-     ErrorCodes.LibraryBranches.LibraryBranchDisablingFailed,
-     "A library branch was not disabled.");
+        ErrorCodes.LibraryBranches.LibraryBranchDisablingFailed,
+        "A library branch was not disabled.");
 }

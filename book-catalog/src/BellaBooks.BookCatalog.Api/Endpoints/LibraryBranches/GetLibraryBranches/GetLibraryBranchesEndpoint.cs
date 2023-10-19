@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryBranches.GetLibraryBranches;
 
-public class GetLibraryBranchesEndpoint : EndpointWithoutRequest<
-    Ok<GetLibraryBranchesContracts.Response>,
+internal class GetLibraryBranchesEndpoint : EndpointWithoutRequest<
+    Ok<GetLibraryBranchesContracts.ResponseDto>,
     GetLibraryBranchesResponseMapper>
 {
     public override void Configure()
@@ -25,7 +25,7 @@ public class GetLibraryBranchesEndpoint : EndpointWithoutRequest<
     }
 
     public override async Task<
-        Ok<GetLibraryBranchesContracts.Response>>
+        Ok<GetLibraryBranchesContracts.ResponseDto>>
         ExecuteAsync(CancellationToken ct)
     {
         var libraryBranches = await new GetLibraryBranchesCommand()

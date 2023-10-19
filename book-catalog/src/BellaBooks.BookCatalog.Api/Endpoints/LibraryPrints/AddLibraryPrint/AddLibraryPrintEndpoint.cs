@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 
-public class AddLibraryPrintEndpoint : Endpoint<
+internal class AddLibraryPrintEndpoint : Endpoint<
     AddLibraryPrintContracts.Request,
     Results<Ok<AddLibraryPrintContracts.Response>, ProblemHttpResult>,
     AddLibraryPrintResponseMapper>

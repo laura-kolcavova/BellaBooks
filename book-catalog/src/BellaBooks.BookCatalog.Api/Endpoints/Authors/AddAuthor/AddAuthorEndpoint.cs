@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.AddAuthor;
 
-public class AddAuthorEndpoint : Endpoint<
+internal class AddAuthorEndpoint : Endpoint<
     AddAuthorContracts.Request,
     Results<Ok<AddAuthorContracts.Response>, ProblemHttpResult>,
     AddAuthorResponseMapper>

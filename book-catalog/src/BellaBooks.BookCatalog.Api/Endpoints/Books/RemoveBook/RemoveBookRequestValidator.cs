@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
-using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.RemoveBook;
 
-public class RemoveBookRequestValidator : Validator<Contracts.Books.RemoveBookContracts.Request>
+internal class RemoveBookRequestValidator : Validator<RemoveBookContracts.Request>
 {
     public RemoveBookRequestValidator()
     {
         RuleFor(r => r.BookId)
-            .GreaterThan(0);
+            .IsNumericId();
     }
 }

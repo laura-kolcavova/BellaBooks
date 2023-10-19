@@ -4,11 +4,10 @@ using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
 
-public class GetPublisherDetailResponseMapper : ResponseMapper<
-    Contracts.Publishers.GetPublisherDetailContracts.Response,
-    PublisherEntity?>
+internal class GetPublisherDetailResponseMapper : ResponseMapper<
+    GetPublisherDetailContracts.Response, PublisherEntity?>
 {
-    public override Contracts.Publishers.GetPublisherDetailContracts.Response FromEntity(PublisherEntity? e)
+    public override GetPublisherDetailContracts.Response FromEntity(PublisherEntity? e)
     {
         return new()
         {

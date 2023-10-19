@@ -43,6 +43,11 @@ internal class ActivateLibraryBranchCommandHandler : ICommandHandler<
                     LibraryBranchErrorResults.LibraryBranchNotFound);
             }
 
+            if (libraryBranch.IsActive)
+            {
+                return UnitResult.Success<ErrorResult>();
+            }
+
             libraryBranch.Activate();
 
             _bookCatalogContext.Update(libraryBranch);

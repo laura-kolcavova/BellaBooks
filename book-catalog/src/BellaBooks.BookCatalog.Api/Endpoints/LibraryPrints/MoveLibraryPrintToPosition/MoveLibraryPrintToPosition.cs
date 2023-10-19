@@ -20,7 +20,7 @@ public class MoveLibraryPrintToPosition : Endpoint<
         Summary(s =>
         {
             s.Summary = "Moves a library print to new position";
-            s.Description = "The endpoint will move a library print to new positiom";
+            s.Description = "The endpoint will move a library print to new position";
         });
 
         Description(d => d

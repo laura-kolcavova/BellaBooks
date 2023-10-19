@@ -1,15 +1,16 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.EditPublisherInfo;
 
-public class EditPublisherInfoRequestValidator : Validator<Contracts.Publishers.EditPublisherInfoContracts.Request>
+internal class EditPublisherInfoRequestValidator : Validator<EditPublisherInfoContracts.Request>
 {
     public EditPublisherInfoRequestValidator()
     {
         RuleFor(x => x.PublisherId)
-           .GreaterThan(0);
+           .IsNumericId();
 
         RuleFor(x => x.Name)
             .MaximumLength(255)

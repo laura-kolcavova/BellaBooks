@@ -2,7 +2,7 @@
 
 public static class GetLibraryBranchesContracts
 {
-    public record Response
+    public record ResponseDto
     {
         public required IReadOnlyCollection<LibraryBranchDetailDto> LibraryBranches { get; set; }
     }

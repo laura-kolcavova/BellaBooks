@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 
-public class GetBookDetailEndpoint : Endpoint
+internal class GetBookDetailEndpoint : Endpoint
     <GetBookDetailContracts.Request,
     Ok<GetBookDetailContracts.Response>,
     GetBookDetailResponseMapper>

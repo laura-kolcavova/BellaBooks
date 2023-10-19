@@ -1,15 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
-using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetGenreDetail;
 
-public class GetGenreDetailRequestValidator : Validator<
-    Contracts.Genres.GetGenreDetailContracts.Request>
+internal class GetGenreDetailRequestValidator : Validator<GetGenreDetailContracts.Request>
 {
     public GetGenreDetailRequestValidator()
     {
         RuleFor(x => x.GenreId)
-            .GreaterThan(0);
+            .IsNumericId();
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;
 
-public class AddGenreEndpoint : Endpoint<
+internal class AddGenreEndpoint : Endpoint<
     AddGenreContracts.Request,
     Results<Ok<AddGenreContracts.Response>, ProblemHttpResult>,
     AddGenreResponseMapper>

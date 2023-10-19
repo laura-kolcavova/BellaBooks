@@ -43,6 +43,11 @@ internal class DisableLibraryBranchCommandHandler : ICommandHandler<
                     LibraryBranchErrorResults.LibraryBranchNotFound);
             }
 
+            if (!libraryBranch.IsActive)
+            {
+                return UnitResult.Success<ErrorResult>();
+            }
+
             libraryBranch.Disable();
 
             _bookCatalogContext.Update(libraryBranch);

@@ -1,10 +1,11 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
+using BellaBooks.BookCatalog.Api.Extensions;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.AddBook;
 
-public class AddBookRequestValidator : Validator<Contracts.Books.AddBookContracts.Request>
+internal class AddBookRequestValidator : Validator<AddBookContracts.Request>
 {
     public AddBookRequestValidator()
     {
@@ -14,13 +15,13 @@ public class AddBookRequestValidator : Validator<Contracts.Books.AddBookContract
 
         RuleFor(request => request.AuthorIds)
             .NotEmpty()
-            .ForEach(id => id.GreaterThan(0));
+            .ForEach(id => id.IsNumericId());
 
         RuleFor(request => request.GenreIds)
-            .ForEach(id => id.GreaterThan(0));
+            .ForEach(id => id.IsNumericId());
 
         RuleFor(x => x.PublisherId)
-            .GreaterThan(0);
+            .IsNumericId();
 
         RuleFor(x => x.Isbn)
             .NotEmpty()
