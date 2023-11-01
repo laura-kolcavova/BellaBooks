@@ -8,5 +8,6 @@ public record EditLibraryBranchInfoCommand : ICommand<
     UnitResult<ErrorResult>>
 {
     public required string LibraryBranchCode { get; init; }
+
     public required string Name { get; init; }
 }
