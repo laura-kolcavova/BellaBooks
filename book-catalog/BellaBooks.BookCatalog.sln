@@ -17,9 +17,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellaBooks.BookCatalog.Buss
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellaBooks.BookCatalog.Api", "src\BellaBooks.BookCatalog.Api\BellaBooks.BookCatalog.Api.csproj", "{A94432E2-131A-4CDF-9702-8CEA2BCAD0A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellaBooks.BookCatalog.UnitTests", "tests\BellaBooks.BookCatalog.UnitTests\BellaBooks.BookCatalog.UnitTests.csproj", "{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellaBooks.BookCatalog.UnitTests", "tests\BellaBooks.BookCatalog.UnitTests\BellaBooks.BookCatalog.UnitTests.csproj", "{DC1DC3A1-748D-4B56-AAD9-EF350738C4D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C56887B-B9B3-4120-AC8B-E18148D8494D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{69DC4246-21D6-41AE-942F-36B5D6A82A9A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,16 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Books;
-using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
-using BellaBooks.BookCatalog.Domain.Errors;
-using BellaBooks.BookCatalog.Domain.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryPrints;
-using BellaBooks.BookCatalog.Domain.LibraryPrints.Commands;
-using BellaBooks.BookCatalog.Infrastructure.Contexts;
-using CSharpFunctionalExtensions;
-using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
-namespace BellaBooks.BookCatalog.Infrastructure.LibraryPrints.CommandHandlers;
+﻿namespace BellaBooks.BookCatalog.Infrastructure.LibraryPrints.CommandHandlers;
 
 internal class AddLibraryPrintCommandHandler : ICommandHandler<
     AddLibraryPrintCommand, Result<int, ErrorResult>>
@@ -70,7 +58,7 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
             var libraryPrint = new LibraryPrintEntity(
                 command.BookId, command.LibraryBranchCode, command.Shelfmark, LibraryPrintStateCode.AV);
 
-            await _bookCatalogContext.AddAsync(libraryPrint, ct);
+            await _bookCatalogContext.LibraryPrints.AddAsync(libraryPrint, ct);
 
             var changes = await _bookCatalogContext.SaveChangesAsync(ct);
 

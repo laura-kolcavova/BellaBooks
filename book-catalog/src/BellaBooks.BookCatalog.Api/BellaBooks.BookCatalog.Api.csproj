@@ -18,9 +18,4 @@
     <PackageReference Include="FastEndpoints.Swagger" Version="5.15.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\Authors\EditAuthorInfo\" />
-    <Folder Include="Endpoints\Authors\GetAllAuthors\" />
-  </ItemGroup>
-
 </Project>
