@@ -14,7 +14,7 @@ Run this command to create the image and tag it with the name book-catalog:
 docker build -t book-catalog .
 ```
 
-To run the web API service, run the following command to start a new Docker container using the book-catalog image and expose the service on port 5000:
+To run the web API service, run the following command to start a new Docker container using the book-catalog image and expose the service on port 8000:
 
 ```Bash
 docker run -it --rm -p 8000:80 --name book-catalog-container book-catalog
