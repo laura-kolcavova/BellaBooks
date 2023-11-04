@@ -1,4 +1,10 @@
-﻿namespace BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Authors;
+using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
+using BellaBooks.BookCatalog.Domain.Genres;
+using BellaBooks.BookCatalog.Domain.LibraryPrints;
+using BellaBooks.BookCatalog.Domain.Publishers;
+
+namespace BellaBooks.BookCatalog.Domain.Books;
 
 public class BookEntity : IEntity<int>, ITrackableEntity
 {
