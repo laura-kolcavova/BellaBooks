@@ -6,11 +6,6 @@ namespace BellaBooks.BookCatalog.Infrastructure;
 internal abstract class BaseDbContext<TContext> : DbContext
     where TContext : DbContext
 {
-    protected BaseDbContext(DbContextOptions<TContext> options)
-    : base(options)
-    {
-    }
-
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
         UpdateTrackingFields();

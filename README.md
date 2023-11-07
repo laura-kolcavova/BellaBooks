@@ -1,3 +1,3 @@
 # BellaBooks services
 
-[Book catalog](book-catalog/README.md)
+[Book Catalog](book-catalog/README.md)

@@ -1,7 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Infrastructure.Authentication;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -38,15 +37,19 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddBookCatalogDataAccess(this IServiceCollection services, string connectionString, bool isDevelopment)
+    public static IServiceCollection AddDataAccess(this IServiceCollection services, string connectionString, bool isDevelopment)
     {
-        services.AddDbContext<BookCatalogContext>((_, options) =>
-        {
-            options
-                .UseSqlServer(connectionString)
-                .EnableDetailedErrors(isDevelopment)
-                .EnableSensitiveDataLogging(isDevelopment);
-        });
+        services.AddScoped(_ => new BookCatalogContext(
+            connectionString: connectionString,
+            useDevelopmentLogging: isDevelopment));
+
+        //services.AddDbContext<BookCatalogContext>((_, options) =>
+        //{
+        //    options
+        //        .UseSqlServer(connectionString)
+        //        .EnableDetailedErrors(isDevelopment)
+        //        .EnableSensitiveDataLogging(isDevelopment);
+        //});
 
         return services;
     }

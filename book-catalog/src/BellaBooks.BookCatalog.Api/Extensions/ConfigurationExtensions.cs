@@ -5,10 +5,16 @@ namespace BellaBooks.BookCatalog.Api.Extensions;
 
 internal static class ConfigurationExtensions
 {
-    public static T GetConfiguration<T>(this IConfiguration configuration, string sectionName)
+    public static TOptions GetConfiguration<TOptions>(this IConfiguration configuration, string? sectionName = null)
+        where TOptions : class
     {
-        return configuration.GetSection(sectionName).Get<T>() ??
-              throw new InvalidOperationException($"Cannot find section {sectionName}");
+        return configuration
+           .GetRequiredSection(sectionName ?? typeof(TOptions).Name)
+           .Get<TOptions>()!;
+
+        //return configuration
+        //    .GetSection(sectionName ?? typeof(TOptions).Name)
+        //    .Get<TOptions>() ?? throw new InvalidOperationException($"Cannot find section {sectionName ?? typeof(TOptions).Name}");
     }
 
     public static string GetSqlConnectionString(this IConfiguration configuration, string sectionName, int? connectTimeout = 1)
