@@ -14,9 +14,21 @@ internal class BookCatalogContext : BaseDbContext<BookCatalogContext>
 {
     public const string DefaultSchema = "dbo";
 
-    public BookCatalogContext(DbContextOptions<BookCatalogContext> options)
-        : base(options)
+    private readonly string _connectionString;
+    private readonly bool _useDevelopmentLogging;
+
+    public BookCatalogContext(string connectionString, bool useDevelopmentLogging)
     {
+        _connectionString = connectionString;
+        _useDevelopmentLogging = useDevelopmentLogging;
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+           .UseSqlServer(_connectionString)
+           .EnableDetailedErrors(_useDevelopmentLogging)
+           .EnableSensitiveDataLogging(_useDevelopmentLogging);
     }
 
     public virtual DbSet<LibraryBranchEntity> LibraryBranches =>

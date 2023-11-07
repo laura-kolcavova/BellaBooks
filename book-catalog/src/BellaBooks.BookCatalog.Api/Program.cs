@@ -66,7 +66,7 @@ services
     .AddApi()
     .AddBussiness()
     .AddInfrastructure(jwtBearedConfiguration)
-    .AddBookCatalogDataAccess(bookCatalogConnectionString, builder.Environment.IsDevelopment());
+    .AddDataAccess(bookCatalogConnectionString, builder.Environment.IsDevelopment());
 
 // Build application
 var app = builder.Build();

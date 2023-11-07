@@ -26,9 +26,9 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
     #region NavigationProperties
 
-    private List<BookGenreEntity> _bookGenres;
+    private readonly List<BookGenreEntity> _bookGenres;
 
-    private List<BookAuthorEntity> _bookAuthors;
+    private readonly List<BookAuthorEntity> _bookAuthors;
 
     public PublisherEntity? Publisher { get; private set; }
 
@@ -36,12 +36,10 @@ public class BookEntity : IEntity<int>, ITrackableEntity
 
 
     public IReadOnlyCollection<BookGenreEntity> BookGenres =>
-        _bookGenres
-            .ToList();
+        _bookGenres;
 
     public IReadOnlyCollection<BookAuthorEntity> BookAuthors =>
-        _bookAuthors
-            .ToList();
+        _bookAuthors;
 
     #endregion NavigationProperties
 
@@ -101,10 +99,10 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         }
 
         var bookAuthors = authors
-            .Select(author => new BookAuthorEntity(author, this))
-            .ToList();
+            .Select(author => new BookAuthorEntity(author, this));
 
-        _bookAuthors = bookAuthors;
+        _bookAuthors.Clear();
+        _bookAuthors.AddRange(_bookAuthors);
 
         return this;
     }
@@ -113,10 +111,10 @@ public class BookEntity : IEntity<int>, ITrackableEntity
     public BookEntity SetGenres(IEnumerable<GenreEntity> genres)
     {
         var bookGenres = genres
-            .Select(genre => new BookGenreEntity(this, genre))
-            .ToList();
+            .Select(genre => new BookGenreEntity(this, genre));
 
-        _bookGenres = bookGenres;
+        _bookGenres.Clear();
+        _bookGenres.AddRange(bookGenres);
 
         return this;
     }

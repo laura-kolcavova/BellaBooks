@@ -70,7 +70,7 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
             var libraryPrint = new LibraryPrintEntity(
                 command.BookId, command.LibraryBranchCode, command.Shelfmark, LibraryPrintStateCode.AV);
 
-            await _bookCatalogContext.AddAsync(libraryPrint, ct);
+            await _bookCatalogContext.LibraryPrints.AddAsync(libraryPrint, ct);
 
             var changes = await _bookCatalogContext.SaveChangesAsync(ct);
 
