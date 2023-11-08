@@ -21,12 +21,12 @@ internal static class ConfigurationExtensions
     {
         if (configuration == null)
         {
-            throw new ArgumentNullException("configuration");
+            throw new ArgumentNullException(nameof(configuration));
         }
 
         if (string.IsNullOrWhiteSpace(sectionName))
         {
-            throw new ArgumentNullException("sectionName");
+            throw new ArgumentNullException(nameof(sectionName));
         }
 
         var connectionStringAndPasswordSection = configuration.GetConfiguration<ConnectionStringAndPasswordSection>(sectionName);

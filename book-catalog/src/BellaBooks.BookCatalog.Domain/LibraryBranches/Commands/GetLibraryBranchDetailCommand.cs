@@ -1,9 +1,10 @@
-﻿using FastEndpoints;
+﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
+using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
 
 public record GetLibraryBranchDetailCommand : ICommand<
-    LibraryBranchEntity?>
+    LibraryBranchDetailReadModel?>
 {
     public required string LibraryBranchCode { get; init; }
 }

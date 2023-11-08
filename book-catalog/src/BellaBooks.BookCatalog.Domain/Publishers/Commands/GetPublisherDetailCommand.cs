@@ -1,9 +1,10 @@
-﻿using FastEndpoints;
+﻿using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
+using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.Publishers.Commands;
 
 public record GetPublisherDetailCommand : ICommand<
-    PublisherEntity?>
+    PublisherDetailReadModel?>
 {
     public required int PublisherId { get; init; }
 }

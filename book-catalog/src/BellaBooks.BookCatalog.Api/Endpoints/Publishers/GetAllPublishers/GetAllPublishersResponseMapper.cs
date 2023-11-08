@@ -1,14 +1,14 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
-using BellaBooks.BookCatalog.Domain.Publishers;
+using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetAllPublishers;
 
 internal class GetAllPublishersResponseMapper : ResponseMapper<
     GetAllPublishersContracts.ResponseDto,
-    ICollection<PublisherEntity>>
+    ICollection<PublisherDetailReadModel>>
 {
-    public override GetAllPublishersContracts.ResponseDto FromEntity(ICollection<PublisherEntity> e)
+    public override GetAllPublishersContracts.ResponseDto FromEntity(ICollection<PublisherDetailReadModel> e)
     {
         return new()
         {

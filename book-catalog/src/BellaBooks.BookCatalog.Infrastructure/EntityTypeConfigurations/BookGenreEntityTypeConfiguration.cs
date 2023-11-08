@@ -28,10 +28,5 @@ internal class BookGenreEntityTypeConfiguration
             .HasOne(e => e.Book)
             .WithMany(f => f.BookGenres)
             .HasForeignKey(e => e.BookId);
-
-        builder
-            .HasOne(e => e.Genre)
-            .WithMany(f => f.BookGenres)
-            .HasForeignKey(e => e.GenreId);
     }
 }

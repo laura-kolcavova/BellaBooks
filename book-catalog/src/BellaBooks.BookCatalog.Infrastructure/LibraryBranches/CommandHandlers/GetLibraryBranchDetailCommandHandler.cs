@@ -1,13 +1,14 @@
-﻿using BellaBooks.BookCatalog.Domain.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
+﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
+using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
+using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.LibraryBranches.CommandHandlers;
 internal class GetLibraryBranchDetailCommandHandler : ICommandHandler<
-    GetLibraryBranchDetailCommand, LibraryBranchEntity?>
+    GetLibraryBranchDetailCommand, LibraryBranchDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetLibraryBranchDetailCommandHandler> _logger;
@@ -21,7 +22,7 @@ internal class GetLibraryBranchDetailCommandHandler : ICommandHandler<
     }
 
     public async Task<
-        LibraryBranchEntity?>
+        LibraryBranchDetailReadModel?>
         ExecuteAsync(GetLibraryBranchDetailCommand command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
@@ -32,9 +33,9 @@ internal class GetLibraryBranchDetailCommandHandler : ICommandHandler<
         try
         {
             var libraryBranch = await _bookCatalogContext.LibraryBranches
-                .AsNoTracking()
-                .SingleOrDefaultAsync(libraryBranch =>
-                libraryBranch.Code == command.LibraryBranchCode, ct);
+                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
+                .Select(libraryBranch => LibraryBranchDetailReadModelExtensions.FromEntity(libraryBranch))
+                .SingleOrDefaultAsync(ct);
 
             return libraryBranch;
         }

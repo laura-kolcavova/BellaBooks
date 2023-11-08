@@ -1,6 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Domain.Genres.Commands;
-using BellaBooks.BookCatalog.Domain.Genres;
+using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
+using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ namespace BellaBooks.BookCatalog.Infrastructure.Genres.CommandHandlers;
 
 internal class GetAllGenresCommandHandler : ICommandHandler<
     GetAllGenresCommand,
-    ICollection<GenreEntity>>
+    ICollection<GenreDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetAllGenresCommandHandler> _logger;
@@ -23,13 +24,13 @@ internal class GetAllGenresCommandHandler : ICommandHandler<
     }
 
     public async Task<
-        ICollection<GenreEntity>>
+        ICollection<GenreDetailReadModel>>
         ExecuteAsync(GetAllGenresCommand command, CancellationToken ct)
     {
         try
         {
             var genres = await _bookCatalogContext.Genres
-                .AsNoTracking()
+                .Select(genre => GenreDetailReadModelExtensions.FromEntity(genre))
                 .ToListAsync(ct);
 
             return genres;

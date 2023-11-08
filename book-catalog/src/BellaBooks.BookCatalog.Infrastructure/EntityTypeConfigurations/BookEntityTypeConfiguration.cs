@@ -68,8 +68,13 @@ internal class BookEntityTypeConfiguration :
             .HasTrackableProperties();
 
         builder
-            .HasOne(e => e.Publisher)
-            .WithMany(f => f.Books)
-            .HasForeignKey(e => e.PublisherId);
+            .HasMany(e => e.BookAuthors)
+            .WithOne(f => f.Book)
+            .HasForeignKey(e => e.BookId);
+
+        builder
+           .HasMany(e => e.BookGenres)
+           .WithOne(f => f.Book)
+           .HasForeignKey(e => e.BookId);
     }
 }

@@ -1,9 +1,9 @@
-﻿using BellaBooks.BookCatalog.Domain.Authors;
+﻿using BellaBooks.BookCatalog.Domain.Authors.ReadModels;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.Authors.Commands;
 
 public record GetAllAuthorsCommand : ICommand<
-    ICollection<AuthorEntity>>
+    ICollection<AuthorDetailReadModel>>
 {
 }

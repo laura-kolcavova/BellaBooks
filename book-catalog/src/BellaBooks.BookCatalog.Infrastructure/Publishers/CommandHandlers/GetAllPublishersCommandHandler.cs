@@ -1,6 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Domain.Publishers.Commands;
-using BellaBooks.BookCatalog.Domain.Publishers;
+using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
+using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace BellaBooks.BookCatalog.Infrastructure.Publishers.CommandHandlers;
 
 internal class GetAllPublishersCommandHandler : ICommandHandler<
-    GetAllPublishersCommand, ICollection<PublisherEntity>>
+    GetAllPublishersCommand, ICollection<PublisherDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetAllPublishersCommandHandler> _logger;
@@ -22,13 +23,13 @@ internal class GetAllPublishersCommandHandler : ICommandHandler<
     }
 
     public async Task<
-        ICollection<PublisherEntity>>
+        ICollection<PublisherDetailReadModel>>
         ExecuteAsync(GetAllPublishersCommand command, CancellationToken ct)
     {
         try
         {
             var publishers = await _bookCatalogContext.Publishers
-                .AsNoTracking()
+                .Select(publisher => PublisherDetailReadModelExtensions.FromEntity(publisher))
                 .ToListAsync(ct);
 
             return publishers;

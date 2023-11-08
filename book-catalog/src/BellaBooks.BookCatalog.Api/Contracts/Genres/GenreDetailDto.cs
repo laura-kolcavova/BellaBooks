@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Genres;
+﻿using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.Genres;
 
@@ -8,7 +8,7 @@ public record GenreDetailDto
 
     public required string Name { get; init; }
 
-    public static GenreDetailDto FromEntity(GenreEntity genre)
+    public static GenreDetailDto FromEntity(GenreDetailReadModel genre)
     {
         return new GenreDetailDto
         {

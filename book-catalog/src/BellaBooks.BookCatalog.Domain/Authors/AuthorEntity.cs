@@ -10,15 +10,8 @@ public class AuthorEntity : IEntity<int>, ITrackableEntity
 
     public DateTimeOffset? UpdatedAt { get; }
 
-    #region NavigationProperties
-
-    public IReadOnlyCollection<BookAuthorEntity> BookAuthors { get; }
-
-    #endregion NavigationProperties
-
     public AuthorEntity(string name)
     {
         Name = name;
-        BookAuthors = new List<BookAuthorEntity>();
     }
 }

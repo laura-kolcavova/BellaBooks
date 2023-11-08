@@ -80,20 +80,20 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                     BookErrorResults.NoAuthors);
             }
 
-            var authors = await _bookCatalogContext.Authors
-                .Where(author => command.AuthorIds.Contains(author.Id))
-                .AsNoTracking()
-                .ToListAsync(ct);
+            var authorIds = await _bookCatalogContext.Authors
+              .Where(author => command.AuthorIds.Contains(author.Id))
+              .Select(author => author.Id)
+              .ToListAsync(ct);
 
-            var genres = await _bookCatalogContext.Genres
+            var genreIds = await _bookCatalogContext.Genres
                 .Where(genre => command.GenreIds.Contains(genre.Id))
-                .AsNoTracking()
+                .Select(genre => genre.Id)
                 .ToListAsync(ct);
 
             book
                 .SetTitle(command.Title)
-                .SetAuthors(authors)
-                .SetGenres(genres)
+                .SetAuthors(authorIds)
+                .SetGenres(genreIds)
                 .SetPublicationInfo(new PublicationInfoValueObject(
                     isbn: command.Isbn,
                     year: command.PublicationYear,

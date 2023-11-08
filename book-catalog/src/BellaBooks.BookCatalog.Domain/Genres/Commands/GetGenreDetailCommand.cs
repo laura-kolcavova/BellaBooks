@@ -1,9 +1,10 @@
-﻿using FastEndpoints;
+﻿using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
+using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Domain.Genres.Commands;
 
 public record GetGenreDetailCommand : ICommand<
-    GenreEntity?>
+    GenreDetailReadModel?>
 {
     public required int GenreId { get; init; }
 }
