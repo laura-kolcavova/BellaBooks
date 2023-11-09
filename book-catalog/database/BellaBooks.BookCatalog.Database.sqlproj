@@ -64,6 +64,7 @@
     <Folder Include="Scripts" />
     <Folder Include="Security" />
     <Folder Include="Security\Schemas" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Books.sql" />
@@ -75,6 +76,7 @@
     <Build Include="dbo\Tables\LibraryPrints.sql" />
     <Build Include="dbo\Tables\LibraryBranches.sql" />
     <Build Include="SeedAndPatch\Seed\SP_Seed_LibraryBranches.sql" />
+    <Build Include="dbo\Views\vBookListingItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\Local.publish.xml" />

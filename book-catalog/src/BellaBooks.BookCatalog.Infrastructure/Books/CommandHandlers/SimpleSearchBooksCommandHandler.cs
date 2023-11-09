@@ -1,16 +1,14 @@
-﻿using BellaBooks.BookCatalog.Domain.Books;
-using BellaBooks.BookCatalog.Domain.Books.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Books.Commands;
 using BellaBooks.BookCatalog.Domain.Books.ReadModels;
+using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
-using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using CSharpFunctionalExtensions;
+using Dapper;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq.Expressions;
+using System.Data;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
-
 internal class SimpleSearchBooksCommandHandler : ICommandHandler<
     SimpleSearchBooksCommand,
     ICollection<BookListingItemReadModel>>
@@ -32,24 +30,43 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
     {
         try
         {
-            var query = _bookCatalogContext.Books
-                .Include(book => book.Publisher)
-                .Include(book => book.BookAuthors)
-                    .ThenInclude(ab => ab.Author)
-                .Include(book => book.LibraryPrints)
-                .AsQueryable();
+            var dbConnection = _bookCatalogContext.Database.GetDbConnection();
 
-            if (command.SearchInput != null)
+            var sqlCommand = new CommandDefinition(
+            @$"
+            SELECT *
+            FROM [dbo].[vBookListingItems]
+            WHERE {BuildFilteringQuery(command.Filter, command.SearchInput)}
+            ",
+            new
             {
-                query = query
-                    .Where(GetFilterExpression(command.SearchInput, command.Filter));
-            }
+                command.SearchInput
+            },
+            commandType: CommandType.Text,
+            cancellationToken: ct);
 
-            var books = await query
-                .Select(book => BookListingItemReadModelExtensions.FromBookEntity(book))
-                .ToListAsync(ct);
+            var bookListingItems = await dbConnection
+                .QueryAsync<BookListingItemReadModel, string, string, BookListingItemReadModel>(
+                sqlCommand,
 
-            return books;
+                (book, authorNames, libraryPrintStateCodes) =>
+                {
+                    book.AuthorsNames = authorNames
+                        .Split(';')
+                        .ToList();
+
+                    book.LibraryPrintStateCodes = libraryPrintStateCodes
+                        .Split(';')
+                        .Select(stateCode => (LibraryPrintStateCode)Enum.Parse(typeof(LibraryPrintStateCode), stateCode))
+                        .ToList();
+
+                    return book;
+                },
+
+                splitOn: "AuthorNames,LibraryPrintStateCodes");
+
+
+            return bookListingItems.ToList();
         }
         catch (Exception ex)
         {
@@ -58,27 +75,31 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
         }
     }
 
-    private static Expression<Func<BookEntity, bool>> GetFilterExpression(string searchInput, SimpleSearchFilter filter)
+    private static string BuildFilteringQuery(SimpleSearchFilter filter, string? searchInput)
     {
+        if (string.IsNullOrWhiteSpace(searchInput))
+        {
+            return string.Empty;
+        }
+
         if (filter == SimpleSearchFilter.Title)
         {
-            return (book) => book.Title.Contains(searchInput);
+            return "Title LIKE '%' + @SearchInput + '%'";
         }
 
         if (filter == SimpleSearchFilter.Isbn)
         {
-            return (book) => book.PublicationInfo.Isbn == searchInput;
+            return "Isbn = @SearchInput";
         }
 
-        if (
-           filter == SimpleSearchFilter.Author)
+        if (filter == SimpleSearchFilter.Author)
         {
-            return (book) => book.BookAuthors.Any(ab => ab.Author.Name.Contains(searchInput));
+            return "AuthorNames LIKE '%' + @SearchInput + '%'";
         }
 
-        return (book) =>
-            book.Title.Contains(searchInput) ||
-            book.PublicationInfo.Isbn == searchInput ||
-            book.BookAuthors.Any(ab => ab.Author.Name.Contains(searchInput));
+        return @"
+        Title LIKE '%@SearchInput%' OR
+        Isbn = @SearchInput OR
+        AuthorNames LIKE '%' + @SearchInput + '%'";
     }
 }
