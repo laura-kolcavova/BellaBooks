@@ -1,9 +1,9 @@
 ﻿using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Domain.Publishers.Commands;
+namespace BellaBooks.BookCatalog.Domain.Publishers.Queries;
 
-public record GetAllPublishersCommand : ICommand<
+public record GetAllPublishersQuery : ICommand<
     ICollection<PublisherDetailReadModel>>
 {
 }

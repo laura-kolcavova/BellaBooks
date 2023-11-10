@@ -1,4 +1,4 @@
-﻿namespace BellaBooks.BookCatalog.Domain.Books.Commands;
+﻿namespace BellaBooks.BookCatalog.Domain.Books;
 
 public enum SimpleSearchFilter
 {

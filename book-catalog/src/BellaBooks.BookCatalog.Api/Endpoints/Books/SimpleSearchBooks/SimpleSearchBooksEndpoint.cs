@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -29,7 +29,7 @@ internal class SimpleSearchBooksEndpoint : Endpoint<
         Ok<SimpleSearchBooksContracts.ResponseDto>>
         ExecuteAsync(SimpleSearchBooksContracts.RequestDto req, CancellationToken ct)
     {
-        var books = await new SimpleSearchBooksCommand
+        var books = await new SimpleSearchBooksQuery
         {
             SearchInput = req.SearchInput ?? string.Empty,
             Filter = req.Filter,

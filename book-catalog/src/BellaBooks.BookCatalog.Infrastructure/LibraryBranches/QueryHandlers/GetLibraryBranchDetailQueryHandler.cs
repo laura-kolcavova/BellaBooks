@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
+﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.Queries;
 using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
@@ -6,16 +6,16 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.LibraryBranches.CommandHandlers;
-internal class GetLibraryBranchDetailCommandHandler : ICommandHandler<
-    GetLibraryBranchDetailCommand, LibraryBranchDetailReadModel?>
+namespace BellaBooks.BookCatalog.Infrastructure.LibraryBranches.QueryHandlers;
+internal class GetLibraryBranchDetailQueryHandler : ICommandHandler<
+    GetLibraryBranchDetailQuery, LibraryBranchDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<GetLibraryBranchDetailCommandHandler> _logger;
+    private readonly ILogger<GetLibraryBranchDetailQueryHandler> _logger;
 
-    public GetLibraryBranchDetailCommandHandler(
+    public GetLibraryBranchDetailQueryHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<GetLibraryBranchDetailCommandHandler> logger)
+        ILogger<GetLibraryBranchDetailQueryHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -23,7 +23,7 @@ internal class GetLibraryBranchDetailCommandHandler : ICommandHandler<
 
     public async Task<
         LibraryBranchDetailReadModel?>
-        ExecuteAsync(GetLibraryBranchDetailCommand command, CancellationToken ct)
+        ExecuteAsync(GetLibraryBranchDetailQuery command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {

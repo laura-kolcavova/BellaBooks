@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Authors.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Authors.Queries;
 using BellaBooks.BookCatalog.Domain.Authors.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
@@ -6,17 +6,17 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Authors.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.Authors.QueryHandlers;
 
-internal class GetAllAuthorsCommandHandler : ICommandHandler<
-    GetAllAuthorsCommand, ICollection<AuthorDetailReadModel>>
+internal class GetAllAuthorsQueryHandler : ICommandHandler<
+    GetAllAuthorsQuery, ICollection<AuthorDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<GetAllAuthorsCommandHandler> _logger;
+    private readonly ILogger<GetAllAuthorsQueryHandler> _logger;
 
-    public GetAllAuthorsCommandHandler(
+    public GetAllAuthorsQueryHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<GetAllAuthorsCommandHandler> logger)
+        ILogger<GetAllAuthorsQueryHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -24,7 +24,7 @@ internal class GetAllAuthorsCommandHandler : ICommandHandler<
 
     public async Task<
         ICollection<AuthorDetailReadModel>>
-        ExecuteAsync(GetAllAuthorsCommand command, CancellationToken ct)
+        ExecuteAsync(GetAllAuthorsQuery command, CancellationToken ct)
     {
         try
         {

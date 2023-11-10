@@ -1,9 +1,9 @@
 ﻿using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Domain.Genres.Commands;
+namespace BellaBooks.BookCatalog.Domain.Genres.Queries;
 
-public record GetAllGenresCommand : ICommand<
+public record GetAllGenresQuery : ICommand<
     ICollection<GenreDetailReadModel>>
 {
 }

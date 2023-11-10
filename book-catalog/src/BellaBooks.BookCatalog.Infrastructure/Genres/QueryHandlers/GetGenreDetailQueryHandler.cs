@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Genres.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Genres.Queries;
 using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
@@ -6,17 +6,17 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Genres.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.Genres.QueryHandlers;
 
-internal class GetGenreDetailCommandHandler : ICommandHandler<
-    GetGenreDetailCommand, GenreDetailReadModel?>
+internal class GetGenreDetailQueryHandler : ICommandHandler<
+    GetGenreDetailQuery, GenreDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<GetGenreDetailCommandHandler> _logger;
+    private readonly ILogger<GetGenreDetailQueryHandler> _logger;
 
-    public GetGenreDetailCommandHandler(
+    public GetGenreDetailQueryHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<GetGenreDetailCommandHandler> logger)
+        ILogger<GetGenreDetailQueryHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -24,7 +24,7 @@ internal class GetGenreDetailCommandHandler : ICommandHandler<
 
     public async Task<
         GenreDetailReadModel?>
-        ExecuteAsync(GetGenreDetailCommand command, CancellationToken ct)
+        ExecuteAsync(GetGenreDetailQuery command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {

@@ -1,9 +1,9 @@
 ﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
 using FastEndpoints;
 
-namespace BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
+namespace BellaBooks.BookCatalog.Domain.LibraryBranches.Queries;
 
-public record GetLibraryBranchesCommand : ICommand<
+public record GetLibraryBranchesQuery : ICommand<
     ICollection<LibraryBranchDetailReadModel>>
 {
 }

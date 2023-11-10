@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Books.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Books.Queries;
 using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
+namespace BellaBooks.BookCatalog.Infrastructure.Books.QueryHandlers;
 
-internal class GetBookDetailCommandHandler : ICommandHandler<
-    GetBookDetailCommand,
+internal class GetBookDetailQueryHandler : ICommandHandler<
+    GetBookDetailQuery,
     BookDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<GetBookDetailCommandHandler> _logger;
+    private readonly ILogger<GetBookDetailQueryHandler> _logger;
 
-    public GetBookDetailCommandHandler(
+    public GetBookDetailQueryHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<GetBookDetailCommandHandler> logger)
+        ILogger<GetBookDetailQueryHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -27,7 +27,7 @@ internal class GetBookDetailCommandHandler : ICommandHandler<
 
     public async Task<
         BookDetailReadModel?>
-        ExecuteAsync(GetBookDetailCommand command, CancellationToken ct)
+        ExecuteAsync(GetBookDetailQuery command, CancellationToken ct)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
@@ -43,12 +43,12 @@ internal class GetBookDetailCommandHandler : ICommandHandler<
 	                 B.[Id]
                     ,B.[Title]
                     ,B.[Isbn]
+                    ,B.[PublisherId]
                     ,B.[PublicationYear]
                     ,B.[PublicationCity]
                     ,B.[PublicationLanguage]
                     ,B.[PageCount]
                     ,B.[Summary]
-	                ,P.[Id] AS PublisherId
 	                ,P.[Name] AS PublisherName
                 FROM [BookCatalog].[dbo].[Books] B
                 INNER JOIN [Publishers] P ON P.[ID] = B.[PublisherId]

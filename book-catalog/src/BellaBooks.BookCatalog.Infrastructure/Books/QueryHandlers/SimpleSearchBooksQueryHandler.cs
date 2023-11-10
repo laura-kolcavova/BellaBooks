@@ -1,4 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.Books.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.Queries;
 using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
@@ -8,17 +9,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
-namespace BellaBooks.BookCatalog.Infrastructure.Books.CommandHandlers;
-internal class SimpleSearchBooksCommandHandler : ICommandHandler<
-    SimpleSearchBooksCommand,
+namespace BellaBooks.BookCatalog.Infrastructure.Books.QueryHandlers;
+internal class SimpleSearchBooksQueryHandler : ICommandHandler<
+    SimpleSearchBooksQuery,
     ICollection<BookListingItemReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
-    private readonly ILogger<SimpleSearchBooksCommandHandler> _logger;
+    private readonly ILogger<SimpleSearchBooksQueryHandler> _logger;
 
-    public SimpleSearchBooksCommandHandler(
+    public SimpleSearchBooksQueryHandler(
         BookCatalogContext bookCatalogContext,
-        ILogger<SimpleSearchBooksCommandHandler> logger)
+        ILogger<SimpleSearchBooksQueryHandler> logger)
     {
         _bookCatalogContext = bookCatalogContext;
         _logger = logger;
@@ -26,7 +27,7 @@ internal class SimpleSearchBooksCommandHandler : ICommandHandler<
 
     public async Task<
         ICollection<BookListingItemReadModel>>
-        ExecuteAsync(SimpleSearchBooksCommand command, CancellationToken ct)
+        ExecuteAsync(SimpleSearchBooksQuery command, CancellationToken ct)
     {
         try
         {
