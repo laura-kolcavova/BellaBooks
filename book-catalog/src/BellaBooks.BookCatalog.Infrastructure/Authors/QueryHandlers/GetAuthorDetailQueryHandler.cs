@@ -35,7 +35,7 @@ internal class GetAuthorDetailQueryHandler : ICommandHandler<
         {
             var author = await _bookCatalogContext.Authors
                 .Where(author => author.Id == command.AuthorId)
-                .Select(author => AuthorDetailReadModelExtensions.FromEntity(author))
+                .SelectAuthorDetailReadModel()
                 .SingleOrDefaultAsync(ct);
 
             return author;

@@ -40,9 +40,37 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
         {
             var connection = _bookCatalogContext.Database.GetDbConnection();
 
-            var sqlCommand = new CommandDefinition(@"
+            var sqlCommand = BuildSqlCommand(command.BookId, ct);
+
+            using var result = await connection.QueryMultipleAsync(sqlCommand);
+
+            var bookDetail = await result.ReadFirstOrDefaultAsync<BookDetailReadModel>();
+
+            if (bookDetail == null)
+            {
+                return bookDetail;
+            }
+
+            bookDetail.Authors = (await result.ReadAsync<AuthorDetailReadModel>()).ToList();
+
+            bookDetail.Genres = (await result.ReadAsync<GenreDetailReadModel>()).ToList();
+
+            bookDetail.LibraryPrints = (await result.ReadAsync<LibraryPrintDetailReadModel>()).ToList();
+
+            return bookDetail;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An unexpected error occurred while getting a book by Id");
+            throw;
+        }
+    }
+
+    private static CommandDefinition BuildSqlCommand(int bookId, CancellationToken cancellationToken)
+    {
+        var sqlCommand = new CommandDefinition(@"
                 SELECT TOP 1
-	                 B.[Id]
+                     B.[Id]
                     ,B.[Title]
                     ,B.[Isbn]
                     ,B.[PublicationYear]
@@ -51,7 +79,7 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
                     ,B.[PageCount]
                     ,B.[Summary]
                     ,P.[Id] AS PublisherId
-	                ,P.[Name] AS PublisherName
+                    ,P.[Name] AS PublisherName
                 FROM [BookCatalog].[dbo].[Books] B
                 INNER JOIN [Publishers] P ON P.[ID] = B.[PublisherId]
                 WHERE B.[ID] = @bookId;
@@ -77,32 +105,11 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
                 ",
                 new
                 {
-                    bookId = command.BookId,
+                    bookId = bookId,
                 },
                 commandType: CommandType.Text,
-                cancellationToken: ct);
+                cancellationToken: cancellationToken);
 
-            using var result = await connection.QueryMultipleAsync(sqlCommand);
-
-            var bookDetail = await result.ReadFirstOrDefaultAsync<BookDetailReadModel>();
-
-            if (bookDetail == null)
-            {
-                return bookDetail;
-            }
-
-            bookDetail.Authors = (await result.ReadAsync<AuthorDetailReadModel>()).ToList();
-
-            bookDetail.Genres = (await result.ReadAsync<GenreDetailReadModel>()).ToList();
-
-            bookDetail.LibraryPrints = (await result.ReadAsync<LibraryPrintDetailReadModel>()).ToList();
-
-            return bookDetail;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An unexpected error occurred while getting a book by Id");
-            throw;
-        }
+        return sqlCommand;
     }
 }

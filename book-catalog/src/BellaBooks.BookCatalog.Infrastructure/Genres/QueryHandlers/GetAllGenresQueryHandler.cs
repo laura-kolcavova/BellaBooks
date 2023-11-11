@@ -30,7 +30,7 @@ internal class GetAllGenresQueryHandler : ICommandHandler<
         try
         {
             var genres = await _bookCatalogContext.Genres
-                .Select(genre => GenreDetailReadModelExtensions.FromEntity(genre))
+                .SelectGenreDetailReadModel()
                 .ToListAsync(ct);
 
             return genres;

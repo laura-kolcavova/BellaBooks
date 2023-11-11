@@ -7,6 +7,7 @@ using BellaBooks.BookCatalog.Domain.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Contexts;
 
@@ -23,16 +24,8 @@ internal class BookCatalogContext : BaseDbContext<BookCatalogContext>
         _useDevelopmentLogging = useDevelopmentLogging;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-           .UseSqlServer(_connectionString)
-           .EnableDetailedErrors(_useDevelopmentLogging)
-           .EnableSensitiveDataLogging(_useDevelopmentLogging);
-    }
-
     public virtual DbSet<LibraryBranchEntity> LibraryBranches =>
-        Set<LibraryBranchEntity>();
+    Set<LibraryBranchEntity>();
 
     public virtual DbSet<AuthorEntity> Authors =>
         Set<AuthorEntity>();
@@ -55,6 +48,21 @@ internal class BookCatalogContext : BaseDbContext<BookCatalogContext>
     public virtual DbSet<LibraryPrintEntity> LibraryPrints =>
         Set<LibraryPrintEntity>();
 
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+           .UseSqlServer(_connectionString);
+
+        if (_useDevelopmentLogging)
+        {
+            optionsBuilder
+                .UseLoggerFactory(CreateLoggerFactory())
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging();
+        }
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new LibraryBranchEntityTypeConfiguration());
@@ -69,5 +77,11 @@ internal class BookCatalogContext : BaseDbContext<BookCatalogContext>
         modelBuilder.ApplyConfiguration(new BookGenreEntityTypeConfiguration());
 
         modelBuilder.ApplyConfiguration(new LibraryPrintEntityTypeConfiguration());
+    }
+
+    private static ILoggerFactory CreateLoggerFactory()
+    {
+        return LoggerFactory.Create(builder =>
+            builder.AddConsole());
     }
 }

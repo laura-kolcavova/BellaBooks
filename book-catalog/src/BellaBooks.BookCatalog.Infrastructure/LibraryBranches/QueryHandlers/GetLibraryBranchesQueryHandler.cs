@@ -29,7 +29,7 @@ internal class GetLibraryBranchesQueryHandler : ICommandHandler<
         try
         {
             var libraryBranches = await _bookCatalogContext.LibraryBranches
-                .Select(libraryBranch => LibraryBranchDetailReadModelExtensions.FromEntity(libraryBranch))
+                .SelectLibraryBranchDetailReadModel()
                 .ToListAsync(ct);
 
             return libraryBranches;
