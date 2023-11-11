@@ -25,11 +25,6 @@ internal class BookAuthorEntityTypeConfiguration :
             .IsRequired();
 
         builder
-            .HasOne(e => e.Author)
-            .WithMany(f => f.BookAuthors)
-            .HasForeignKey(e => e.AuthorId);
-
-        builder
             .HasOne(e => e.Book)
             .WithMany(f => f.BookAuthors)
             .HasForeignKey(e => e.BookId);

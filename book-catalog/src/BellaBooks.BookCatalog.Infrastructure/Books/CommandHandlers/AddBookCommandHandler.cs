@@ -60,19 +60,19 @@ internal class AddBookCommandHandler : ICommandHandler<
                    BookErrorResults.NoAuthors);
             }
 
-            var authors = await _bookCatalogContext.Authors
+            var authorIds = await _bookCatalogContext.Authors
                 .Where(author => command.AuthorIds.Contains(author.Id))
-                .AsNoTracking()
+                .Select(author => author.Id)
                 .ToListAsync(ct);
 
-            var genres = await _bookCatalogContext.Genres
+            var genreIds = await _bookCatalogContext.Genres
                 .Where(genre => command.GenreIds.Contains(genre.Id))
-                .AsNoTracking()
+                .Select(genre => genre.Id)
                 .ToListAsync(ct);
 
             var newBook = new BookEntity(command.Title)
-                .SetAuthors(authors)
-                .SetGenres(genres)
+                .SetAuthors(authorIds)
+                .SetGenres(genreIds)
                 .SetPublisher(command.PublisherId)
                 .SetPublicationInfo(new PublicationInfoValueObject(
                     isbn: command.Isbn,

@@ -1,13 +1,13 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryBranches;
+using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryBranches.GetLibraryBranches;
 
 internal class GetLibraryBranchesResponseMapper : ResponseMapper<
-    GetLibraryBranchesContracts.ResponseDto, ICollection<LibraryBranchEntity>>
+    GetLibraryBranchesContracts.ResponseDto, ICollection<LibraryBranchDetailReadModel>>
 {
-    public override GetLibraryBranchesContracts.ResponseDto FromEntity(ICollection<LibraryBranchEntity> e)
+    public override GetLibraryBranchesContracts.ResponseDto FromEntity(ICollection<LibraryBranchDetailReadModel> e)
     {
         return new()
         {

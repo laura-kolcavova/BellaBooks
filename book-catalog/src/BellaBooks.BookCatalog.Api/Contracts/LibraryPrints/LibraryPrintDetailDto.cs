@@ -1,6 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
-using BellaBooks.BookCatalog.Domain.LibraryPrints;
-using System.Text.Json.Serialization;
+using BellaBooks.BookCatalog.Domain.LibraryPrints.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
 
@@ -14,10 +13,9 @@ public class LibraryPrintDetailDto
 
     public required string LibraryBranchCode { get; init; }
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public required LibraryPrintStateCode StateCode { get; init; }
 
-    public static LibraryPrintDetailDto FromEntity(LibraryPrintEntity entity)
+    public static LibraryPrintDetailDto FromEntity(LibraryPrintDetailReadModel entity)
     {
         return new LibraryPrintDetailDto
         {

@@ -1,6 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.LibraryPrints;
-
-namespace BellaBooks.BookCatalog.Domain.LibraryBranches;
+﻿namespace BellaBooks.BookCatalog.Domain.LibraryBranches;
 
 public class LibraryBranchEntity : IEntity, ITrackableEntity
 {
@@ -14,17 +12,10 @@ public class LibraryBranchEntity : IEntity, ITrackableEntity
 
     public DateTimeOffset? UpdatedAt { get; }
 
-    #region NavigationProperties
-
-    public IReadOnlyCollection<LibraryPrintEntity> LibraryPrints { get; }
-
-    #endregion NavigationProperties
-
     public LibraryBranchEntity(string code, string name)
     {
         Code = code;
         Name = name;
-        LibraryPrints = new List<LibraryPrintEntity>();
         IsActive = true;
     }
 

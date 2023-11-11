@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Books.Commands;
+﻿using BellaBooks.BookCatalog.Domain.Books;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.Books;
 

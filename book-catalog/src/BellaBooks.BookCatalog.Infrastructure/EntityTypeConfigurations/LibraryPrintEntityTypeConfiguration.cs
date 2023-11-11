@@ -43,15 +43,5 @@ internal class LibraryPrintEntityTypeConfiguration :
 
         builder
             .HasTrackableProperties();
-
-        builder
-            .HasOne(e => e.Book)
-            .WithMany(f => f.LibraryPrints)
-            .HasForeignKey(e => e.BookId);
-
-        builder
-           .HasOne(e => e.LibraryBranch)
-           .WithMany(f => f.LibraryPrints)
-           .HasForeignKey(e => e.LibraryBranchCode);
     }
 }

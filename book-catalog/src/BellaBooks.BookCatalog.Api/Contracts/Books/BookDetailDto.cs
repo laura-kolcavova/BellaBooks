@@ -2,7 +2,7 @@
 using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
 using BellaBooks.BookCatalog.Api.Contracts.Publishers;
-using BellaBooks.BookCatalog.Domain.Books;
+using BellaBooks.BookCatalog.Domain.Books.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.Books;
 
@@ -24,7 +24,7 @@ public record BookDetailDto
 
     public required string? Summary { get; init; }
 
-    public required PublisherDetailDto? Publisher { get; init; }
+    public required PublisherDetailDto Publisher { get; init; }
 
     public required IReadOnlyCollection<AuthorDetailDto> Authors { get; init; }
 
@@ -32,26 +32,24 @@ public record BookDetailDto
 
     public required IReadOnlyCollection<LibraryPrintDetailDto> LibraryPrints { get; init; }
 
-    public static BookDetailDto FromEntity(BookEntity book)
+    public static BookDetailDto FromEntity(BookDetailReadModel book)
     {
         return new BookDetailDto
         {
             Id = book.Id,
             Title = book.Title,
-            Isbn = book.PublicationInfo.Isbn,
-            PublicationYear = book.PublicationInfo.Year,
-            PublicationLanguage = book.PublicationInfo.Language,
-            PublicationCity = book.PublicationInfo.City,
-            PageCount = book.FormatInfo.PageCount,
-            Publisher = book.Publisher != null
-             ? PublisherDetailDto.FromEntity(book.Publisher)
-             : null,
+            Isbn = book.Isbn,
+            PublicationYear = book.PublicationYear,
+            PublicationLanguage = book.PublicationLanguage,
+            PublicationCity = book.PublicationCity,
+            PageCount = book.PageCount,
             Summary = book.Summary,
-            Authors = book.BookAuthors
-                .Select(ab => AuthorDetailDto.FromEntity(ab.Author))
+            Publisher = PublisherDetailDto.FromEntity(book.Publisher),
+            Authors = book.Authors
+                .Select(AuthorDetailDto.FromEntity)
                 .ToList(),
-            Genres = book.BookGenres
-                .Select(bg => GenreDetailDto.FromEntity(bg.Genre))
+            Genres = book.Genres
+                .Select(GenreDetailDto.FromEntity)
                 .ToList(),
             LibraryPrints = book.LibraryPrints
                 .Select(LibraryPrintDetailDto.FromEntity)

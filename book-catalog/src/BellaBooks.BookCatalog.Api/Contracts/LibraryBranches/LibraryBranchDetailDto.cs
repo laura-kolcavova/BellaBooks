@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.LibraryBranches;
+﻿using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.LibraryBranches;
 
@@ -10,7 +10,7 @@ public record LibraryBranchDetailDto
 
     public required bool IsActive { get; init; }
 
-    public static LibraryBranchDetailDto FromEntity(LibraryBranchEntity libraryBranch)
+    public static LibraryBranchDetailDto FromEntity(LibraryBranchDetailReadModel libraryBranch)
     {
         return new LibraryBranchDetailDto
         {

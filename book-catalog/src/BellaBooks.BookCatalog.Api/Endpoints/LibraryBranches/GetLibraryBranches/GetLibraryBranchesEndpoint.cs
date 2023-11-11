@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryBranches;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.LibraryBranches.Commands;
+using BellaBooks.BookCatalog.Domain.LibraryBranches.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -28,7 +28,7 @@ internal class GetLibraryBranchesEndpoint : EndpointWithoutRequest<
         Ok<GetLibraryBranchesContracts.ResponseDto>>
         ExecuteAsync(CancellationToken ct)
     {
-        var libraryBranches = await new GetLibraryBranchesCommand()
+        var libraryBranches = await new GetLibraryBranchesQuery()
             .ExecuteAsync(ct);
 
         return TypedResults.Ok(Map.FromEntity(libraryBranches));

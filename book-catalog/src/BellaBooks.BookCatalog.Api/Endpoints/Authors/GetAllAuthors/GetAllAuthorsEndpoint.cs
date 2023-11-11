@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Authors.GetAllAuthors;
-using BellaBooks.BookCatalog.Domain.Authors.Commands;
+using BellaBooks.BookCatalog.Domain.Authors.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -29,7 +29,7 @@ internal class GetAllAuthorsEndpoint : EndpointWithoutRequest<
         Ok<GetAllAuthorsContracts.ResponseDto>>
         ExecuteAsync(CancellationToken ct)
     {
-        var authors = await new GetAllAuthorsCommand()
+        var authors = await new GetAllAuthorsQuery()
             .ExecuteAsync(ct);
 
         return TypedResults.Ok(Map.FromEntity(authors));

@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;
-using BellaBooks.BookCatalog.Domain.Publishers.Commands;
+using BellaBooks.BookCatalog.Domain.Publishers.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -32,7 +32,7 @@ internal class GetPublisherDetailEndpoint : Endpoint<
         Ok<GetPublisherDetailContracts.ResponseDto>>
         ExecuteAsync(GetPublisherDetailContracts.RequestDto req, CancellationToken ct)
     {
-        var result = await new GetPublisherDetailCommand()
+        var result = await new GetPublisherDetailQuery()
         {
             PublisherId = req.PublisherId,
         }.ExecuteAsync(ct);

@@ -1,8 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.Authors;
-using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
-using BellaBooks.BookCatalog.Domain.Genres;
+﻿using BellaBooks.BookCatalog.Domain.Books.ValueObjects;
 using BellaBooks.BookCatalog.Domain.LibraryPrints;
-using BellaBooks.BookCatalog.Domain.Publishers;
 
 namespace BellaBooks.BookCatalog.Domain.Books;
 
@@ -29,8 +26,6 @@ public class BookEntity : IEntity<int>, ITrackableEntity
     private readonly List<BookGenreEntity> _bookGenres;
 
     private readonly List<BookAuthorEntity> _bookAuthors;
-
-    public PublisherEntity? Publisher { get; private set; }
 
     public IReadOnlyCollection<LibraryPrintEntity> LibraryPrints { get; }
 
@@ -85,21 +80,15 @@ public class BookEntity : IEntity<int>, ITrackableEntity
         return this;
     }
 
-    public BookEntity SetPublisher(PublisherEntity publisher)
+    public BookEntity SetAuthors(IEnumerable<int> authorIds)
     {
-        Publisher = publisher;
-        return SetPublisher(publisher.Id);
-    }
-
-    public BookEntity SetAuthors(IEnumerable<AuthorEntity> authors)
-    {
-        if (!authors.Any())
+        if (!authorIds.Any())
         {
-            throw new ArgumentException("Collection of authors must not be empty", nameof(authors));
+            throw new ArgumentException("Collection of authors must not be empty", nameof(authorIds));
         }
 
-        var bookAuthors = authors
-            .Select(author => new BookAuthorEntity(author, this));
+        var bookAuthors = authorIds
+            .Select(authorId => new BookAuthorEntity(this, authorId));
 
         _bookAuthors.Clear();
         _bookAuthors.AddRange(_bookAuthors);
@@ -108,10 +97,10 @@ public class BookEntity : IEntity<int>, ITrackableEntity
     }
 
 
-    public BookEntity SetGenres(IEnumerable<GenreEntity> genres)
+    public BookEntity SetGenres(IEnumerable<int> genreIds)
     {
-        var bookGenres = genres
-            .Select(genre => new BookGenreEntity(this, genre));
+        var bookGenres = genreIds
+            .Select(genreId => new BookGenreEntity(this, genreId));
 
         _bookGenres.Clear();
         _bookGenres.AddRange(bookGenres);

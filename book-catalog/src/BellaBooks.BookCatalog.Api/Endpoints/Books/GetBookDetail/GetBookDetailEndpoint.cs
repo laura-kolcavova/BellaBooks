@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.Books.Commands;
+using BellaBooks.BookCatalog.Domain.Books.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -28,7 +28,7 @@ internal class GetBookDetailEndpoint : Endpoint
         Ok<GetBookDetailContracts.ResponseDto>>
         ExecuteAsync(GetBookDetailContracts.RequestDto req, CancellationToken ct)
     {
-        var result = await new GetBookDetailCommand
+        var result = await new GetBookDetailQuery
         {
             BookId = req.BookId,
         }.ExecuteAsync(ct);

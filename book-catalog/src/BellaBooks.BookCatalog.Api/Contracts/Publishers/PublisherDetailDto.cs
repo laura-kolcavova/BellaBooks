@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Publishers;
+﻿using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
 
 namespace BellaBooks.BookCatalog.Api.Contracts.Publishers;
 
@@ -8,7 +8,7 @@ public record PublisherDetailDto
 
     public required string Name { get; init; }
 
-    public static PublisherDetailDto FromEntity(PublisherEntity entity)
+    public static PublisherDetailDto FromEntity(PublisherDetailReadModel entity)
     {
         return new PublisherDetailDto
         {

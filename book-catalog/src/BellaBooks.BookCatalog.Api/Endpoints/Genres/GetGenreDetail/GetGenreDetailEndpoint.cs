@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.Genres.Commands;
+using BellaBooks.BookCatalog.Domain.Genres.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -28,7 +28,7 @@ internal class GetGenreByIdEndpoint : Endpoint<
         Ok<GetGenreDetailContracts.ResponseDto>>
         ExecuteAsync(GetGenreDetailContracts.RequestDto req, CancellationToken ct)
     {
-        var result = await new GetGenreDetailCommand()
+        var result = await new GetGenreDetailQuery()
         {
             GenreId = req.GenreId,
         }.ExecuteAsync(ct);
