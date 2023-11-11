@@ -34,7 +34,7 @@ internal class GetLibraryBranchDetailQueryHandler : ICommandHandler<
         {
             var libraryBranch = await _bookCatalogContext.LibraryBranches
                 .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
-                .Select(libraryBranch => LibraryBranchDetailReadModelExtensions.FromEntity(libraryBranch))
+                .SelectLibraryBranchDetailReadModel()
                 .SingleOrDefaultAsync(ct);
 
             return libraryBranch;

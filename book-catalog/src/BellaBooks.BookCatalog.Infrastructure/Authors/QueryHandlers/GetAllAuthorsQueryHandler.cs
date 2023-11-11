@@ -29,7 +29,7 @@ internal class GetAllAuthorsQueryHandler : ICommandHandler<
         try
         {
             var authors = await _bookCatalogContext.Authors
-                .Select(author => AuthorDetailReadModelExtensions.FromEntity(author))
+                .SelectAuthorDetailReadModel()
                 .ToListAsync(ct);
 
             return authors;

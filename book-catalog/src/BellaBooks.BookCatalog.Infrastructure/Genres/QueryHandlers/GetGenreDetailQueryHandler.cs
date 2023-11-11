@@ -35,7 +35,7 @@ internal class GetGenreDetailQueryHandler : ICommandHandler<
         {
             var genre = await _bookCatalogContext.Genres
                 .Where(genre => genre.Id == command.GenreId)
-                .Select(genre => GenreDetailReadModelExtensions.FromEntity(genre))
+                .SelectGenreDetailReadModel()
                 .SingleOrDefaultAsync(ct);
 
             return genre;

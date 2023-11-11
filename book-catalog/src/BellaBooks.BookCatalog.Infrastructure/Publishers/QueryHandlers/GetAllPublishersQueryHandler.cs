@@ -29,7 +29,7 @@ internal class GetAllPublishersQueryHandler : ICommandHandler<
         try
         {
             var publishers = await _bookCatalogContext.Publishers
-                .Select(publisher => PublisherDetailReadModelExtensions.FromEntity(publisher))
+                .SelectPublisherDetailReadModel()
                 .ToListAsync(ct);
 
             return publishers;

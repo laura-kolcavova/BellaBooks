@@ -35,7 +35,7 @@ internal class GetPublisherDetailQueryHandler : ICommandHandler<
         {
             var publisher = await _bookCatalogContext.Publishers
                 .Where(publisher => publisher.Id == command.PublisherId)
-                .Select(publisher => PublisherDetailReadModelExtensions.FromEntity(publisher))
+                .SelectPublisherDetailReadModel()
                 .SingleOrDefaultAsync(ct);
 
             return publisher;
