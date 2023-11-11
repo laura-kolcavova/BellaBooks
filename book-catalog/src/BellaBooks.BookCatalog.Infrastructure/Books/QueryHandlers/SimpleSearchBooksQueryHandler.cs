@@ -49,7 +49,6 @@ internal class SimpleSearchBooksQueryHandler : ICommandHandler<
             var bookListingItems = await dbConnection
                 .QueryAsync<BookListingItemReadModel, string, string, BookListingItemReadModel>(
                 sqlCommand,
-
                 (book, authorNames, libraryPrintStateCodes) =>
                 {
                     book.AuthorsNames = authorNames

@@ -24,7 +24,7 @@ public record BookDetailDto
 
     public required string? Summary { get; init; }
 
-    public required PublisherDetailDto? Publisher { get; init; }
+    public required PublisherDetailDto Publisher { get; init; }
 
     public required IReadOnlyCollection<AuthorDetailDto> Authors { get; init; }
 
@@ -43,10 +43,8 @@ public record BookDetailDto
             PublicationLanguage = book.PublicationLanguage,
             PublicationCity = book.PublicationCity,
             PageCount = book.PageCount,
-            Publisher = book.Publisher != null
-             ? PublisherDetailDto.FromEntity(book.Publisher)
-             : null,
             Summary = book.Summary,
+            Publisher = PublisherDetailDto.FromEntity(book.Publisher),
             Authors = book.Authors
                 .Select(AuthorDetailDto.FromEntity)
                 .ToList(),

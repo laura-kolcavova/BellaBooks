@@ -1,7 +1,9 @@
-﻿using BellaBooks.BookCatalog.Domain.Books.Queries;
+﻿using BellaBooks.BookCatalog.Domain.Authors.ReadModels;
+using BellaBooks.BookCatalog.Domain.Books.Queries;
 using BellaBooks.BookCatalog.Domain.Books.ReadModels;
+using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
+using BellaBooks.BookCatalog.Domain.LibraryPrints.ReadModels;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
-using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using Dapper;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -43,16 +45,36 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
 	                 B.[Id]
                     ,B.[Title]
                     ,B.[Isbn]
-                    ,B.[PublisherId]
                     ,B.[PublicationYear]
                     ,B.[PublicationCity]
                     ,B.[PublicationLanguage]
                     ,B.[PageCount]
                     ,B.[Summary]
+                    ,P.[Id] AS PublisherId
 	                ,P.[Name] AS PublisherName
                 FROM [BookCatalog].[dbo].[Books] B
                 INNER JOIN [Publishers] P ON P.[ID] = B.[PublisherId]
-                WHERE B.[ID] = @bookId",
+                WHERE B.[ID] = @bookId;
+
+                SELECT A.[Id], A.[Name]
+                FROM [BookAuthors] BA
+                INNER JOIN [Authors] A ON A.[Id] = BA.[BookId]
+                WHERE BA.[BookId] = @bookId
+
+                SELECT G.[Id], G.[Name]
+                FROM [BookGenres] BG
+                INNER JOIN [Genres] G ON G.[Id] = BG.[GenreId]
+                WHERE BG.[BookId] = @bookId
+
+                SELECT
+                     LP.[Id]
+                    ,LP.[BookId]
+                    ,LP.[LibraryBranchCode]
+                    ,LP.[Shelfmark]
+                    ,LP.[StateCode]
+                FROM [LibraryPrints] LP
+                WHERE LP.[BookId] = @bookId
+                ",
                 new
                 {
                     bookId = command.BookId,
@@ -60,32 +82,20 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
                 commandType: CommandType.Text,
                 cancellationToken: ct);
 
-            var bookDetail = await connection.QueryFirstAsync<BookDetailReadModel>(sqlCommand);
+            using var result = await connection.QueryMultipleAsync(sqlCommand);
+
+            var bookDetail = await result.ReadFirstOrDefaultAsync<BookDetailReadModel>();
 
             if (bookDetail == null)
             {
                 return bookDetail;
             }
 
-            bookDetail.Authors = await _bookCatalogContext.BookAuthors
-                .Join(
-                    _bookCatalogContext.Authors,
-                    bookAuthor => bookAuthor.AuthorId,
-                    author => author.Id,
-                    (bookAuthor, author) => AuthorDetailReadModelExtensions.FromEntity(author))
-                .ToListAsync(ct);
+            bookDetail.Authors = (await result.ReadAsync<AuthorDetailReadModel>()).ToList();
 
-            bookDetail.Genres = await _bookCatalogContext.BookGenres
-               .Join(
-                    _bookCatalogContext.Genres,
-                    bookGenre => bookGenre.GenreId,
-                    genre => genre.Id, (bookGenre, genre) => GenreDetailReadModelExtensions.FromEntity(genre))
-               .ToListAsync(ct);
+            bookDetail.Genres = (await result.ReadAsync<GenreDetailReadModel>()).ToList();
 
-            bookDetail.LibraryPrints = await _bookCatalogContext.LibraryPrints
-                .Where(libaryPrint => libaryPrint.BookId == command.BookId)
-                .Select(libraryPrint => LibraryPrintDetailReadModelExtensions.FromEntity(libraryPrint))
-                .ToListAsync(ct);
+            bookDetail.LibraryPrints = (await result.ReadAsync<LibraryPrintDetailReadModel>()).ToList();
 
             return bookDetail;
         }

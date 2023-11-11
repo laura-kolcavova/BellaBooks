@@ -23,7 +23,15 @@ public class BookDetailReadModel
 
     public required string? Summary { get; init; }
 
-    public required PublisherDetailReadModel Publisher { get; init; }
+    public required int PublisherId { get; init; }
+
+    public required string PublisherName { get; init; }
+
+    public PublisherDetailReadModel Publisher => new()
+    {
+        Id = PublisherId,
+        Name = PublisherName,
+    };
 
     public IReadOnlyCollection<AuthorDetailReadModel> Authors { get; set; } = new List<AuthorDetailReadModel>();
 
