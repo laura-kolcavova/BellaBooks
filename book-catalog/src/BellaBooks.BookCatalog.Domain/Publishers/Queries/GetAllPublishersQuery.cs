@@ -4,6 +4,6 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Domain.Publishers.Queries;
 
 public record GetAllPublishersQuery : ICommand<
-    ICollection<PublisherDetailReadModel>>
+    IReadOnlyCollection<PublisherDetailReadModel>>
 {
 }

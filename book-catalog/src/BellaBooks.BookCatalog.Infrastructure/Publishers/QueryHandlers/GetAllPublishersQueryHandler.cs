@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace BellaBooks.BookCatalog.Infrastructure.Publishers.QueryHandlers;
 
 internal class GetAllPublishersQueryHandler : ICommandHandler<
-    GetAllPublishersQuery, ICollection<PublisherDetailReadModel>>
+    GetAllPublishersQuery,
+    IReadOnlyCollection<PublisherDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetAllPublishersQueryHandler> _logger;
@@ -22,8 +23,7 @@ internal class GetAllPublishersQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        ICollection<PublisherDetailReadModel>>
+    public async Task<IReadOnlyCollection<PublisherDetailReadModel>>
         ExecuteAsync(GetAllPublishersQuery command, CancellationToken ct)
     {
         try

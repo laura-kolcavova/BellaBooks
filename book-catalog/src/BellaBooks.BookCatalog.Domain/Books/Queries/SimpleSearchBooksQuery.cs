@@ -4,7 +4,7 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Domain.Books.Queries;
 
 public record SimpleSearchBooksQuery : ICommand<
-    ICollection<BookListingItemReadModel>>
+    IReadOnlyCollection<BookListingItemReadModel>>
 {
     public required string? SearchInput { get; init; }
 
