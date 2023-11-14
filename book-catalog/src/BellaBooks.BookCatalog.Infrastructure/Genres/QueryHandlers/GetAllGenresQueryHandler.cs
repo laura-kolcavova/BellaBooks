@@ -10,7 +10,7 @@ namespace BellaBooks.BookCatalog.Infrastructure.Genres.QueryHandlers;
 
 internal class GetAllGenresQueryHandler : ICommandHandler<
     GetAllGenresQuery,
-    ICollection<GenreDetailReadModel>>
+    IReadOnlyCollection<GenreDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetAllGenresQueryHandler> _logger;
@@ -23,8 +23,7 @@ internal class GetAllGenresQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        ICollection<GenreDetailReadModel>>
+    public async Task<IReadOnlyCollection<GenreDetailReadModel>>
         ExecuteAsync(GetAllGenresQuery command, CancellationToken ct)
     {
         try

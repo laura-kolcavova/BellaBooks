@@ -12,7 +12,7 @@ using System.Data;
 namespace BellaBooks.BookCatalog.Infrastructure.Books.QueryHandlers;
 internal class SimpleSearchBooksQueryHandler : ICommandHandler<
     SimpleSearchBooksQuery,
-    ICollection<BookListingItemReadModel>>
+    IReadOnlyCollection<BookListingItemReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<SimpleSearchBooksQueryHandler> _logger;
@@ -25,8 +25,7 @@ internal class SimpleSearchBooksQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        ICollection<BookListingItemReadModel>>
+    public async Task<IReadOnlyCollection<BookListingItemReadModel>>
         ExecuteAsync(SimpleSearchBooksQuery command, CancellationToken ct)
     {
         try

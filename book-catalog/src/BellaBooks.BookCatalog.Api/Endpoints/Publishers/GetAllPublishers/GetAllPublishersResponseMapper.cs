@@ -6,9 +6,9 @@ namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetAllPublishers;
 
 internal class GetAllPublishersResponseMapper : ResponseMapper<
     GetAllPublishersContracts.ResponseDto,
-    ICollection<PublisherDetailReadModel>>
+    IReadOnlyCollection<PublisherDetailReadModel>>
 {
-    public override GetAllPublishersContracts.ResponseDto FromEntity(ICollection<PublisherDetailReadModel> e)
+    public override GetAllPublishersContracts.ResponseDto FromEntity(IReadOnlyCollection<PublisherDetailReadModel> e)
     {
         return new()
         {

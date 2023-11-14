@@ -4,6 +4,6 @@ using FastEndpoints;
 namespace BellaBooks.BookCatalog.Domain.Genres.Queries;
 
 public record GetAllGenresQuery : ICommand<
-    ICollection<GenreDetailReadModel>>
+    IReadOnlyCollection<GenreDetailReadModel>>
 {
 }

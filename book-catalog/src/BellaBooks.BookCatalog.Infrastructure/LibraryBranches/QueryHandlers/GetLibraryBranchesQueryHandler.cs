@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace BellaBooks.BookCatalog.Infrastructure.LibraryBranches.QueryHandlers;
 
 internal class GetLibraryBranchesQueryHandler : ICommandHandler<
-    GetLibraryBranchesQuery, ICollection<LibraryBranchDetailReadModel>>
+    GetLibraryBranchesQuery,
+    IReadOnlyCollection<LibraryBranchDetailReadModel>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
     private readonly ILogger<GetLibraryBranchesQueryHandler> _logger;
@@ -22,8 +23,7 @@ internal class GetLibraryBranchesQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        ICollection<LibraryBranchDetailReadModel>>
+    public async Task<IReadOnlyCollection<LibraryBranchDetailReadModel>>
         ExecuteAsync(GetLibraryBranchesQuery command, CancellationToken ct)
     {
         try

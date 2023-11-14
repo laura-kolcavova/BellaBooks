@@ -105,7 +105,7 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
                 ",
                 new
                 {
-                    bookId = bookId,
+                    bookId,
                 },
                 commandType: CommandType.Text,
                 cancellationToken: cancellationToken);

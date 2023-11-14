@@ -4,6 +4,6 @@ public static class GetAllPublishersContracts
 {
     public record ResponseDto
     {
-        public required ICollection<PublisherDetailDto> Publishers { get; init; }
+        public required IReadOnlyCollection<PublisherDetailDto> Publishers { get; init; }
     }
 }

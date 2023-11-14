@@ -6,9 +6,9 @@ namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;
 
 internal class SimpleSearchBooksResponseMapper : ResponseMapper<
     SimpleSearchBooksContracts.ResponseDto,
-    ICollection<BookListingItemReadModel>>
+    IReadOnlyCollection<BookListingItemReadModel>>
 {
-    public override SimpleSearchBooksContracts.ResponseDto FromEntity(ICollection<BookListingItemReadModel> e)
+    public override SimpleSearchBooksContracts.ResponseDto FromEntity(IReadOnlyCollection<BookListingItemReadModel> e)
     {
         return new()
         {

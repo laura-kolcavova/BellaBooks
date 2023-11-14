@@ -4,6 +4,6 @@ public static class GetAllGenresContracts
 {
     public record ResponseDto
     {
-        public required ICollection<GenreDetailDto> Genres { get; init; }
+        public required IReadOnlyCollection<GenreDetailDto> Genres { get; init; }
     }
 }
