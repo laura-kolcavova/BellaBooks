@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.0" />
-    <PackageReference Include="FastEndpoints" Version="5.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Constants\BellaBooks.BookCatalog.Constants.csproj" />
   </ItemGroup>
 
 </Project>

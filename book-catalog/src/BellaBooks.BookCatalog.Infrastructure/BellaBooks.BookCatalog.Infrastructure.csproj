@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BellaBooks.BookCatalog.Bussiness\BellaBooks.BookCatalog.Bussiness.csproj" />
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Application\BellaBooks.BookCatalog.Application.csproj" />
   </ItemGroup>
 
 </Project>

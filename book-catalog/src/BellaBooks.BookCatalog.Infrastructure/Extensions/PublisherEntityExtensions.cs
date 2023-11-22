@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.Publishers;
-using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
+﻿using BellaBooks.BookCatalog.Application.Features.Publishers.Queries;
+using BellaBooks.BookCatalog.Domain.Entities.Publishers;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;
 

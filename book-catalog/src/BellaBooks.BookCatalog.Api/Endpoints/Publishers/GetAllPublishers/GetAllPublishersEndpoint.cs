@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetAllPublishers;
-using BellaBooks.BookCatalog.Domain.Publishers.Queries;
+using BellaBooks.BookCatalog.Application.Features.Publishers.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 

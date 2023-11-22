@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\BellaBooks.BookCatalog.Application\BellaBooks.BookCatalog.Application.csproj" />
     <ProjectReference Include="..\..\src\BellaBooks.BookCatalog.Domain\BellaBooks.BookCatalog.Domain.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
+using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryBranches.GetLibraryBranches;

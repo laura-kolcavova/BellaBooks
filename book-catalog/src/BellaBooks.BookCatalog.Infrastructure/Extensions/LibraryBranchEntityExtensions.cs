@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryBranches.ReadModels;
+﻿using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
+using BellaBooks.BookCatalog.Domain.Entities.LibraryBranches;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;
 

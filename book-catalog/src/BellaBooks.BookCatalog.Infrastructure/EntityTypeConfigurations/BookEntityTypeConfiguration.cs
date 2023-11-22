@@ -1,4 +1,4 @@
-﻿using BellaBooks.BookCatalog.Domain.Books;
+﻿using BellaBooks.BookCatalog.Domain.Entities.Books;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;

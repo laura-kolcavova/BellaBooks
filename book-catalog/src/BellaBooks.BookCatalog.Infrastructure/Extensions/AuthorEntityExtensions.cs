@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.Authors;
-using BellaBooks.BookCatalog.Domain.Authors.ReadModels;
+﻿using BellaBooks.BookCatalog.Application.Features.Authors.Queries;
+using BellaBooks.BookCatalog.Domain.Entities.Authors;
 using CSharpFunctionalExtensions;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;

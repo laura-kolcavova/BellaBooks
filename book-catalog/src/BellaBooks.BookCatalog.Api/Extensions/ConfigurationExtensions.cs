@@ -5,11 +5,16 @@ namespace BellaBooks.BookCatalog.Api.Extensions;
 
 internal static class ConfigurationExtensions
 {
+    public static IConfigurationSection GetRequiredSection<TOptions>(this IConfiguration configuration, string? sectionName = null)
+    {
+        return configuration.GetRequiredSection(sectionName ?? typeof(TOptions).Name);
+    }
+
     public static TOptions GetConfiguration<TOptions>(this IConfiguration configuration, string? sectionName = null)
         where TOptions : class
     {
         return configuration
-           .GetRequiredSection(sectionName ?? typeof(TOptions).Name)
+           .GetRequiredSection<TOptions>(sectionName)
            .Get<TOptions>()!;
 
         //return configuration

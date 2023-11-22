@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
-using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
+using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
