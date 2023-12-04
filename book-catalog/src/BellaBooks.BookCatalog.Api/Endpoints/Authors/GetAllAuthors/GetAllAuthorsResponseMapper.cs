@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Authors;
-using BellaBooks.BookCatalog.Domain.Authors.ReadModels;
+using BellaBooks.BookCatalog.Application.Features.Authors.Queries;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Authors.GetAllAuthors;

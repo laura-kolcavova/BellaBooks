@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.Genres.Queries;
+using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 

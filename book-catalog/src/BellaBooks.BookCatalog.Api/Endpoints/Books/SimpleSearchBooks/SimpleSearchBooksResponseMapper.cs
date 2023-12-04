@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
-using BellaBooks.BookCatalog.Domain.Books.ReadModels;
+using BellaBooks.BookCatalog.Application.Features.Books.Queries;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;

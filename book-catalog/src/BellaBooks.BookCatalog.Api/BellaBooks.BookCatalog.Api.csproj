@@ -4,10 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c6130175-d2a0-484c-9801-42c8326d11e1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BellaBooks.BookCatalog.Bussiness\BellaBooks.BookCatalog.Bussiness.csproj" />
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Contracts\BellaBooks.BookCatalog.Contracts.csproj" />
+    <ProjectReference Include="..\BellaBooks.BookCatalog.Application\BellaBooks.BookCatalog.Application.csproj" />
     <ProjectReference Include="..\BellaBooks.BookCatalog.Infrastructure\BellaBooks.BookCatalog.Infrastructure.csproj" />
   </ItemGroup>
 

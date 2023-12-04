@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY ./BellaBooks.BookCatalog.sln ./
 
-COPY ./src/BellaBooks.BookCatalog.Api/BellaBooks.BookCatalog.Api.csproj ./src/BellaBooks.BookCatalog.Api/
-COPY ./src/BellaBooks.BookCatalog.Bussiness/BellaBooks.BookCatalog.Bussiness.csproj ././src/BellaBooks.BookCatalog.Bussiness/
-COPY ./src/BellaBooks.BookCatalog.Infrastructure/BellaBooks.BookCatalog.Infrastructure.csproj ./src/BellaBooks.BookCatalog.Infrastructure/
+COPY ./src/BellaBooks.BookCatalog.Constants/BellaBooks.BookCatalog.Constants.csproj ./src/BellaBooks.BookCatalog.Constants/
 COPY ./src/BellaBooks.BookCatalog.Domain/BellaBooks.BookCatalog.Domain.csproj ./src/BellaBooks.BookCatalog.Domain/
+COPY ./src/BellaBooks.BookCatalog.Application/BellaBooks.BookCatalog.Application.csproj ././src/BellaBooks.BookCatalog.Application/
+COPY ./src/BellaBooks.BookCatalog.Infrastructure/BellaBooks.BookCatalog.Infrastructure.csproj ./src/BellaBooks.BookCatalog.Infrastructure/
+COPY ./src/BellaBooks.BookCatalog.Contracts/BellaBooks.BookCatalog.Contracts.csproj ./src/BellaBooks.BookCatalog.Contracts/
+COPY ./src/BellaBooks.BookCatalog.Api/BellaBooks.BookCatalog.Api.csproj ./src/BellaBooks.BookCatalog.Api/
 
 # restore dependencies
 RUN dotnet restore ./src/BellaBooks.BookCatalog.Api/BellaBooks.BookCatalog.Api.csproj -r linux-x64

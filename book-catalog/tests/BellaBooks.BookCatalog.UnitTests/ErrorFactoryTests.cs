@@ -1,10 +1,10 @@
-﻿using BellaBooks.BookCatalog.Domain.Authors;
-using BellaBooks.BookCatalog.Domain.Books;
-using BellaBooks.BookCatalog.Domain.Errors;
-using BellaBooks.BookCatalog.Domain.Genres;
-using BellaBooks.BookCatalog.Domain.LibraryBranches;
-using BellaBooks.BookCatalog.Domain.LibraryPrints;
-using BellaBooks.BookCatalog.Domain.Publishers;
+﻿using BellaBooks.BookCatalog.Application.Errors;
+using BellaBooks.BookCatalog.Application.Features.Authors;
+using BellaBooks.BookCatalog.Application.Features.Books;
+using BellaBooks.BookCatalog.Application.Features.Genres;
+using BellaBooks.BookCatalog.Application.Features.LibraryBranches;
+using BellaBooks.BookCatalog.Application.Features.LibraryPrints;
+using BellaBooks.BookCatalog.Application.Features.Publishers;
 using FluentAssertions;
 using System.Reflection;
 using Xunit;

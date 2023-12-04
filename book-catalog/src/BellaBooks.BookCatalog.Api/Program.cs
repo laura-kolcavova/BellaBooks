@@ -1,7 +1,7 @@
 using BellaBooks.BookCatalog.Api.Configuration;
 using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Api.Filters;
-using BellaBooks.BookCatalog.Bussiness.Extensions;
+using BellaBooks.BookCatalog.Application.Extensions;
 using BellaBooks.BookCatalog.Infrastructure.Authentication;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
 using FastEndpoints;
@@ -64,7 +64,7 @@ var jwtBearedConfiguration = configuration
 services
     .AddMemoryCache()
     .AddApi()
-    .AddBussiness()
+    .AddApplication()
     .AddInfrastructure(jwtBearedConfiguration)
     .AddDataAccess(bookCatalogConnectionString, builder.Environment.IsDevelopment());
 

@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
-using BellaBooks.BookCatalog.Domain.Publishers.ReadModels;
+using BellaBooks.BookCatalog.Application.Features.Publishers.Queries;
 using FastEndpoints;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.GetPublisherDetail;

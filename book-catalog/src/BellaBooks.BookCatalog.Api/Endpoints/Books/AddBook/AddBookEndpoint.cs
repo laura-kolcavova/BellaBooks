@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
-using BellaBooks.BookCatalog.Domain.Books.Commands;
+using BellaBooks.BookCatalog.Application.Features.Books.Commands;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -44,7 +44,7 @@ internal class AddBookEndpoint : Endpoint<
         return TypedResults.Ok(Map.FromEntity(result.Value));
     }
 
-    private static AddBookCommand CreateAddBookCommand(Contracts.Books.AddBookContracts.RequestDto req)
+    private static AddBookCommand CreateAddBookCommand(AddBookContracts.RequestDto req)
     {
         return new AddBookCommand()
         {

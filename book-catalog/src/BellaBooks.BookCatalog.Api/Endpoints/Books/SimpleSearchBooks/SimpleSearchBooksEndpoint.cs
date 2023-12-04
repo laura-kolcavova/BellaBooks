@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
-using BellaBooks.BookCatalog.Domain.Books.Queries;
+using BellaBooks.BookCatalog.Application.Features.Books.Queries;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -33,6 +33,11 @@ internal class SimpleSearchBooksEndpoint : Endpoint<
         {
             SearchInput = req.SearchInput ?? string.Empty,
             Filter = req.Filter,
+            OffsetPaginationFilter = new Application.Pagination.OffsetPaginationFilter
+            {
+                Limit = int.MaxValue,
+                Offset = 0
+            }
         }.ExecuteAsync(ct);
 
         return TypedResults.Ok(Map.FromEntity(books));

@@ -1,5 +1,5 @@
-﻿using BellaBooks.BookCatalog.Domain.Genres;
-using BellaBooks.BookCatalog.Domain.Genres.ReadModels;
+﻿using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
+using BellaBooks.BookCatalog.Domain.Entities.Genres;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Extensions;
 
