@@ -4,13 +4,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Commands;
 using BellaBooks.BookCatalog.Domain.Entities.LibraryBranches;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryBranches.CommandHandlers;
 
-internal class AddLibraryBranchCommandHandler : ICommandHandler<
+internal class AddLibraryBranchCommandHandler : IRequestHandler<
     AddLibraryBranchCommand, Result<string, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -24,33 +24,31 @@ internal class AddLibraryBranchCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        Result<string, ErrorResult>>
-        ExecuteAsync(AddLibraryBranchCommand command, CancellationToken ct)
+    public async Task<Result<string, ErrorResult>> Handle(AddLibraryBranchCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibraryBranchCode"] = command.LibraryBranchCode,
-            ["Name"] = command.Name,
+            ["LibraryBranchCode"] = request.LibraryBranchCode,
+            ["Name"] = request.Name,
         });
 
         try
         {
             var libraryBranchExists = await _bookCatalogContext.LibraryBranches
-                .AnyAsync(libraryBranch => libraryBranch.Code == command.LibraryBranchCode, ct);
+                .AnyAsync(libraryBranch => libraryBranch.Code == request.LibraryBranchCode, cancellationToken);
 
             if (libraryBranchExists)
             {
                 return Result.Failure<string, ErrorResult>(
-                    LibraryBranchErrorResults.LibraryBranchWithSameCodeAlreadyExists);
+                LibraryBranchErrorResults.LibraryBranchWithSameCodeAlreadyExists);
             }
 
             var libraryBranch = new LibraryBranchEntity(
-                command.LibraryBranchCode, command.Name);
+                request.LibraryBranchCode, request.Name);
 
-            await _bookCatalogContext.AddAsync(libraryBranch, ct);
+            await _bookCatalogContext.AddAsync(libraryBranch, cancellationToken);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

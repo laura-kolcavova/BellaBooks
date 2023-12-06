@@ -4,7 +4,7 @@ using BellaBooks.BookCatalog.Api.Filters;
 using BellaBooks.BookCatalog.Application.Extensions;
 using BellaBooks.BookCatalog.Infrastructure.Authentication;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;

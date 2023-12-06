@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryPrints;
 using BellaBooks.BookCatalog.Application.Features.LibraryPrints.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryPrints.CommandHandlers;
 
-internal class ChangeLibraryPrintStateCommandHandler : ICommandHandler<
+internal class ChangeLibraryPrintStateCommandHandler : IRequestHandler<
     ChangeLibaryPrintStateCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,20 +23,18 @@ internal class ChangeLibraryPrintStateCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(ChangeLibaryPrintStateCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(ChangeLibaryPrintStateCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibraryPrintId"] = command.LibraryPrintId,
-            ["StateCode"] = command.StateCode
+            ["LibraryPrintId"] = request.LibraryPrintId,
+            ["StateCode"] = request.StateCode
         });
 
         try
         {
             var libraryPrint = await _bookCatalogContext.LibraryPrints
-                .SingleOrDefaultAsync(libraryPrint => libraryPrint.Id == command.LibraryPrintId, ct);
+                .SingleOrDefaultAsync(libraryPrint => libraryPrint.Id == request.LibraryPrintId, cancellationToken);
 
             if (libraryPrint == null)
             {
@@ -44,17 +42,17 @@ internal class ChangeLibraryPrintStateCommandHandler : ICommandHandler<
                     LibraryPrintErrorResults.LibraryPrintNotFound);
             }
 
-            if (libraryPrint.StateCode == command.StateCode)
+            if (libraryPrint.StateCode == request.StateCode)
             {
                 return UnitResult.Failure<ErrorResult>(
                    LibraryPrintErrorResults.LibraryPrintStateIsSameAsNewOne);
             }
 
-            libraryPrint.ChangeState(command.StateCode);
+            libraryPrint.ChangeState(request.StateCode);
 
             _bookCatalogContext.Update(libraryPrint);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

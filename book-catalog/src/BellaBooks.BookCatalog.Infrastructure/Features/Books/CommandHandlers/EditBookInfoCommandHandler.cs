@@ -5,13 +5,13 @@ using BellaBooks.BookCatalog.Application.Features.Publishers;
 using BellaBooks.BookCatalog.Domain.Entities.Books.ValueObjects;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Books.CommandHandlers;
 
-internal class EditBookInfoCommandHandler : ICommandHandler<
+internal class EditBookInfoCommandHandler : IRequestHandler<
     EditBookInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -25,14 +25,13 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(EditBookInfoCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>>
+        Handle(EditBookInfoCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["BookId"] = command.BookId,
-            ["Isbn"] = command.Isbn,
+            ["BookId"] = request.BookId,
+            ["Isbn"] = request.Isbn,
         });
 
         try
@@ -40,7 +39,7 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
             var book = await _bookCatalogContext.Books
                 .Include(book => book.BookAuthors)
                 .Include(book => book.BookGenres)
-                .SingleOrDefaultAsync(book => book.Id == command.BookId, ct);
+                .SingleOrDefaultAsync(book => book.Id == request.BookId, cancellationToken);
 
             if (book == null)
             {
@@ -48,10 +47,10 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                     BookErrorResults.BookNotFound);
             }
 
-            if (book.PublicationInfo.Isbn != command.Isbn)
+            if (book.PublicationInfo.Isbn != request.Isbn)
             {
                 var bookWithIsbnExists = await _bookCatalogContext.Books
-                    .AnyAsync(book => book.PublicationInfo.Isbn == command.Isbn, ct);
+                    .AnyAsync(book => book.PublicationInfo.Isbn == request.Isbn, cancellationToken);
 
                 if (bookWithIsbnExists)
                 {
@@ -60,10 +59,10 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                 }
             }
 
-            if (book.PublisherId != command.PublisherId)
+            if (book.PublisherId != request.PublisherId)
             {
                 var publisherExists = await _bookCatalogContext.Publishers
-                    .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
+                    .AnyAsync(publisher => publisher.Id == request.PublisherId, cancellationToken);
 
                 if (!publisherExists)
                 {
@@ -71,42 +70,42 @@ internal class EditBookInfoCommandHandler : ICommandHandler<
                         PublisherErrorResults.PublisherNotFound);
                 }
 
-                book.SetPublisher(command.PublisherId);
+                book.SetPublisher(request.PublisherId);
             }
 
-            if (command.AuthorIds.Count == 0)
+            if (request.AuthorIds.Count == 0)
             {
                 return Result.Failure<int, ErrorResult>(
                     BookErrorResults.NoAuthors);
             }
 
             var authorIds = await _bookCatalogContext.Authors
-              .Where(author => command.AuthorIds.Contains(author.Id))
-              .Select(author => author.Id)
-              .ToListAsync(ct);
+                .Where(author => request.AuthorIds.Contains(author.Id))
+                .Select(author => author.Id)
+                .ToListAsync(cancellationToken);
 
             var genreIds = await _bookCatalogContext.Genres
-                .Where(genre => command.GenreIds.Contains(genre.Id))
+                .Where(genre => request.GenreIds.Contains(genre.Id))
                 .Select(genre => genre.Id)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
 
             book
-                .SetTitle(command.Title)
+                .SetTitle(request.Title)
                 .SetAuthors(authorIds)
                 .SetGenres(genreIds)
                 .SetPublicationInfo(new PublicationInfoValueObject(
-                    isbn: command.Isbn,
-                    year: command.PublicationYear,
-                    city: command.PublicationCity,
-                    language: command.PublicationLanguage))
+                    isbn: request.Isbn,
+                    year: request.PublicationYear,
+                    city: request.PublicationCity,
+                    language: request.PublicationLanguage))
                 .SetFormatInfo(new FormatInfoValueObject(
-                    pageCount: command.PageCount))
-                .SetSummary(command.Summary);
+                    pageCount: request.PageCount))
+                .SetSummary(request.Summary);
 
             _bookCatalogContext.Books
                 .Update(book);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

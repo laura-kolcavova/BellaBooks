@@ -1,7 +1,7 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Application.Features.Books.Queries;
-using FastEndpoints;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.SimpleSearchBooks;

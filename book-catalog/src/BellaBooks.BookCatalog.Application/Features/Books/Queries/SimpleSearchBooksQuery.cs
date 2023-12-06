@@ -1,9 +1,9 @@
 ﻿using BellaBooks.BookCatalog.Application.Pagination;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Books.Queries;
 
-public record SimpleSearchBooksQuery : ICommand<
+public record SimpleSearchBooksQuery : IRequest<
     IReadOnlyCollection<BookListingItemReadModel>>
 {
     public required string? SearchInput { get; init; }

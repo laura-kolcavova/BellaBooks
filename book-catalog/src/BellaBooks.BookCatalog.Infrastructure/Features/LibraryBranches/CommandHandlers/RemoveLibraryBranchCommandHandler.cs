@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryBranches;
 using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryBranches.CommandHandlers;
 
-internal class RemoveLibraryBranchCommandHandler : ICommandHandler<
+internal class RemoveLibraryBranchCommandHandler : IRequestHandler<
     RemoveLibraryBranchCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,19 +23,17 @@ internal class RemoveLibraryBranchCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(RemoveLibraryBranchCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(RemoveLibraryBranchCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>()
         {
-            ["LibraryBranchCode"] = command.LibraryBranchCode
+            ["LibraryBranchCode"] = request.LibraryBranchCode
         });
 
         try
         {
             var libraryBranchExists = await _bookCatalogContext.LibraryBranches
-                .AnyAsync(libraryBranch => libraryBranch.Code == command.LibraryBranchCode, ct);
+                .AnyAsync(libraryBranch => libraryBranch.Code == request.LibraryBranchCode, cancellationToken);
 
             if (!libraryBranchExists)
             {
@@ -44,8 +42,8 @@ internal class RemoveLibraryBranchCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.LibraryBranches
-                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
-                .ExecuteDeleteAsync(ct);
+                .Where(libraryBranch => libraryBranch.Code == request.LibraryBranchCode)
+                .ExecuteDeleteAsync(cancellationToken);
 
             if (changes == 0)
             {

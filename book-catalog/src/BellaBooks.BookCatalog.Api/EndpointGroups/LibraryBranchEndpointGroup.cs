@@ -1,4 +1,4 @@
-﻿using FastEndpoints;
+﻿using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.EndpointGroups;
 

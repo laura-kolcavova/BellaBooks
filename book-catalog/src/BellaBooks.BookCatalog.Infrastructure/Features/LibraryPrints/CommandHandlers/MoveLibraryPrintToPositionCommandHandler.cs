@@ -4,13 +4,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryPrints;
 using BellaBooks.BookCatalog.Application.Features.LibraryPrints.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryPrints.CommandHandlers;
 
-internal class MoveLibraryPrintToPositionCommandHandler : ICommandHandler<
+internal class MoveLibraryPrintToPositionCommandHandler : IRequestHandler<
     MoveLibraryPrintToPositionCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -24,43 +24,40 @@ internal class MoveLibraryPrintToPositionCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(MoveLibraryPrintToPositionCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(MoveLibraryPrintToPositionCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibraryPrintId"] = command.LibraryPrintId,
-            ["Shelfmark"] = command.Shelfmark,
-            ["LibraryBranchCode"] = command.LibraryBranchCode
+            ["LibraryPrintId"] = request.LibraryPrintId,
+            ["Shelfmark"] = request.Shelfmark,
+            ["LibraryBranchCode"] = request.LibraryBranchCode
         });
 
         try
         {
             var libraryPrint = await _bookCatalogContext.LibraryPrints
-                .SingleOrDefaultAsync(libraryPrint => libraryPrint.Id == command.LibraryPrintId, ct);
+                .SingleOrDefaultAsync(libraryPrint => libraryPrint.Id == request.LibraryPrintId, cancellationToken);
 
             if (libraryPrint == null)
             {
                 return UnitResult.Failure<ErrorResult>(
                     LibraryPrintErrorResults.LibraryPrintNotFound);
             }
-
-            if (libraryPrint.LibraryBranchCode == command.LibraryBranchCode &&
-                libraryPrint.Shelfmark == command.Shelfmark)
+            if (libraryPrint.LibraryBranchCode == request.LibraryBranchCode &&
+                libraryPrint.Shelfmark == request.Shelfmark)
             {
                 return UnitResult.Failure<ErrorResult>(
                    LibraryPrintErrorResults.LibraryPrintLocationIsSameAsNewOne);
             }
 
             var libraryBranch = await _bookCatalogContext.LibraryBranches
-                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
+                .Where(libraryBranch => libraryBranch.Code == request.LibraryBranchCode)
                 .Select(libraryBranch => new
                 {
                     libraryBranch.Code,
                     libraryBranch.IsActive,
                 })
-                .SingleOrDefaultAsync(ct);
+                .SingleOrDefaultAsync(cancellationToken);
 
             if (libraryBranch is null)
             {
@@ -68,11 +65,11 @@ internal class MoveLibraryPrintToPositionCommandHandler : ICommandHandler<
                     LibraryBranchErrorResults.LibraryBranchNotFound);
             }
 
-            libraryPrint.MoveToLocation(command.LibraryBranchCode, command.Shelfmark);
+            libraryPrint.MoveToLocation(request.LibraryBranchCode, request.Shelfmark);
 
             _bookCatalogContext.Update(libraryPrint);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

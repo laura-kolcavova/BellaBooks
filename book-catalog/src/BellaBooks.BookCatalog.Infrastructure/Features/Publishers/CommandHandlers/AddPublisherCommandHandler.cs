@@ -4,13 +4,13 @@ using BellaBooks.BookCatalog.Application.Features.Publishers.Commands;
 using BellaBooks.BookCatalog.Domain.Entities.Publishers;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Publishers.CommandHandlers;
 
-internal class AddPublisherCommandHandler : ICommandHandler<
+internal class AddPublisherCommandHandler : IRequestHandler<
     AddPublisherCommand, Result<int, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -24,19 +24,17 @@ internal class AddPublisherCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        Result<int, ErrorResult>>
-        ExecuteAsync(AddPublisherCommand command, CancellationToken ct)
+    public async Task<Result<int, ErrorResult>> Handle(AddPublisherCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["Name"] = command.Name
+            ["Name"] = request.Name
         });
 
         try
         {
             var publisherWithNameAlreadyExists = await _bookCatalogContext.Publishers
-                .AnyAsync(publisher => publisher.Name == command.Name, ct);
+                .AnyAsync(publisher => publisher.Name == request.Name, cancellationToken);
 
             if (publisherWithNameAlreadyExists)
             {
@@ -44,13 +42,13 @@ internal class AddPublisherCommandHandler : ICommandHandler<
                     (PublisherErrorResults.PublisherWithSameNameAlreadyExists);
             }
 
-            var newPublisher = new PublisherEntity(command.Name);
+            var newPublisher = new PublisherEntity(request.Name);
 
             _bookCatalogContext.Publishers
                 .Add(newPublisher);
 
             var changes = await _bookCatalogContext
-                 .SaveChangesAsync(ct);
+                .SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

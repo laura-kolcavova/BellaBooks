@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Publishers.Commands;
 
-public record RemovePublisherCommand : ICommand<
+public record RemovePublisherCommand : IRequest<
     UnitResult<ErrorResult>>
 {
     public required int PublisherId { get; init; }

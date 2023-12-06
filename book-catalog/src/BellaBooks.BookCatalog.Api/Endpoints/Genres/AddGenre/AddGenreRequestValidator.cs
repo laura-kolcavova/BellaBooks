@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
-using FastEndpoints;
+using MediatR;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;

@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryBranches;
 using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryBranches.GetLibraryBranchDetail;
 

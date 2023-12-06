@@ -7,13 +7,13 @@ using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Domain.Entities.LibraryPrints;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryPrints.CommandHandlers;
 
-internal class AddLibraryPrintCommandHandler : ICommandHandler<
+internal class AddLibraryPrintCommandHandler : IRequestHandler<
     AddLibraryPrintCommand, Result<int, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -27,19 +27,19 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<Result<int, ErrorResult>> ExecuteAsync(AddLibraryPrintCommand command, CancellationToken ct)
+    public async Task<Result<int, ErrorResult>> Handle(AddLibraryPrintCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["BookId"] = command.BookId,
-            ["LibraryBranchCode"] = command.LibraryBranchCode,
-            ["Shelfmark"] = command.Shelfmark,
+            ["BookId"] = request.BookId,
+            ["LibraryBranchCode"] = request.LibraryBranchCode,
+            ["Shelfmark"] = request.Shelfmark,
         });
 
         try
         {
             var bookExists = await _bookCatalogContext.Books
-                .AnyAsync(book => book.Id == command.BookId, ct);
+                .AnyAsync(book => book.Id == request.BookId, cancellationToken);
 
             if (!bookExists)
             {
@@ -48,13 +48,13 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
             }
 
             var libraryBranch = await _bookCatalogContext.LibraryBranches
-                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
+                .Where(libraryBranch => libraryBranch.Code == request.LibraryBranchCode)
                 .Select(libraryBranch => new
                 {
                     libraryBranch.Code,
                     libraryBranch.IsActive,
                 })
-                .SingleOrDefaultAsync(ct);
+                .SingleOrDefaultAsync(cancellationToken);
 
             if (libraryBranch is null)
             {
@@ -69,11 +69,11 @@ internal class AddLibraryPrintCommandHandler : ICommandHandler<
             }
 
             var libraryPrint = new LibraryPrintEntity(
-                command.BookId, command.LibraryBranchCode, command.Shelfmark, LibraryPrintStateCode.AV);
+                request.BookId, request.LibraryBranchCode, request.Shelfmark, LibraryPrintStateCode.AV);
 
-            await _bookCatalogContext.LibraryPrints.AddAsync(libraryPrint, ct);
+            await _bookCatalogContext.LibraryPrints.AddAsync(libraryPrint, cancellationToken);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

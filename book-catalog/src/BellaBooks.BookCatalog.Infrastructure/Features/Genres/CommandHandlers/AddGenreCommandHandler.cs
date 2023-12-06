@@ -4,13 +4,13 @@ using BellaBooks.BookCatalog.Application.Features.Genres.Commands;
 using BellaBooks.BookCatalog.Domain.Entities.Genres;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Genres.CommandHandlers;
 
-internal class AddGenreCommandHandler : ICommandHandler<
+internal class AddGenreCommandHandler : IRequestHandler<
     AddGenreCommand,
     Result<int, ErrorResult>>
 {
@@ -25,33 +25,30 @@ internal class AddGenreCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        Result<int, ErrorResult>>
-        ExecuteAsync(AddGenreCommand command, CancellationToken ct)
+    public async Task<Result<int, ErrorResult>> Handle(AddGenreCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["Name"] = command.Name
+            ["Name"] = request.Name
         });
 
         try
         {
             var genreWithNameExists = await _bookCatalogContext.Genres
-                .AnyAsync(genre => genre.Name == command.Name, ct);
+                .AnyAsync(genre => genre.Name == request.Name, cancellationToken);
 
             if (genreWithNameExists)
             {
                 return Result.Failure<int, ErrorResult>
                     (GenreErrorResults.GenreWithSameNameAlreadyExists);
             }
-
-            var newGenre = new GenreEntity(command.Name);
+            var newGenre = new GenreEntity(request.Name);
 
             _bookCatalogContext.Genres
                 .Add(newGenre);
 
             var changes = await _bookCatalogContext
-                 .SaveChangesAsync(ct);
+                .SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

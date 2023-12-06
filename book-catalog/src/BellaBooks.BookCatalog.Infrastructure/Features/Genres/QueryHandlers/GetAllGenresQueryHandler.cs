@@ -1,13 +1,13 @@
 ﻿using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Genres.QueryHandlers;
 
-internal class GetAllGenresQueryHandler : ICommandHandler<
+internal class GetAllGenresQueryHandler : IRequestHandler<
     GetAllGenresQuery,
     IReadOnlyCollection<GenreDetailReadModel>>
 {
@@ -22,14 +22,13 @@ internal class GetAllGenresQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<GenreDetailReadModel>>
-        ExecuteAsync(GetAllGenresQuery command, CancellationToken ct)
+    public async Task<IReadOnlyCollection<GenreDetailReadModel>> Handle(GetAllGenresQuery request, CancellationToken cancellationToken)
     {
         try
         {
             var genres = await _bookCatalogContext.Genres
                 .SelectGenreDetailReadModel()
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
 
             return genres;
         }

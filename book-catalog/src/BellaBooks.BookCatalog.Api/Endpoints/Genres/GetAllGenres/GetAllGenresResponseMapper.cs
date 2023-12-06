@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Genres;
 using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.GetAllGenres;
 

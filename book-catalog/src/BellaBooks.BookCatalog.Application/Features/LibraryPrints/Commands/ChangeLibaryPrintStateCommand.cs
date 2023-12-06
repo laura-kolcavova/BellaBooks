@@ -1,11 +1,11 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.LibraryPrints.Commands;
 
-public record ChangeLibaryPrintStateCommand : ICommand
+public record ChangeLibaryPrintStateCommand : IRequest
     <UnitResult<ErrorResult>>
 {
     public required int LibraryPrintId { get; init; }

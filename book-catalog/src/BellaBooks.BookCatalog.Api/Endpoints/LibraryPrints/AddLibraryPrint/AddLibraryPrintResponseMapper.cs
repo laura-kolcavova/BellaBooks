@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.LibraryPrints;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.LibraryPrints.AddLibraryPrint;
 

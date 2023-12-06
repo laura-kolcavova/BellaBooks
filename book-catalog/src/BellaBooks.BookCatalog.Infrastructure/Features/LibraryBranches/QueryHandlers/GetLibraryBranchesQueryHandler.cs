@@ -1,13 +1,13 @@
 ﻿using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryBranches.QueryHandlers;
 
-internal class GetLibraryBranchesQueryHandler : ICommandHandler<
+internal class GetLibraryBranchesQueryHandler : IRequestHandler<
     GetLibraryBranchesQuery,
     IReadOnlyCollection<LibraryBranchDetailReadModel>>
 {
@@ -22,14 +22,13 @@ internal class GetLibraryBranchesQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<LibraryBranchDetailReadModel>>
-        ExecuteAsync(GetLibraryBranchesQuery command, CancellationToken ct)
+    public async Task<IReadOnlyCollection<LibraryBranchDetailReadModel>> Handle(GetLibraryBranchesQuery request, CancellationToken cancellationToken)
     {
         try
         {
             var libraryBranches = await _bookCatalogContext.LibraryBranches
                 .SelectLibraryBranchDetailReadModel()
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
 
             return libraryBranches;
         }

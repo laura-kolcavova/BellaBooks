@@ -4,14 +4,14 @@ using BellaBooks.BookCatalog.Application.Features.Genres.Queries;
 using BellaBooks.BookCatalog.Application.Features.LibraryPrints.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using Dapper;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Books.QueryHandlers;
 
-internal class GetBookDetailQueryHandler : ICommandHandler<
+internal class GetBookDetailQueryHandler : IRequestHandler<
     GetBookDetailQuery,
     BookDetailReadModel?>
 {
@@ -26,20 +26,17 @@ internal class GetBookDetailQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        BookDetailReadModel?>
-        ExecuteAsync(GetBookDetailQuery command, CancellationToken ct)
+    public async Task<BookDetailReadModel?> Handle(GetBookDetailQuery request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["BookId"] = command.BookId
+            ["BookId"] = request.BookId
         });
 
         try
         {
             var connection = _bookCatalogContext.Database.GetDbConnection();
-
-            var sqlCommand = BuildSqlCommand(command.BookId, ct);
+            var sqlCommand = BuildSqlCommand(request.BookId, cancellationToken);
 
             using var result = await connection.QueryMultipleAsync(sqlCommand);
 

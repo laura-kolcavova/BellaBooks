@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Authors.Commands;
 
-public record EditAuthorInfoCommand : ICommand<
+public record EditAuthorInfoCommand : IRequest<
     UnitResult<ErrorResult>>
 {
     public required int AuthorId { get; init; }

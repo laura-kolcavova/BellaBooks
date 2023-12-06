@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.Genres;
 using BellaBooks.BookCatalog.Application.Features.Genres.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Genres.CommandHandlers;
 
-internal class RemoveGenreCommandHandler : ICommandHandler<
+internal class RemoveGenreCommandHandler : IRequestHandler<
     RemoveGenreCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,19 +23,17 @@ internal class RemoveGenreCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(RemoveGenreCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(RemoveGenreCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["GenreId"] = command.GenreId,
+            ["GenreId"] = request.GenreId,
         });
 
         try
         {
             var genreExists = await _bookCatalogContext.Genres
-                .AnyAsync(genre => genre.Id == command.GenreId, ct);
+                .AnyAsync(genre => genre.Id == request.GenreId, cancellationToken);
 
             if (!genreExists)
             {
@@ -44,8 +42,8 @@ internal class RemoveGenreCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.Genres
-                .Where(genre => genre.Id == command.GenreId)
-                .ExecuteDeleteAsync(ct);
+                .Where(genre => genre.Id == request.GenreId)
+                .ExecuteDeleteAsync(cancellationToken);
 
             if (changes == 0)
             {

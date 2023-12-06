@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryBranches;
 using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryBranches.CommandHandlers;
 
-internal class ActivateLibraryBranchCommandHandler : ICommandHandler<
+internal class ActivateLibraryBranchCommandHandler : IRequestHandler<
     ActivateLibraryBranchCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,19 +23,17 @@ internal class ActivateLibraryBranchCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(ActivateLibraryBranchCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(ActivateLibraryBranchCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibraryBranchCode"] = command.LibraryBranchCode,
+            ["LibraryBranchCode"] = request.LibraryBranchCode,
         });
 
         try
         {
             var libraryBranch = await _bookCatalogContext.LibraryBranches
-                .FirstOrDefaultAsync(libraryBranch => libraryBranch.Code == command.LibraryBranchCode, ct);
+                .FirstOrDefaultAsync(libraryBranch => libraryBranch.Code == request.LibraryBranchCode, cancellationToken);
 
             if (libraryBranch is null)
             {
@@ -52,7 +50,7 @@ internal class ActivateLibraryBranchCommandHandler : ICommandHandler<
 
             _bookCatalogContext.Update(libraryBranch);
 
-            var changes = await _bookCatalogContext.SaveChangesAsync(ct);
+            var changes = await _bookCatalogContext.SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {

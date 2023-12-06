@@ -1,8 +1,8 @@
-﻿using FastEndpoints;
+﻿using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Publishers.Queries;
 
-public record GetAllPublishersQuery : ICommand<
+public record GetAllPublishersQuery : IRequest<
     IReadOnlyCollection<PublisherDetailReadModel>>
 {
 }

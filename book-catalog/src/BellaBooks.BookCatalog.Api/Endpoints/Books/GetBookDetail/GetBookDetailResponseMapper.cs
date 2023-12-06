@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
 using BellaBooks.BookCatalog.Application.Features.Books.Queries;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Books.GetBookDetail;
 

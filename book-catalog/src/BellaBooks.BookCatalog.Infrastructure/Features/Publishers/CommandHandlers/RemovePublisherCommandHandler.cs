@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.Publishers;
 using BellaBooks.BookCatalog.Application.Features.Publishers.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Publishers.CommandHandlers;
 
-internal class RemovePublisherCommandHandler : ICommandHandler<
+internal class RemovePublisherCommandHandler : IRequestHandler<
     RemovePublisherCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,19 +23,17 @@ internal class RemovePublisherCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(RemovePublisherCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(RemovePublisherCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["PublisherId"] = command.PublisherId,
+            ["PublisherId"] = request.PublisherId,
         });
 
         try
         {
             var publisherExists = await _bookCatalogContext.Publishers
-                .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
+                .AnyAsync(publisher => publisher.Id == request.PublisherId, cancellationToken);
 
             if (!publisherExists)
             {
@@ -44,8 +42,8 @@ internal class RemovePublisherCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.Publishers
-                .Where(publisher => publisher.Id == command.PublisherId)
-                .ExecuteDeleteAsync(ct);
+                .Where(publisher => publisher.Id == request.PublisherId)
+                .ExecuteDeleteAsync(cancellationToken);
 
             if (changes == 0)
             {

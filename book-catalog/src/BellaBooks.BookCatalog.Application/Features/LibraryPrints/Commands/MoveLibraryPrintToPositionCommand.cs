@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.LibraryPrints.Commands;
 
-public record MoveLibraryPrintToPositionCommand : ICommand<
+public record MoveLibraryPrintToPositionCommand : IRequest<
     UnitResult<ErrorResult>>
 {
     public required int LibraryPrintId { get; init; }

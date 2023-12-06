@@ -1,13 +1,13 @@
 ﻿using BellaBooks.BookCatalog.Application.Features.Publishers.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Publishers.QueryHandlers;
 
-internal class GetAllPublishersQueryHandler : ICommandHandler<
+internal class GetAllPublishersQueryHandler : IRequestHandler<
     GetAllPublishersQuery,
     IReadOnlyCollection<PublisherDetailReadModel>>
 {
@@ -22,14 +22,13 @@ internal class GetAllPublishersQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<PublisherDetailReadModel>>
-        ExecuteAsync(GetAllPublishersQuery command, CancellationToken ct)
+    public async Task<IReadOnlyCollection<PublisherDetailReadModel>> Handle(GetAllPublishersQuery request, CancellationToken cancellationToken)
     {
         try
         {
             var publishers = await _bookCatalogContext.Publishers
                 .SelectPublisherDetailReadModel()
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
 
             return publishers;
         }

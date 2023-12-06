@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Genres.Commands;
 
-public record EditGenreInfoCommand : ICommand<
+public record EditGenreInfoCommand : IRequest<
     UnitResult<ErrorResult>>
 {
     public required int GenreId { get; init; }

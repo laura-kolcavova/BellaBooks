@@ -3,14 +3,14 @@ using BellaBooks.BookCatalog.Application.Features.Books.Queries;
 using BellaBooks.BookCatalog.Domain.Constants.LibraryPrints;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using Dapper;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Books.QueryHandlers;
 
-internal class SimpleSearchBooksQueryHandler : ICommandHandler<
+internal class SimpleSearchBooksQueryHandler : IRequestHandler<
     SimpleSearchBooksQuery,
     IReadOnlyCollection<BookListingItemReadModel>>
 {
@@ -25,8 +25,7 @@ internal class SimpleSearchBooksQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<BookListingItemReadModel>>
-        ExecuteAsync(SimpleSearchBooksQuery command, CancellationToken ct)
+    public async Task<IReadOnlyCollection<BookListingItemReadModel>> Handle(SimpleSearchBooksQuery request, CancellationToken cancellationToken)
     {
         try
         {
@@ -36,18 +35,18 @@ internal class SimpleSearchBooksQueryHandler : ICommandHandler<
             @$"
             SELECT *
             FROM [dbo].[vBookListingItems]
-            WHERE {BuildFilteringQuery(command.Filter, command.SearchInput)}
+            WHERE {BuildFilteringQuery(request.Filter, request.SearchInput)}
             OFFSET @Offset ROWS
             FETCH NEXT @Limit ROWS ONLY
             ",
             new
             {
-                command.SearchInput,
-                command.OffsetPaginationFilter.Offset,
-                command.OffsetPaginationFilter.Limit,
+                request.SearchInput,
+                request.OffsetPaginationFilter.Offset,
+                request.OffsetPaginationFilter.Limit,
             },
             commandType: CommandType.Text,
-            cancellationToken: ct);
+            cancellationToken: cancellationToken);
 
             var bookListingItems = await dbConnection
                 .QueryAsync<BookListingItemReadModel, string, string, BookListingItemReadModel>(

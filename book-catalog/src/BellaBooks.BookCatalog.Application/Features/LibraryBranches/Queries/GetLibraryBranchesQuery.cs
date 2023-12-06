@@ -1,8 +1,8 @@
-﻿using FastEndpoints;
+﻿using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
 
-public record GetLibraryBranchesQuery : ICommand<
+public record GetLibraryBranchesQuery : IRequest<
     IReadOnlyCollection<LibraryBranchDetailReadModel>>
 {
 }

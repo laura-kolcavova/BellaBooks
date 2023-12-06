@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.Authors;
 using BellaBooks.BookCatalog.Application.Features.Authors.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Authors.CommandHandlers;
 
-internal class EditAuthorInfoCommandHandler : ICommandHandler<
+internal class EditAuthorInfoCommandHandler : IRequestHandler<
     EditAuthorInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,20 +23,19 @@ internal class EditAuthorInfoCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(EditAuthorInfoCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>>
+        Handle(EditAuthorInfoCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["AuthorId"] = command.AuthorId,
-            ["Name"] = command.Name,
+            ["AuthorId"] = request.AuthorId,
+            ["Name"] = request.Name,
         });
 
         try
         {
             var authorExists = await _bookCatalogContext.Authors
-                .AnyAsync(author => author.Id == command.AuthorId, ct);
+            .AnyAsync(author => author.Id == request.AuthorId, cancellationToken);
 
             if (!authorExists)
             {
@@ -45,9 +44,9 @@ internal class EditAuthorInfoCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.Authors
-                .Where(author => author.Id == command.AuthorId)
+            .Where(author => author.Id == request.AuthorId)
                 .ExecuteUpdateAsync(setters => setters.SetProperty(
-                    author => author.Name, command.Name), ct);
+                author => author.Name, request.Name), cancellationToken);
 
             if (changes == 0)
             {

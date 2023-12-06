@@ -1,6 +1,6 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
 using BellaBooks.BookCatalog.Api.Extensions;
-using FastEndpoints;
+using MediatR;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.EditPublisherInfo;

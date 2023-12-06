@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.LibraryPrints;
 using BellaBooks.BookCatalog.Application.Features.LibraryPrints.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryPrints.CommandHandlers;
 
-internal class RemoveLibraryPrintCommandHandler : ICommandHandler<
+internal class RemoveLibraryPrintCommandHandler : IRequestHandler<
     RemoveLibraryPrintCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,18 +23,17 @@ internal class RemoveLibraryPrintCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<UnitResult<ErrorResult>>
-        ExecuteAsync(RemoveLibraryPrintCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(RemoveLibraryPrintCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibraryPrintId"] = command.LibraryPrintId
+            ["LibraryPrintId"] = request.LibraryPrintId
         });
 
         try
         {
             var libraryPrintExists = await _bookCatalogContext.LibraryPrints
-                .AnyAsync(libraryPrint => libraryPrint.Id == command.LibraryPrintId, ct);
+                .AnyAsync(libraryPrint => libraryPrint.Id == request.LibraryPrintId, cancellationToken);
 
             if (!libraryPrintExists)
             {
@@ -43,8 +42,8 @@ internal class RemoveLibraryPrintCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.LibraryPrints
-                .Where(libraryPrint => libraryPrint.Id == command.LibraryPrintId)
-                .ExecuteDeleteAsync(ct);
+                .Where(libraryPrint => libraryPrint.Id == request.LibraryPrintId)
+                .ExecuteDeleteAsync(cancellationToken);
 
             if (changes == 0)
             {

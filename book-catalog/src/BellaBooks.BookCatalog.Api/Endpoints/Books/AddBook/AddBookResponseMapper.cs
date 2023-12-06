@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Books;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Books.AddBook;
 

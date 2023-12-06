@@ -1,13 +1,13 @@
 ﻿using BellaBooks.BookCatalog.Application.Features.Authors.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Authors.QueryHandlers;
 
-internal class GetAuthorDetailQueryHandler : ICommandHandler<
+internal class GetAuthorDetailQueryHandler : IRequestHandler<
     GetAuthorDetailQuery, AuthorDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -21,21 +21,20 @@ internal class GetAuthorDetailQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        AuthorDetailReadModel?>
-        ExecuteAsync(GetAuthorDetailQuery command, CancellationToken ct)
+    public async Task<AuthorDetailReadModel?>
+        Handle(GetAuthorDetailQuery request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["AuthorId"] = command.AuthorId
+            ["AuthorId"] = request.AuthorId
         });
 
         try
         {
             var author = await _bookCatalogContext.Authors
-                .Where(author => author.Id == command.AuthorId)
+            .Where(author => author.Id == request.AuthorId)
                 .SelectAuthorDetailReadModel()
-                .SingleOrDefaultAsync(ct);
+                .SingleOrDefaultAsync(cancellationToken);
 
             return author;
         }

@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.Authors.Commands;
 
-public record AddAuthorCommand : ICommand<
+public record AddAuthorCommand : IRequest<
     Result<int, ErrorResult>>
 {
     public required string Name { get; init; }

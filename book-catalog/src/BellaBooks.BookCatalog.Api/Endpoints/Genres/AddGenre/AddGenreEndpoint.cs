@@ -2,7 +2,7 @@
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Extensions;
 using BellaBooks.BookCatalog.Application.Features.Genres.Commands;
-using FastEndpoints;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Genres.AddGenre;

@@ -1,12 +1,12 @@
 ﻿using BellaBooks.BookCatalog.Application.Features.LibraryBranches.Queries;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using BellaBooks.BookCatalog.Infrastructure.Extensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.LibraryBranches.QueryHandlers;
-internal class GetLibraryBranchDetailQueryHandler : ICommandHandler<
+internal class GetLibraryBranchDetailQueryHandler : IRequestHandler<
     GetLibraryBranchDetailQuery, LibraryBranchDetailReadModel?>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -20,21 +20,19 @@ internal class GetLibraryBranchDetailQueryHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        LibraryBranchDetailReadModel?>
-        ExecuteAsync(GetLibraryBranchDetailQuery command, CancellationToken ct)
+    public async Task<LibraryBranchDetailReadModel?> Handle(GetLibraryBranchDetailQuery request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["LibaryBranchCode"] = command.LibraryBranchCode
+            ["LibaryBranchCode"] = request.LibraryBranchCode
         });
 
         try
         {
             var libraryBranch = await _bookCatalogContext.LibraryBranches
-                .Where(libraryBranch => libraryBranch.Code == command.LibraryBranchCode)
+                .Where(libraryBranch => libraryBranch.Code == request.LibraryBranchCode)
                 .SelectLibraryBranchDetailReadModel()
-                .SingleOrDefaultAsync(ct);
+                .SingleOrDefaultAsync(cancellationToken);
 
             return libraryBranch;
         }

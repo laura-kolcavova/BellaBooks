@@ -2,7 +2,7 @@
 using BellaBooks.BookCatalog.Api.EndpointGroups;
 using BellaBooks.BookCatalog.Api.Endpoints.Authors.GetAuthorDetail;
 using BellaBooks.BookCatalog.Application.Features.Authors.Queries;
-using FastEndpoints;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BellaBooks.BookCatalog.Api.Ednpoints.Authors.GetAuthorDetail;

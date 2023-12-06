@@ -1,5 +1,5 @@
 ﻿using BellaBooks.BookCatalog.Api.Contracts.Publishers;
-using FastEndpoints;
+using MediatR;
 using FluentValidation;
 
 namespace BellaBooks.BookCatalog.Api.Endpoints.Publishers.AddPublisher;

@@ -1,10 +1,10 @@
 ﻿using BellaBooks.BookCatalog.Application.Errors;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 
 namespace BellaBooks.BookCatalog.Application.Features.LibraryBranches.Commands;
 
-public record RemoveLibraryBranchCommand : ICommand<
+public record RemoveLibraryBranchCommand : IRequest<
     UnitResult<ErrorResult>>
 {
     public required string LibraryBranchCode { get; init; }

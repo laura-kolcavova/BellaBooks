@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.Genres;
 using BellaBooks.BookCatalog.Application.Features.Genres.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Genres.CommandHandlers;
 
-internal class EditGenreInfoCommandHandler : ICommandHandler<
+internal class EditGenreInfoCommandHandler : IRequestHandler<
     EditGenreInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,22 +23,20 @@ internal class EditGenreInfoCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(EditGenreInfoCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(EditGenreInfoCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["GenreId"] = command.GenreId,
-            ["Name"] = command.Name,
+            ["GenreId"] = request.GenreId,
+            ["Name"] = request.Name,
         });
 
         try
         {
             var changes = await _bookCatalogContext.Genres
-                .Where(genre => genre.Id == command.GenreId)
+                .Where(genre => genre.Id == request.GenreId)
                 .ExecuteUpdateAsync(setters => setters.SetProperty(
-                    genre => genre.Name, command.Name), ct);
+                genre => genre.Name, request.Name), cancellationToken);
 
             if (changes == 0)
             {

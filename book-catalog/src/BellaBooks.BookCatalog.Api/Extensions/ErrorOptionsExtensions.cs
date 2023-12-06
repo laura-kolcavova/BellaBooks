@@ -1,4 +1,4 @@
-﻿using FastEndpoints;
+﻿using MediatR;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 

@@ -3,13 +3,13 @@ using BellaBooks.BookCatalog.Application.Features.Publishers;
 using BellaBooks.BookCatalog.Application.Features.Publishers.Commands;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Publishers.CommandHandlers;
 
-internal class EditPublisherInfoCommandHandler : ICommandHandler<
+internal class EditPublisherInfoCommandHandler : IRequestHandler<
     EditPublisherInfoCommand, UnitResult<ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -23,20 +23,18 @@ internal class EditPublisherInfoCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        UnitResult<ErrorResult>>
-        ExecuteAsync(EditPublisherInfoCommand command, CancellationToken ct)
+    public async Task<UnitResult<ErrorResult>> Handle(EditPublisherInfoCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["PublisherId"] = command.PublisherId,
-            ["Name"] = command.Name,
+            ["PublisherId"] = request.PublisherId,
+            ["Name"] = request.Name,
         });
 
         try
         {
             var publisherExists = await _bookCatalogContext.Publishers
-                .AnyAsync(publisher => publisher.Id == command.PublisherId, ct);
+                .AnyAsync(publisher => publisher.Id == request.PublisherId, cancellationToken);
 
             if (!publisherExists)
             {
@@ -45,9 +43,9 @@ internal class EditPublisherInfoCommandHandler : ICommandHandler<
             }
 
             var changes = await _bookCatalogContext.Publishers
-                 .Where(publisher => publisher.Id == command.PublisherId)
-                 .ExecuteUpdateAsync(setters => setters.SetProperty(
-                     publisher => publisher.Name, command.Name), ct);
+                .Where(publisher => publisher.Id == request.PublisherId)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(
+                    publisher => publisher.Name, request.Name), cancellationToken);
 
             if (changes == 0)
             {

@@ -4,13 +4,13 @@ using BellaBooks.BookCatalog.Application.Features.Authors.Commands;
 using BellaBooks.BookCatalog.Domain.Entities.Authors;
 using BellaBooks.BookCatalog.Infrastructure.Contexts;
 using CSharpFunctionalExtensions;
-using FastEndpoints;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BellaBooks.BookCatalog.Infrastructure.Features.Authors.CommandHandlers;
 
-internal class AddAuthorCommandHandler : ICommandHandler<
+internal class AddAuthorCommandHandler : IRequestHandler<
     AddAuthorCommand, Result<int, ErrorResult>>
 {
     private readonly BookCatalogContext _bookCatalogContext;
@@ -24,33 +24,31 @@ internal class AddAuthorCommandHandler : ICommandHandler<
         _logger = logger;
     }
 
-    public async Task<
-        Result<int, ErrorResult>>
-        ExecuteAsync(AddAuthorCommand command, CancellationToken ct)
+    public async Task<Result<int, ErrorResult>>
+        Handle(AddAuthorCommand request, CancellationToken cancellationToken)
     {
         using var loggerScope = _logger.BeginScope(new Dictionary<string, object>
         {
-            ["Name"] = command.Name
+            ["Name"] = request.Name
         });
 
         try
         {
             var authorWithNameAlreadyExists = await _bookCatalogContext.Authors
-                .AnyAsync(author => author.Name == command.Name, ct);
+            .AnyAsync(author => author.Name == request.Name, cancellationToken);
 
             if (authorWithNameAlreadyExists)
             {
                 return Result.Failure<int, ErrorResult>
                     (AuthorErrorResults.AuthorWithSameNameAlreadyExists);
             }
-
-            var newAuthor = new AuthorEntity(command.Name);
+            var newAuthor = new AuthorEntity(request.Name);
 
             _bookCatalogContext.Authors
                 .Add(newAuthor);
 
             var changes = await _bookCatalogContext
-                 .SaveChangesAsync(ct);
+                 .SaveChangesAsync(cancellationToken);
 
             if (changes == 0)
             {
